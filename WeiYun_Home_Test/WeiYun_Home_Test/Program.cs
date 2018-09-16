@@ -1,0 +1,166 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using WeiYun_Home_Test;
+
+namespace WeiYun_Home_Test
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            #region 委托BeginInvoke参数测试
+            //new 委托BeginInvoke参数测试.DelegateTest().TestStart4();
+            #endregion
+
+            #region 判断两个变量是否为同一个对象（是不是使用同一块内存）
+            //Equals和==比较的栈中的值，如果是引用类型，栈的值里面的存的堆地址一样。ReferenceEquals比较的是堆中的地址。
+            //值类型不一样，每一个变量都是一块单独的内存。Equals和==相同，ReferenceEquals一定不同。
+            //引用类型
+            //Person p1 = new Person();
+            //p1.Name = "张三";
+            //Person p2 = new Person();
+            //p2.Name = "张三";
+            //Person p3 = p1;
+
+            //bool equalResult = p3.Equals(p1);
+            //Console.WriteLine("引用类型变量Equals的结果{0}",equalResult);
+            //bool equalResult1 = p3==p1;
+            //Console.WriteLine("引用类型变量==的结果{0}", equalResult1);
+            //bool equalResult2 = object.ReferenceEquals(p3, p1);
+            //Console.WriteLine("引用类型变量ReferenceEquals的结果{0}", equalResult2);
+            //值类型
+            //int a = 1;
+            //int b = 2;
+            //int c = 1;
+            //bool equalResult3 = a.Equals(c);
+            //Console.WriteLine("值类型变量Equals的结果{0}", equalResult3);
+            //bool equalResult4 = a == c;
+            //Console.WriteLine("值类型变量==的结果{0}", equalResult4);
+            //bool equalResult5 = object.ReferenceEquals(a, c);
+            //Console.WriteLine("值类型变量ReferenceEquals的结果{0}", equalResult5);
+            #endregion
+
+
+            #region Hash表的应用
+            //Hashtable hs = new Hashtable();
+            //hs.Add("Cyrus", "塞勒斯");
+            //foreach (object item in hs.Keys)
+            //{
+            //    Console.WriteLine("键：{0}，值：{1}", item, hs[item]);
+            //}
+
+            //foreach (DictionaryEntry item in hs)
+            //{
+            //    Console.WriteLine("键：{0}，值：{1}", item.Key, item.Value);
+            //}
+
+            #endregion
+
+            #region 判断输入的字符是不是字母
+            //string c = Console.ReadLine();
+            //while (c != "quit")
+            //{
+            //    if (char.IsLetter(c[0]))
+            //    {
+            //        Console.WriteLine("是字母");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("不是字母");
+            //    }
+            //    c = Console.ReadLine();
+
+            //} 
+            #endregion
+
+
+            #region 递归调用
+            //Say(); 
+            #endregion
+
+            #region 获取所有语言的编码方式
+            //if (File.Exists(@"encodings.txt"))
+            //{
+            //    File.Delete(@"encodings.txt");
+            //}
+            //EncodingInfo[] infos = Encoding.GetEncodings();
+            //foreach (var item in infos)
+            //{
+            //    File.AppendAllText(@"encodings.txt", string.Format("{0},{1},{2}"+Environment.NewLine, item.CodePage, item.DisplayName, item.Name));
+            //}
+            #endregion
+
+            #region 获取电脑上的所有磁盘符
+            //string[] drives = Directory.GetLogicalDrives();//返回所有磁盘符名称(包含DVD驱动器)
+            //foreach (var item in drives)
+            //{
+            //    Console.WriteLine(item);
+            //    DriveInfo drive = new DriveInfo(item);//根据磁盘符名称，创建驱动盘对象
+            //    if (drive.DriveType == DriveType.Fixed)//平常我们需要的是固定的盘符（驱动）
+            //    {
+            //        Console.WriteLine("{0}的类型：{1},文件系统名称：{2}", drive.Name, drive.DriveType, drive.DriveFormat);
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("{0}的类型：{1},文件系统名称：{2}", drive.Name, drive.DriveType, "驱动盘");
+            //    }
+
+            //}
+            #endregion
+
+            #region 通过文件流实现大文件拷贝
+            BigFileCopy(@"d:\a.rar", @"e:\abc.rar");
+            #endregion
+            Console.Read();
+        }
+        /// <summary>
+        /// 递归调用
+        /// </summary>
+        static void Say()
+        {
+            Console.WriteLine("山上有座庙");
+            Console.WriteLine("庙里有个老和尚和小和尚");
+            Console.WriteLine("有一天，老和尚给小和尚讲故事：");
+            Console.WriteLine("讲的是：");
+            Say();//调用自己，递归调用。
+        }
+        /// <summary>
+        /// 通过文件流实现将source中的文件拷贝到target
+        /// </summary>
+        /// <param name="source">原文件路径</param>
+        /// <param name="target">目标文件路径</param>
+        static void BigFileCopy(string source , string target)
+        {
+            //1、创建一个读取源文件的文件流
+            using (FileStream fsRead = new FileStream(source, FileMode.Open, FileAccess.Read))
+            {
+                //2、创建一个写入新文件的文件流
+                using (FileStream fsWrite = new FileStream(target, FileMode.Create, FileAccess.Write))
+                {
+                    //缓冲区的选择，选多大合适呢？缓冲区大了，保护硬盘不伤硬盘什么的。缓冲区小了，eg：1kb，那么每读1kb都要向磁盘中写。缓冲区小了，那么频率就大了。缓冲区大了，读半天写一次，对硬盘操作就少了，这样来说就是保护硬盘了。
+                    byte[] bytes = new byte[1024 * 1024 * 5];//缓冲区的设置
+                    int r = fsRead.Read(bytes, 0, bytes.Length);//返回值，表示本次实际读取到字节个数
+                                                                //上边已经读了一次，判断读到内容是不是空
+                    while (r > 0)
+                    {
+                        //将读取到的内容写入到新文件中
+                        fsWrite.Write(bytes, 0, r);//第三个参数应该是实际读取到的字节数，而不是数组的长度
+                        //在这里，我们每次写入完毕以后，可以显示拷贝了百分之几，显示一个拷贝进度
+                        //Console.WriteLine(".");//这里先暂时显示一个点，可以做成进度条，从这里入手。显示百分比怎么来做呢？就是用已经写入的文件流除以总的文件长度就可以了。
+                        double d = (fsWrite.Position / (double)fsRead.Length) * 100;
+                        Console.WriteLine("{0}%",d);
+                        Thread.Sleep(1000);
+                        r = fsRead.Read(bytes, 0, bytes.Length);//返回值，表示本次实际读取到字节个数
+                                                                    //上边的文件读取文件流，每次读取的时候，他怎么知道本次从哪个位置开始读取。它有一个属性：fsWrite.Postion.表示获取或者设置此流的当前位置，默认值是自动的移到你上次读取或者写位置。当然你也可以手动设置一下，这样你每次读的东西都是一样的
+                    }//此处可以用do-while循环
+                }
+            }
+        }
+    }
+}
