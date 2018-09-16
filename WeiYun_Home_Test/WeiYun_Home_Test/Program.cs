@@ -115,7 +115,11 @@ namespace WeiYun_Home_Test
             #endregion
 
             #region 通过文件流实现大文件拷贝
-            BigFileCopy(@"d:\a.rar", @"e:\abc.rar");
+            // BigFileCopy(@"d:\a.rar", @"e:\abc.rar");
+            //加密
+            //JiaMi(@"d:\a.rar", @"e:\abc.rar");
+            //解密(文件的路径位置调换一下就好了)
+            //JiaMi( @"e:\abc.rar", @"e:\ABCD.rar");
             #endregion
             Console.Read();
         }
@@ -158,6 +162,37 @@ namespace WeiYun_Home_Test
                         Thread.Sleep(1000);
                         r = fsRead.Read(bytes, 0, bytes.Length);//返回值，表示本次实际读取到字节个数
                                                                     //上边的文件读取文件流，每次读取的时候，他怎么知道本次从哪个位置开始读取。它有一个属性：fsWrite.Postion.表示获取或者设置此流的当前位置，默认值是自动的移到你上次读取或者写位置。当然你也可以手动设置一下，这样你每次读的东西都是一样的
+                    }//此处可以用do-while循环
+                }
+            }
+        }
+
+        /// <summary>
+        /// 文件加密拷贝，文件打开为损坏，再解密一下就好了
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        static void JiaMi(string source, string target)
+        {
+            //1、创建一个读取源文件的文件流
+            using (FileStream fsRead = new FileStream(source, FileMode.Open, FileAccess.Read))
+            {
+                //2、创建一个写入新文件的文件流
+                using (FileStream fsWrite = new FileStream(target, FileMode.Create, FileAccess.Write))
+                {
+                    byte[] bytes = new byte[1024 * 1024 * 5];//缓冲区的设置
+                    int count = 0;//返回值，表示本次实际读取到字节个数
+                    //while的这种写法，可以说是do-while的新版本
+                    while ((count = fsRead.Read(bytes, 0, bytes.Length)) > 0)
+                    {
+                        //加密，加密其实就是先把Bbyte[]数组中的字节内容先改变一下，然后在执行写入操作
+                        for (int i = 0; i < count; i++)
+                        {
+                            bytes[i] = (byte)(byte.MaxValue - bytes[i]);
+                        }
+                        //拷贝，直接写拷贝代码
+                        fsWrite.Write(bytes, 0, count);
+
                     }//此处可以用do-while循环
                 }
             }
