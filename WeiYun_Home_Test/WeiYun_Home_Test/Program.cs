@@ -121,6 +121,14 @@ namespace WeiYun_Home_Test
             //解密(文件的路径位置调换一下就好了)
             //JiaMi( @"e:\abc.rar", @"e:\ABCD.rar");
             #endregion
+
+            #region 统计字符串中字符串出现的次数
+            //string content = "青葡萄，紫葡萄，青葡萄没紫葡萄紫，紫葡萄不吐葡萄皮，不吃葡萄倒吐葡萄皮。";
+            //Console.WriteLine(content);
+            //string statisticsString = "葡萄";
+            //int count = StatisticsStringOccourCount(content, statisticsString);
+            //Console.WriteLine("上述内容出现了{0}次{1}", count,statisticsString);
+            #endregion
             Console.Read();
         }
         /// <summary>
@@ -196,6 +204,23 @@ namespace WeiYun_Home_Test
                     }//此处可以用do-while循环
                 }
             }
+        }
+        /// <summary>
+        /// 统计字符串中字符串出现的次数
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="statisticsString"></param>
+        /// <returns></returns>
+        static int StatisticsStringOccourCount(string content ,string statisticsString)
+        {
+            int count = 0;//声明一个统计变量
+            int index = 0;//声明一个索引变量,相当于游标
+            while ((index = content.IndexOf(statisticsString, index)) > -1)
+            {
+                count++;
+                index = index + statisticsString.Length;//索引位置的移动
+            }
+            return count;
         }
     }
 }
