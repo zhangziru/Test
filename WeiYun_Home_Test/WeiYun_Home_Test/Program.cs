@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using WeiYun_Home_Test;
@@ -128,6 +129,24 @@ namespace WeiYun_Home_Test
             //string statisticsString = "葡萄";
             //int count = StatisticsStringOccourCount(content, statisticsString);
             //Console.WriteLine("上述内容出现了{0}次{1}", count,statisticsString);
+            #endregion
+
+            #region 字符串利用正则来提取内容
+            //string msg = "xioahu@qq.com,gogogo@qq.com,zzaaa@163.com,jjjjj@163.com,hhhh@outlook.com";
+            ////从字符串中提取字符串
+            ////如果想要对已经匹配的字符串再进行分组提取，就用到了“提取组”的功能
+            ////通过添加()能实现提取组。
+            ////在正则表达式中只要出现了()就表示进行了分组。
+            ////小括号既有改变优先级的作用又具有提取组的功能。
+            //MatchCollection matchs = Regex.Matches(msg, @"([-a-zA-Z_0-9]+)@([-a-zA-Z_0-9]+(\.[a-zA-Z]+)+)");
+            //foreach (Match item in matchs)
+            //{
+            //    //Console.WriteLine(item.Value);//item.Value表示本次提取到的字符串
+            //    //item.Groups集合中存储的就是所有的分组信息
+            //    Console.WriteLine("第0组：{0}", item.Groups[0].Value);//item.Groups[0].Value与item.Value是等价的，都表示本次提取到的完整的字符串，表示整个邮箱字符串，而item.Groups[1].Value则表示第一组的字符串。
+            //    Console.WriteLine("第1组：{0}", item.Groups[1].Value);
+            //    Console.WriteLine("第2组：{0}", item.Groups[2].Value);
+            //} 
             #endregion
             Console.Read();
         }
