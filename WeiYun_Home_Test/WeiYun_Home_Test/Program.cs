@@ -146,7 +146,27 @@ namespace WeiYun_Home_Test
             //    Console.WriteLine("第0组：{0}", item.Groups[0].Value);//item.Groups[0].Value与item.Value是等价的，都表示本次提取到的完整的字符串，表示整个邮箱字符串，而item.Groups[1].Value则表示第一组的字符串。
             //    Console.WriteLine("第1组：{0}", item.Groups[1].Value);
             //    Console.WriteLine("第2组：{0}", item.Groups[2].Value);
-            //} 
+            //    Console.WriteLine("第3组：{0}", item.Groups[3].Value);
+            //}
+            #endregion
+
+            #region 字符串提取，前者是对一个匹配项进行了分组，后者是对一个字符串提取了多个匹配项
+            //方法一
+            string date = " June   26, 1951 ";
+            Match match = Regex.Match(date, @"([a-zA-Z]+)\s*([0-9]{2})\s*,\s*([0-9]{4})\s*");
+            for (int i = 0; i < match.Groups.Count; i++)
+            {
+                Console.WriteLine(match.Groups[i].Value);
+            }
+            Console.WriteLine("-----------------------------------------------------------");
+            //方法二
+
+            MatchCollection matches = Regex.Matches(date, @"[a-zA-Z0-9]+");
+            foreach (Match item in matches)
+            {
+                Console.WriteLine(item.Value);
+            }
+            //这两种写法有什么区别，首先思路是完全不同的。前者是对一个匹配项进行了分组，后者是对一个字符串提取了多个匹配项
             #endregion
             Console.Read();
         }
