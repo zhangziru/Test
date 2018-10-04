@@ -52,7 +52,7 @@ GitHub的学习笔记
 2、通过git管理GitHub托管项目代码
 3、Git是一个免费的、开源的版本控制软件。
 4、下载安装：
-	1）Git官网下载地址：https://www.git-scm.com/download/win
+	1）Git官网下载地址：https://www.git-scm.com/download/win(【TortoiseGit:https://tortoisegit.org/】)
 	2）选择下载的文件下载
 	3）双击安装
 	4）组件选择：有命令行模式和图形界面模式
