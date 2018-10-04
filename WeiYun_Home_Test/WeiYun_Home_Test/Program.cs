@@ -184,16 +184,38 @@ namespace WeiYun_Home_Test
             #endregion
 
             #region 通过WebClient类对象下载网页字符串
-            WebClient webclient = new WebClient();
-            string html = webclient.DownloadString("http://www.baidu.com");//自己找一个有邮箱的地址进行测试
-            //从网页字符串中进行字符串的提取邮箱
-            MatchCollection matches = Regex.Matches(html, @"[a-zA-Z0-9_.]+@[a-zA-Z0-9]+(\.[a-zA-Z]){1,2}");
-            foreach (Match item in matches)
-            {
-                Console.WriteLine(item.Value);
-            }
-            Console.WriteLine("共{0}个邮箱地址。",matches.Count);
+            //WebClient webclient = new WebClient();
+            //string html = webclient.DownloadString("http://www.baidu.com");//自己找一个有邮箱的地址进行测试
+            ////从网页字符串中进行字符串的提取邮箱
+            //MatchCollection matches = Regex.Matches(html, @"[a-zA-Z0-9_.]+@[a-zA-Z0-9]+(\.[a-zA-Z]){1,2}");
+            //foreach (Match item in matches)
+            //{
+            //    Console.WriteLine(item.Value);
+            //}
+            //Console.WriteLine("共{0}个邮箱地址。",matches.Count);
             #endregion
+
+            #region 通过WebClient提取网页中的图片
+            ////1、下载Html
+            //WebClient client = new WebClient();
+            //string html = client.DownloadString("http://www.27270.com/ent/meinvtupian/");
+
+            ////2、提取Html中的img标签
+            //MatchCollection matches = Regex.Matches(html, @"<img.+?src=""(.+?)"".+?>",RegexOptions.IgnoreCase);
+            //foreach (Match item in matches)
+            //{
+            //    //3、通过“提取组”获取img的src属性
+            //    //Console.WriteLine(item.Value+"\t"+item.Groups[1].Value);
+            //    //Console.WriteLine(item.Groups[1].Value);
+            //    string img_path = item.Groups[1].Value;
+            //    //4、下载图片（如果是相对相对地址，通过拼接路径下载图片。远程在线的图片则直接下载）
+            //    //5、下载图片还要用WebClient对象
+            //    client.DownloadFile(img_path,@"d:\" + System.DateTime.Now.ToString("yyyyMMddhhmmss")+".jpg");
+            //}
+
+            //Console.WriteLine("下载完毕，ok!");
+            #endregion
+
             Console.Read();
         }
         /// <summary>
