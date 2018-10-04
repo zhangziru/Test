@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -180,6 +181,18 @@ namespace WeiYun_Home_Test
             //Console.WriteLine("终止贪婪模式");
             //Match match1 = Regex.Match(msg, ".+?。");
             //Console.WriteLine(match1.Value);
+            #endregion
+
+            #region 通过WebClient类对象下载网页字符串
+            WebClient webclient = new WebClient();
+            string html = webclient.DownloadString("http://www.baidu.com");//自己找一个有邮箱的地址进行测试
+            //从网页字符串中进行字符串的提取邮箱
+            MatchCollection matches = Regex.Matches(html, @"[a-zA-Z0-9_.]+@[a-zA-Z0-9]+(\.[a-zA-Z]){1,2}");
+            foreach (Match item in matches)
+            {
+                Console.WriteLine(item.Value);
+            }
+            Console.WriteLine("共{0}个邮箱地址。",matches.Count);
             #endregion
             Console.Read();
         }
