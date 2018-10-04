@@ -151,22 +151,35 @@ namespace WeiYun_Home_Test
             #endregion
 
             #region 字符串提取，前者是对一个匹配项进行了分组，后者是对一个字符串提取了多个匹配项
-            //方法一
-            string date = " June   26, 1951 ";
-            Match match = Regex.Match(date, @"([a-zA-Z]+)\s*([0-9]{2})\s*,\s*([0-9]{4})\s*");
-            for (int i = 0; i < match.Groups.Count; i++)
-            {
-                Console.WriteLine(match.Groups[i].Value);
-            }
-            Console.WriteLine("-----------------------------------------------------------");
-            //方法二
+            ////方法一
+            //string date = " June   26, 1951 ";
+            //Match match = Regex.Match(date, @"([a-zA-Z]+)\s*([0-9]{2})\s*,\s*([0-9]{4})\s*");
+            //for (int i = 0; i < match.Groups.Count; i++)
+            //{
+            //    Console.WriteLine(match.Groups[i].Value);
+            //}
+            //Console.WriteLine("-----------------------------------------------------------");
+            ////方法二
 
-            MatchCollection matches = Regex.Matches(date, @"[a-zA-Z0-9]+");
-            foreach (Match item in matches)
-            {
-                Console.WriteLine(item.Value);
-            }
-            //这两种写法有什么区别，首先思路是完全不同的。前者是对一个匹配项进行了分组，后者是对一个字符串提取了多个匹配项
+            //MatchCollection matches = Regex.Matches(date, @"[a-zA-Z0-9]+");
+            //foreach (Match item in matches)
+            //{
+            //    Console.WriteLine(item.Value);
+            //}
+            ////这两种写法有什么区别，首先思路是完全不同的。前者是对一个匹配项进行了分组，后者是对一个字符串提取了多个匹配项
+
+            #endregion
+
+            #region 正则表达式的“贪婪模式”和“终止贪婪模式”
+            ////贪婪模式,按照尽可能多的来匹配
+            //string msg = "1111。11。111。1。1。";
+            //Match match = Regex.Match(msg,".+。");
+            //Console.WriteLine(match.Value);
+            ////终止贪婪模式,它就会尽可能按照少的进行匹配
+            ////终止贪婪模式，在表达式后面的限定符后面加上一个"?"就表示【终止贪婪模式】
+            //Console.WriteLine("终止贪婪模式");
+            //Match match1 = Regex.Match(msg, ".+?。");
+            //Console.WriteLine(match1.Value);
             #endregion
             Console.Read();
         }
