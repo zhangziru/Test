@@ -216,6 +216,21 @@ namespace WeiYun_Home_Test
             //Console.WriteLine("下载完毕，ok!");
             #endregion
 
+            #region 【网络爬虫原理】通过WebClient提取网页中的超链接标签
+            //1、下载Html
+            WebClient client = new WebClient();
+            string html = client.DownloadString("http://www.27270.com/ent/meinvtupian/");
+
+            //2、提取Html中的<a>标签
+            MatchCollection matches = Regex.Matches(html, @"<a.+?href=""(.+?)"".*?>.+?</a>", RegexOptions.IgnoreCase);
+            foreach (Match item in matches)
+            {
+                //3、通过“提取组”获取<a>的href属性
+                string img_url = item.Groups[1].Value;
+                Console.WriteLine(img_url);
+
+            }
+            #endregion
             Console.Read();
         }
         /// <summary>
