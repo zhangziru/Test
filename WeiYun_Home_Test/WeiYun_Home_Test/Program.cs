@@ -248,18 +248,36 @@ namespace WeiYun_Home_Test
             #endregion
 
             #region 正则替换，使用委托来隐藏邮箱的用户名
-            string msg = "张三13422222222@qq.com李四13422222223@163.com王五13422222224@yahu.com赵六13422222225@sina.com";
-            msg = Regex.Replace(msg, @"([a-zA-Z0-9_]+?)(@[a-zA-Z0-9_]+?\.[a-zA-Z0-9_]+?)",  delegate(Match item) {
-                string start = "";
-                if (item.Groups[1].Value.Length != 0)
-                {
-                    for (int i = 0; i < item.Groups[1].Value.Length; i++)
-                    {
-                        start += "*";
-                    }
-                }
-                return start+item.Groups[2].Value; });
-            Console.WriteLine(msg);
+            //string msg = "张三13422222222@qq.com李四13422222223@163.com王五13422222224@yahu.com赵六13422222225@sina.com";
+            //msg = Regex.Replace(msg, @"([a-zA-Z0-9_]+?)(@[a-zA-Z0-9_]+?\.[a-zA-Z0-9_]+?)",  delegate(Match item) {
+            //    string start = "";
+            //    if (item.Groups[1].Value.Length != 0)
+            //    {
+            //        for (int i = 0; i < item.Groups[1].Value.Length; i++)
+            //        {
+            //            start += "*";
+            //        }
+            //    }
+            //    return start+item.Groups[2].Value; });
+            //Console.WriteLine(msg);
+            #endregion
+
+            #region 正则表达式-单词边界＼ｂ
+            //将"Hi,how are you?Welcome to our country!"请提取出3个字母的单词。
+            #region 说明
+            //1）什么是单词？[a-zA-Z0-9_] 这些被认为是单词的字符。
+            //2）注意1：是将单词“row”替换为“line”,而不是将字符串"row"替换为“line”。这是不一样的。
+            //3）\b属于“断言”的一种，只判断是否匹配，并不真正匹配。例如：^或$等。
+            //4）正则表达式中，如果一个单词两边有/b的时候，表示，匹配的是一个单词，不是包含在一个单词中的字符串。
+            //5）\b不是匹配一个空格
+            //6）\b表示一边是单词字符，一边不是（或者没有单词字符），不能两边都是单词字符。
+            #endregion
+            string msg = "Hi,how are you?Welcome to our country!";
+            MatchCollection matches = Regex.Matches(msg, @"\b[a-z]{3}\b", RegexOptions.IgnoreCase);
+            foreach (Match item in matches)
+            {
+                Console.WriteLine(item.Value);
+            }
             #endregion
             Console.Read();
         }
@@ -279,7 +297,7 @@ namespace WeiYun_Home_Test
         /// </summary>
         /// <param name="source">原文件路径</param>
         /// <param name="target">目标文件路径</param>
-        static void BigFileCopy(string source , string target)
+        static void BigFileCopy(string source, string target)
         {
             //1、创建一个读取源文件的文件流
             using (FileStream fsRead = new FileStream(source, FileMode.Open, FileAccess.Read))
@@ -298,10 +316,10 @@ namespace WeiYun_Home_Test
                         //在这里，我们每次写入完毕以后，可以显示拷贝了百分之几，显示一个拷贝进度
                         //Console.WriteLine(".");//这里先暂时显示一个点，可以做成进度条，从这里入手。显示百分比怎么来做呢？就是用已经写入的文件流除以总的文件长度就可以了。
                         double d = (fsWrite.Position / (double)fsRead.Length) * 100;
-                        Console.WriteLine("{0}%",d);
+                        Console.WriteLine("{0}%", d);
                         Thread.Sleep(1000);
                         r = fsRead.Read(bytes, 0, bytes.Length);//返回值，表示本次实际读取到字节个数
-                                                                    //上边的文件读取文件流，每次读取的时候，他怎么知道本次从哪个位置开始读取。它有一个属性：fsWrite.Postion.表示获取或者设置此流的当前位置，默认值是自动的移到你上次读取或者写位置。当然你也可以手动设置一下，这样你每次读的东西都是一样的
+                                                                //上边的文件读取文件流，每次读取的时候，他怎么知道本次从哪个位置开始读取。它有一个属性：fsWrite.Postion.表示获取或者设置此流的当前位置，默认值是自动的移到你上次读取或者写位置。当然你也可以手动设置一下，这样你每次读的东西都是一样的
                     }//此处可以用do-while循环
                 }
             }
@@ -343,7 +361,7 @@ namespace WeiYun_Home_Test
         /// <param name="content"></param>
         /// <param name="statisticsString"></param>
         /// <returns></returns>
-        static int StatisticsStringOccourCount(string content ,string statisticsString)
+        static int StatisticsStringOccourCount(string content, string statisticsString)
         {
             int count = 0;//声明一个统计变量
             int index = 0;//声明一个索引变量,相当于游标
