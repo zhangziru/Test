@@ -272,12 +272,18 @@ namespace WeiYun_Home_Test
             //5）\b不是匹配一个空格
             //6）\b表示一边是单词字符，一边不是（或者没有单词字符），不能两边都是单词字符。
             #endregion
-            string msg = "Hi,how are you?Welcome to our country!";
-            MatchCollection matches = Regex.Matches(msg, @"\b[a-z]{3}\b", RegexOptions.IgnoreCase);
-            foreach (Match item in matches)
-            {
-                Console.WriteLine(item.Value);
-            }
+            //string msg = "Hi,how are you?Welcome to our country!";
+            //MatchCollection matches = Regex.Matches(msg, @"\b[a-z]{3}\b", RegexOptions.IgnoreCase);
+            //foreach (Match item in matches)
+            //{
+            //    Console.WriteLine(item.Value);
+            //}
+            #endregion
+
+            #region 叠词去重-正则中引用分组（反向引用）
+            string msg = "AAABBBBBBBCCCCC";//"(.)\1+"
+            msg = Regex.Replace(msg, @"(.)\1+", "$1");
+            Console.WriteLine(msg); 
             #endregion
             Console.Read();
         }
