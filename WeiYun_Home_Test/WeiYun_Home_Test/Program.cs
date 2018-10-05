@@ -217,19 +217,49 @@ namespace WeiYun_Home_Test
             #endregion
 
             #region 【网络爬虫原理】通过WebClient提取网页中的超链接标签
-            //1、下载Html
-            WebClient client = new WebClient();
-            string html = client.DownloadString("http://www.27270.com/ent/meinvtupian/");
+            ////1、下载Html
+            //WebClient client = new WebClient();
+            //string html = client.DownloadString("http://www.27270.com/ent/meinvtupian/");
 
-            //2、提取Html中的<a>标签
-            MatchCollection matches = Regex.Matches(html, @"<a.+?href=""(.+?)"".*?>.+?</a>", RegexOptions.IgnoreCase);
-            foreach (Match item in matches)
-            {
-                //3、通过“提取组”获取<a>的href属性
-                string img_url = item.Groups[1].Value;
-                Console.WriteLine(img_url);
+            ////2、提取Html中的<a>标签
+            //MatchCollection matches = Regex.Matches(html, @"<a.+?href=""(.+?)"".*?>.+?</a>", RegexOptions.IgnoreCase);
+            //foreach (Match item in matches)
+            //{
+            //    //3、通过“提取组”获取<a>的href属性
+            //    string img_url = item.Groups[1].Value;
+            //    Console.WriteLine(img_url);
 
-            }
+            //}
+            #endregion
+
+            #region 正则表达式字符串替换,【替换的字符串中使用提取组】
+            //string msg = "hello 'welcome' to 'China'";
+            //msg = Regex.Replace(msg, "'(.+?)'", "【$1】");
+            ////正则是个贪婪模式，显然不合适，所以使用终止贪婪模式
+            ////正则的替换也可以使用提取组
+            ////正则匹配项写完了，替换掉的字符串，中间如何引用中间那部分不需要替换的字符串。【使用"$"符号，引用提取组中的数据值】
+            //Console.WriteLine(msg);
+            #endregion
+
+            #region 正则替换，隐藏手机号码
+            //string msg = "张三13422222222李四13422222223王五13422222224赵六13422222225";
+            //msg = Regex.Replace(msg, "([0-9]{3})([0-9]{4})([0-9]{4})", "$1****$3");
+            //Console.WriteLine(msg);
+            #endregion
+
+            #region 正则替换，使用委托来隐藏邮箱的用户名
+            string msg = "张三13422222222@qq.com李四13422222223@163.com王五13422222224@yahu.com赵六13422222225@sina.com";
+            msg = Regex.Replace(msg, @"([a-zA-Z0-9_]+?)(@[a-zA-Z0-9_]+?\.[a-zA-Z0-9_]+?)",  delegate(Match item) {
+                string start = "";
+                if (item.Groups[1].Value.Length != 0)
+                {
+                    for (int i = 0; i < item.Groups[1].Value.Length; i++)
+                    {
+                        start += "*";
+                    }
+                }
+                return start+item.Groups[2].Value; });
+            Console.WriteLine(msg);
             #endregion
             Console.Read();
         }
