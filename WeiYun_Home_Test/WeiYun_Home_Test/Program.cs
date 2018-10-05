@@ -281,10 +281,17 @@ namespace WeiYun_Home_Test
             #endregion
 
             #region 叠词去重-正则中引用分组（反向引用）
-            string msg = "AAABBBBBBBCCCCC";//"(.)\1+"
-            msg = Regex.Replace(msg, @"(.)\1+", "$1");
-            Console.WriteLine(msg); 
+            //string msg = "AAABBBBBBBCCCCC";//"(.)\1+"
+            //msg = Regex.Replace(msg, @"(.)\1+", "$1");
+            //Console.WriteLine(msg);
             #endregion
+
+            #region 日期格式的转换-正则表达式分组应用
+            string msg = "我的生日是05/21/2010耶";
+            msg = Regex.Replace(msg, @"(\d{2})/(\d{2})/(\d{4})", "$3-$1-$2", RegexOptions.ECMAScript);
+            Console.WriteLine(msg);
+            #endregion
+
             Console.Read();
         }
         /// <summary>
