@@ -287,11 +287,22 @@ namespace WeiYun_Home_Test
             #endregion
 
             #region 日期格式的转换-正则表达式分组应用
-            string msg = "我的生日是05/21/2010耶";
-            msg = Regex.Replace(msg, @"(\d{2})/(\d{2})/(\d{4})", "$3-$1-$2", RegexOptions.ECMAScript);
-            Console.WriteLine(msg);
+            //string msg = "我的生日是05/21/2010耶";
+            //msg = Regex.Replace(msg, @"(\d{2})/(\d{2})/(\d{4})", "$3-$1-$2", RegexOptions.ECMAScript);
+            //Console.WriteLine(msg);
             #endregion
 
+            #region 正则应用-敏感词过滤
+            string content = "";
+            Console.WriteLine("输入“quit”终止验证");
+            do
+            {
+                content = Console.ReadLine();
+                SenstiveFilter(content);
+            } while (content!="quit");
+           
+
+            #endregion
             Console.Read();
         }
         /// <summary>
@@ -385,5 +396,46 @@ namespace WeiYun_Home_Test
             }
             return count;
         }
+
+        #region 敏感词过滤
+        //判断该内容是否禁止
+        static void SenstiveFilter(string content)
+        {
+            //用来存储需要审核的关键词
+            StringBuilder sbMode = new StringBuilder();
+            //用来存储绝对禁止的关键词
+            StringBuilder sbBanned = new StringBuilder();
+            //从文件中读取所有的敏感词
+            string[] lines = File.ReadAllLines("senstive.txt", Encoding.Default);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string[] parts = lines[i].Split('=');
+                if (parts[1] == "{MOD}")
+                {
+                    sbMode.AppendFormat("{0}|", parts[0]);
+                }
+                else if (parts[1] == "{BANNED}")
+                {
+                    sbBanned.AppendFormat("{0}|", parts[0]);
+                }
+            }
+            //添加完毕以后，字符串的最后面，还是会多出来一根竖线的，我们在遍历完以后把它去掉。
+            sbMode.Remove(sbMode.Length - 1, 1);
+            sbBanned.Remove(sbBanned.Length - 1, 1);
+            //验证是否有禁止发帖的关键词(里面的正则表达式，就是以“|”或分隔符分割的正则表达式)
+            if (Regex.IsMatch(content, sbBanned.ToString()))
+            {
+                Console.WriteLine("禁止关键词");
+            }
+            else if (Regex.IsMatch(content, sbMode.ToString()))
+            {
+                Console.WriteLine("需要审核的关键词");
+            }
+            else
+            {
+                Console.WriteLine("用户可以发帖");
+            }
+        } 
+        #endregion
     }
 }
