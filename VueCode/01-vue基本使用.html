@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+    <!--将来 new 的Vue实例，会控制这个 元素中的所有内容-->
+    <!--【注意】Vue 实例所控制的这个元素区域，就是我们的 V（View）-->
+    <div id="app">
+        <!--使用“Mustache”语法（双大括号），来绑定“文本”-->
+        <p>{{ msg }}</p>
+        <!--双 Mustache 标签将数据解析为纯文本而不是 HTML。为了输出真的 HTML 字符串，需要用三 Mustache 标签：-->
+       <!--  <p>{{{ html }}}</p> -->
+    </div>
+    <script>
+        //2、创建一个Vue的实例
+        //当我们导入包之后，在浏览器的内存中，就多了一个Vue 构造函数；var vm = new Vue();
+        //创建完Vue以后，我们就要进行一些相关的配置,通过对象的形式进行配置，代码如下
+        //【注意】我们 new 出来的这个 vm 对象实例，就是我们MVVM中的 VM调度者
+       var vm = new Vue({
+           el:"#app",//表示，当前我们new 的这个 Vue实例，要控制页面上的哪个区域
+           //【注意】这里的data存的就是页面中的数据，就是MVVM中的M（Model）
+           data:{//data 属性中，存放的是 el 中要使用的数据。
+               msg:"欢迎来到‘百变则是新’",//如果将这个数据渲染到页面中id为app的内容区域里呢
+               html:"<strong>欢迎来到‘百变则是新’（加粗）</strong>"
+           }
+       });
+       //通过Jquery我们可以实现，将data中的数据放到id为app的内容区域。eg：$("#app").text(data.msg);
+       //这是通过操作Dom帮我们实现的，当我们使用了Vue以后，就帮我们省去操作Dom的步骤。
+       //我们只用【使用Vue提供的操作指令】就可以很方便的【把数据渲染到页面】中去，程序员不需要手动操作Dom元素了
+       //【前端的Vue之类的框架，不提倡我们去手动操作Dom元素了】
+    </script>
+</body>
+</html>

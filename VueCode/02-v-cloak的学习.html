@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+    <style>
+    [v-cloak]{
+
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--普通的 插值表达式-->
+        <p >{{ msg }}</p>
+        <!-- 使用 v-cloak 能够解决 插值表达式闪烁的问题 【在加载的时候，拥有cload属性，当插值加载完毕以后，就会把这个v-cloak属性给移除了】-->
+        <p v-cloak>{{ msg }}</p>
+        <!-- 默认 v-text 是没有闪烁问题的-->
+        <p v-text="msg"></p>
+        <!--【总结】 v-text 会覆盖元素中原本的内容，但是 插值表达式 只会替换自己的这个占位符，不会把 整个元素的内容清空-->
+        <!-- v-html 会覆盖元素中原本的内容，显示解析后的html，不是原生字符串-->
+        <p v-html="msg2"></p>
+        <!-- v-bind 是Vue中，提供的用于【绑定属性的指令】v-bind会把后面双引号中的值作为一个变量；也可以使用一个变量+一个表达式-->
+        <!--【注意】：v-bind 指令可以简写为 : 英文的冒号，后面加上要绑定的属性-->
+        <!-- v-bind 的属性值中，可以写合法的js表达式-->
+
+        <!--Vue 中 提供了 v-on: 事件绑定机制-->
+        <!--这就是Vue中，v-on帮我实现的事件绑定机制。v-on中指定的事件方法在Vue对象的methods对应的对象中定义-->
+        <input type="button" value="按钮" v-bind:title="mytitle + '123'" v-on:click="show"/>
+        <!--事件绑定：浏览器中常用的事件都可以定义，eg：click，mouseover等-->
+    </div>
+    <script>
+    new Vue({
+        el:"#app",
+        data:{
+            msg:123,//文本数据
+            msg2:"<h1>哈哈哈，我是h1</h1>",//html数据
+            mytitle:"这是一个自定义的title"
+        },
+        methods:{//这个methods属性中定义了当前Vue实例所有可用的方法
+            show:function(){alert("hello")}
+        }
+    })
+    </script>
+</body>
+</html>
