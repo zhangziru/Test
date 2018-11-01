@@ -154,7 +154,8 @@ git checkout –b <分支名称>：直接创建分支并切换到该分支
 【GIT 命令 贮藏或储藏】
 git stash ：保存当前分支的修改，不提交到本地仓库[常用命令]（切换分支时，由于当前分支有修改。不用放弃当前分支的修改，贮藏当前分支的修改。然后可以切换分支。）
 git stash list ：查看 贮藏 或 储藏 列表
-git stash apply ：取回当前分支的修改内容（方法1）[常用]
+git stash apply ：取回当前分支的修改内容（方法1）[常用]（备注：应用了贮藏的修改，但是修改的内容仍在贮藏列表中，需要手动清除该贮藏记录）
 git stash apply @stash{2} ：取回当前分支的修改内容
-git stash pop ：取回当前分支的修改内容（方法2）[常用]
+git stash pop ：取回当前分支的修改内容（方法2）[常用]（备注：应用了贮藏的修改，但是修改的内容也被移除了）
+git stash drop [stashname] ：从贮藏列表中删除 指定名称的 贮藏版本的代码更改 
 git stash branch [branchname] ：从暂存中创建分支
