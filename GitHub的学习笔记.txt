@@ -159,3 +159,6 @@ git stash apply @stash{2} ：取回当前分支的修改内容
 git stash pop ：取回当前分支的修改内容（方法2）[常用]（备注：应用了贮藏的修改，但是修改的内容也被移除了）
 git stash drop [stashname] ：从贮藏列表中删除 指定名称的 贮藏版本的代码更改 
 git stash branch [branchname] ：从暂存中创建分支
+【Git 命令 忽略本地文件更改】（类似于SVN中的ignore on commit。）
+git update-index --assume-unchanged [file-path] ：忽略本地文件更改
+git update-index --no-assume-unchanged [file-path] ：[取消]忽略本地文件更改
