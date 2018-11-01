@@ -1,0 +1,7 @@
+入门篇，原文地址：https://www.cnblogs.com/zxj159/p/4082987.html
+
+
+【参考资料】中文资料
+Castle 开发系列文章,原文地址：http://www.cnblogs.com/Terrylee/archive/2006/04/28/387503.html
+
+Castle实际应用 具体的用法，原文地址：http://terrylee.cnblogs.com/archive/2006/04/12/372823.html
