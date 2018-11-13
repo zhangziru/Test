@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中样式</title>
+    <script src="./lib/vue.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .thin {
+            font-family: italic;
+        }
+
+        .active {
+            letter-spacing: 0.5em;
+            font-size: 1.25em;
+        }
+    </style>
+</head>
+<div id="app">
+    <!-- <h1 class="red thin">今天是美好的一天！</h1> -->
+    <!-- 【第一种使用方式】直接传递一个数组，注意：这里的 class 需要使用 v-bind 做数据绑定 -->
+    <!-- 这种方式相比较，还是直接写方便 -->
+    <h1 :class="['red','thin']">今天是美好的一天！</h1>
+
+
+    <!-- 【第二种使用方式】在数组中 使用三元表达式 可以体现出为元素绑定class时的一点优势-->
+    <!-- 但是，这个代码量稍微有点多 -->
+    <h1 :class="['red','thin',flag?'active':'']">今天是美好的一天！</h1>
+    <!--【第三种使用方式,上述的变形】上边写三元表达式，显得代码臃肿，可以使用对象的形式。键为类名，当这个类的值为true的时候，表示被使用
+    对象来 -->
+    <h1 :class="['red','thin',{'active':flag}]">今天是美好的一天！</h1>
+    <!--【第四种使用方式】在为class 使用 v-bind 绑定 对象的时候，对象中的键是类名，可带引号，也可不带引号。对象的值是一个标识符（bool值） -->
+    <!--也可以把这个对象直接放到Vue的  data 里面-->
+    <h1 :class="{'active':true,'thin':true,'red':true}">今天是美好的一天！</h1>
+    <h1 :class="calssObj">今天是美好的一天！</h1>
+</div>
+
+<body>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: true,
+                calssObj:{'active':true,'thin':true,'red':true}
+            }
+        });
+    </script>
+</body>
+
+</html>

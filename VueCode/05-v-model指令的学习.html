@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model指令的学习</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h4>{{ msg }}</h4>
+        <input type="text" v-model="msg" style="width: 100%;" />
+    </div>
+    <script>
+    //创建 Vue 实例，得到ViewModel
+    //我们的这个vm是属于window的对象的。通过浏览器调试界面，通过window.vm就可以获取到该对象。
+    //所以，我们在data中的定义的字段，最后都会挂载到vm的对象里面。所以在vm对象的内部使用时，完全可以使用this.  使用data里面的数据
+    //表单元素  可以与我们的用户进行交互
+    //v-bind只能实现数据的单向绑定（M->V）,无法实现数据的双向绑定。
+    //v-model直接绑定的就是值，无需添加任何特殊的符号修饰。
+    //v-model指令，可以实现 表单元素和Model中的数据的双向绑定（V<=>M）
+    //【注意】v-model只能运用在表单元素中
+    //input(radio,text,address,email......) select checkbox textarea
+    //而像div，span则不是表单元素，充其量用个 v-bind:
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            msg:"欢迎来到‘百变则是新’，您的一天将会是美好的一天！"
+        },
+        methods:{
+            
+        }
+    });
+    </script>
+</body>
+</html>

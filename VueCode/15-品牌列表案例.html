@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <div class="panel pannel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>Id:
+                    <input type="text" class="form-control" v-model="id">
+                </label>
+                <label>Name:
+                    <input type="text" class="form-control" v-model="name">
+                </label>
+                <!-- 为元素指定绑定事件，在指定处理函数的时候，如果加了小括号，就可以给函数传参数了。 -->
+                <input type="button" class="btn btn-primary" value="添加" @click="add">
+            </div>
+        </div>
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.ctime }}</td>
+                    <td>
+                        <a href="">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        //2、创建一个Vue的实例
+        var vm = new Vue({
+            el: "#app",
+
+            data: {
+                list: [
+                    { id: 1, name: '奔驰', ctime: new Date() },
+                    { id: 2, name: '宝马', ctime: new Date() }
+                ]
+            },
+            methods: {
+                add() {
+                    console.log("ok");
+                    //分析：
+                    //1、获取到 id 和 name ，直接从 data 上面获取
+                    //2、组织出一个对象
+                    //3、把这个对象，调用 数组的  相关方法，添加到  当前data 上的 list 中
+                    //4、注意：在Vue中，已经实现了数据的双向绑定，每当我们修改了 data 中的数据，Vue会默认监听到数据的改动，自动把最新的数据，应用到页面上；
+                    //5、当我们意识到上面的第四点的时候，就证明了大家已经入门Vue了，我们更多的是在进行 VM中 Model数据的操作，同时，在操作Model数据的时候，指定的业务逻辑操作
+                    var car = { id: this.id, name: this.name, ctme: this.ctime }
+                    this.list.push(car);
+                    this.id = this.name = '';
+                }
+
+            }
+        });
+    </script>
+</body>
+
+</html>

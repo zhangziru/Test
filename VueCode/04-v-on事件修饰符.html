@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件访问修饰符</title>
+    <script src="./lib/vue.js"></script>
+    <style>
+        .inner {
+            height: 150px;
+            background-color: darkcyan;
+        }
+
+        .outer {
+
+            padding: 40px;
+            background-color: darkgrey;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!--冒泡案例 点击按钮，div中的事件也会触发【冒泡方向：从内到外】-->
+        <div class="inner" @click="divHandler">
+            <input type="button" value="戳他" @click="btnHandler">
+        </div>
+        <!--冒泡案例 stop【阻止冒泡，在事件后面加修饰符stop，通过 英文点"."符号】-->
+        <div class="inner" @click="divHandler">
+            <input type="button" value="戳他-阻止冒泡" @click.stop="btnHandler">
+        </div>
+
+
+        <!--默认行为案例，a标签 ，-->
+        <a href="http://baidu.com" @click="linkClick">有问题，先去百度</a>
+        <br/>
+        <!--默认行为案例，prevent【阻止默认行为】 -->
+        <a href="http://baidu.com" @click.prevent="linkClick">有问题，先去百度-阻止默认行为（跳转链接）</a>
+        <br/>
+
+
+        <!--捕获事件capture，【将冒泡事件的顺序反置（颠倒了一下），从外到内执行】-->
+        <div class="inner" @click.capture="divHandler">
+            <input type="button" value="戳他" @click="btnHandler">
+        </div>
+
+        <!--自身事件 self，只有通过操作自身元素触发 事件执行，如果是通过冒泡或者捕获方式触发，事件不执行-->
+        <div class="inner" @click.self="divHandler">
+            <input type="button" value="戳他" @click="btnHandler">
+        </div>
+
+        <!--一次性事件 once，只触发一次事件处理函数-->
+        <a href="http://baidu.com" @click.prevent.once="linkClick">有问题，先去百度-阻止默认行为（跳转链接）</a>
+
+        <!--self 和 stop 的联合使用;self只负责自己，只阻止自己的冒泡事件，不阻止其它元素的冒泡事件-->
+        <div class="outer" @click="outerHandler">
+            <div class="inner" @click.self="divHandler">
+                <input type="button" value="戳他" @click="btnHandler">
+            </div>
+        </div>
+
+    </div>
+    <script>
+        //创建 Vue实例，得到 ViewModel
+        var vm = new Vue({
+            el: "#app",
+            data: {},
+            methods: {
+                divHandler: function () {
+                    console.log("这是触发了 inner div 的点击事件");
+                },
+                btnHandler: function () {
+                    console.log("这是触发了 btn 的点击事件");
+                },
+                linkClick: function () {
+                    console.log("这是触发了 链接 的点击事件");
+                },
+                outerHandler:function(){
+                    console.log("这是触发了 outer div 的点击事件");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

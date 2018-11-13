@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的内联样式style</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<div id="app">
+    <!-- 【注意】如果对象的键里面包含”-“连字符，必须要用引号括起来，这是规定 -->
+    <!-- 【第一种方式】直接通过对象来添加样式 ,值如果是字符，必须添加引号，否则会被认为是变量-->
+    <h1 :style="{color:'red','font-weight':200}">今天是美好的一天！</h1>
+    <!-- 【第二种方式】将样式对象，定义到  data 中管理 -->
+    <h1 :style="h1style">今天是美好的一天！</h1>
+    <!--【第三种方式】可以使用数组，里面放多个对象 -->
+    <h1 :style="[h1style,h1style1]">今天是美好的一天！</h1>
+</div>
+
+<body>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                h1style: { color: 'red', 'font-weight': 200 },
+                h1style1: { 'font-style': 'italic' }
+            }
+        });
+    </script>
+</body>
+
+</html>

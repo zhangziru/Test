@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for循环中key属性的使用</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<div id="app">
+    <input type="button" value="toggle" @click="toggle">
+    <!--v-if的特点：每次都对重新删除或创建Dom元素 -->
+    <!--v-show的特点：每次不会重新删除或创建Dom元素，只是切换了元素的display的样式，none和block -->
+
+    <!--v-if有较高的切换性能消耗 -->
+    <!--v-show有较高的初始渲染效果 -->
+
+    <!-- 如果元素涉及到频繁的切换，最好不要使用v-if，而是推荐使用v-show -->
+    <!-- 如果元素可能永远也不会被显示出来的被用户看到，则推荐使用v-if -->
+    <h3 v-if="flag">这是v-if控制的元素</h3>
+    <h3 v-show="flag">这是v-show控制的元素</h3>
+</div>
+
+<body>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: true
+            },
+            methods: {
+                toggle() {
+                    this.flag = !this.flag;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
