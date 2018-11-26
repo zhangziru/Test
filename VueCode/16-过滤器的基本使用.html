@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <!-- 第一个数据调用后面的第一个过滤器，把得到的值再交给后面的过滤器。可以追加多个过滤器 -->
+        <p> {{ msg | msgFormat('疯狂') | msgAppend }} </p>
+    </div>
+
+    <script>
+        //定义一个  Vue 全局的过滤器，名字叫做   msgFormat
+        //第一个参数，已经规定死了，永远都是  过滤器 管道符前面 传递过来的数据
+        //第二位置以后的参数，为过滤器传递的参数，可以有多个。
+        Vue.filter('msgFormat', function (msg,arg) {
+            //字符串 replace 方法，第一个参数，除了可写一个  字符串之外，还可以定义一个正则
+            return msg.replace(/单纯/g, arg)
+        })
+        Vue.filter('msgAppend', function (msg) {            
+            return msg +'============';
+        })
+        //创建一个Vue的实例
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: '曾经，我也是一个单纯的少年，单纯的我，傻傻的问，谁是世界上最单纯的男人'
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
