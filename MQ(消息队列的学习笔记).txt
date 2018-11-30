@@ -1,0 +1,5 @@
+1、建立一个队列管理器
+2、连接队列管理器
+3、连接队列管理器之前必须要设置的3个“MQ环境变量”主要包括:连接的主机的IP地址HostName、通道名称Channel和端口Port，此外还要指定队列管理器名、队列的名称。
+4、HostName(主机的IP地址),Channel(通道名称),Port(端口),QueueManager(队列管理器名),QueueName(队列的名称)在配置文件App.config中指定
+思想来源，原文链接：https://blog.csdn.net/huang_dannier/article/details/4096432
