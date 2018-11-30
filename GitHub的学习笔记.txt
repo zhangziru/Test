@@ -174,3 +174,11 @@ git stash branch [branchname] ：从暂存中创建分支
 【Git 命令 忽略本地文件更改】（类似于SVN中的ignore on commit。）
 git update-index --assume-unchanged [file-path] ：忽略本地文件更改
 git update-index --no-assume-unchanged [file-path] ：[取消]忽略本地文件更改
+【Git 命令 撤销】
+git checkout[file]  ：恢复“暂存区”的指定文件到“工作区”
+git checkout[commit] [file]  ：恢复某个commit的指定文件（本地仓库未推送的文件）到“暂存区”和“工作区”
+git checkout .	:恢复"暂存区"的所有文件到"工作区"
+git reset --soft HEAD^  :恢复“本地仓库”的最新提交到“暂存区”
+git reset --mixed HEAD^  :恢复“本地仓库”的最新提交到“工作区”
+【Git 命令 查看未推送的记录】
+git cherry -v	:查看本地仓库未推送的记录
