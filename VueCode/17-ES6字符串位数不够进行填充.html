@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ES6字符串位数不够进行填充</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        日期填充 {{ date | dateFormat }}
+    </div>
+
+    <script>
+        //2、创建一个Vue的实例
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                date: new Date()               
+            },
+          filters: {//定义私有的过滤器
+                //如果私有过滤器和全局过滤器，名称一致，采用的是“就近原则”，采用私有过滤器。
+                //第一个参数，已经规定死了，永远都是  过滤器 管道符前面 传递过来的数据
+                //第二位置以后的参数，为过滤器传递的参数，可以有多个。
+                dateFormat: function (dateStr, pattern = '') {
+                    //根据给定的字符串，得到特定的时间
+                    var dt = new Date(dateStr);
+                    //yyyy-mm-dd
+                    var y = dt.getFullYear().toString().padStart(4,'0');//年
+                    var m = (dt.getMonth() + 1).toString().padStart(2,'0');//月
+                    var d = dt.getDate().toString().padStart(2,'0');//日
+                    //dt.getDay()//获得的是星期几
+                    /* return y + '-' + m + '-' + d; */
+
+                    if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+                        return `${y}-${m}-${d}~~~~~~~~~~~~~~~~~`;//Tab键上边的那个 点 符号【模板字符串】
+                    }
+                    else {
+                        var hh = dt.getHours().toString().padStart(2,'0');
+                        var mm = dt.getMinutes().toString().padStart(2,'0');
+                        var ss = dt.getSeconds().toString().padStart(2,'0');
+                        return `${y}-${m}-${d} ${hh}:${mm}:${ss}~~~~~~~~~~~~~~~`;//Tab键上边的那个 点 符号【模板字符串】
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

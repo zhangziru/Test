@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue自定义指令之指令参数传递（设置字体颜色）</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <span v-text="date" v-fontweight="700"></span>
+    </div>
+
+    <script>
+        //2、创建一个Vue的实例
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                date: new Date()
+            },
+            methods: {
+                ResponTest() {
+                    alert("Hello World!");
+                }
+            },
+            directives:{//自定义私有指令
+                'fontweight':{
+                    bind:function(el,binding){
+                        el.style.color = "red";
+                        el.style.fontWeight = binding.value;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

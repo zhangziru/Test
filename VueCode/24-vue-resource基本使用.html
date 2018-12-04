@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue指令函数的简写形式</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+    <!--注意：vue-source 依赖于 Vue，所以先后顺序要注意 -->
+    <!-- 这个插件，向Vue实例对象上挂载了一个属性$http -->
+    <!-- 通过this.$http.get、this.$http.post、this.$http.jsonp (this指代的是Vue实例)-->
+    <script src="./lib/vue-resource-v1.5.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <a href="https://github.com/pagekit/vue-resource/blob/develop/docs/http.md">vue-resource开发文档</a>
+        <br>
+        <a href="https://github.com/pagekit/vue-resource">vue-resource源码下载</a>
+        <br>
+        <input type="button" value="get请求" @click="getinfo">
+        <input type="button" value="post请求" @click="postinfo">
+        <input type="button" value="jsonp请求" @click="jsonpinfo">
+    </div>
+
+    <script>
+        //2、创建一个Vue的实例
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "ok"
+            },
+            methods: {
+                getinfo() {//发起get请求
+                    //当发起get请求之后，通过 .then 来设置成功的回调函数
+                    this.$http.get("http://vue.studyit.io/api/getlunbo").then(
+                        function (result) {
+                            //通过 result.body 拿到服务器返回的成功的数据
+                            console.log(result.body);
+                        },
+                        function (error) {
+                            console.log("Api失效");
+                            console.log(error.body);
+                        }
+                    );
+                },
+                postinfo() {//发起 post 请求（发送post，就要接收表单类型的数据，表单类型的提交格式：application/x-www-form-urlencoded）
+                    //手动发起的 Post 请求，默认没有表单格式，所以，有的服务器处理不了
+                    //通过 post 方法的第三个参数，设置 提交的内容类型 ，为 普通表单数据格式{emulateJson:true}
+                    this.$http.post("http://vue.studyit.io/api/post", {}, { emulateJSON: true }).then(
+                        function (result) {
+                            console.log(result.body);
+                        },
+                        function (error) {
+                            console.log("Api失效");
+                            console.log(error.body);
+                        });
+                },
+                jsonpinfo() {//发起JSONP 请求
+                    this.$http.jsonp("http://vue.studyit.io/api/jsonp").then(
+                        function (result) {
+                            console.log(result.body);
+                        },
+                        function (error) {
+                            console.log("Api失效");
+                            console.log(error.body);
+                        });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

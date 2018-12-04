@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>客户端JSONP页面</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function showinfo(data) {
+        console.log(data);
+    }
+</script>
+<script src="http://127.0.0.1:3000/getscript?callback=showinfo"></script>
+客户端定义一个方法，不是客户端调用，而是服务端返回一个具体方法调用。我们要拿到数据，服务端帮我们组织好，然后传递回来。
+<!-- 这个就是使用jsonp返回的脚本解析成js -->
+<!-- <script>
+    showinfo(data)
+</script> -->
+
+</html>

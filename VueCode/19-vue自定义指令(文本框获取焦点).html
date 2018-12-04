@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue自定义指令(文本框获取焦点)</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        文本框中按键回车，触发事件。
+        <br>
+        <input type="text" @keyup.enter="ResponTest">
+        <br>
+        <input type="text" v-focus>
+    </div>
+
+    <script>
+        Vue.directive("focus", {
+            bind: function (el) {//每当指令绑定到元素上的时候，会立即执行这个 bind 函数，只执行一次
+                //注意：在每个 函数中，第一个参数，永远是 el，表示 被绑定了指令的那个元素，这个 el 参数，是一个原生的JS对象
+                //在元素 刚绑定了指令的时候，还没有 插入到 DOM中去，这个时候，调用 focus 方法没有作用
+                //因为，一个元素，只有插入DOM之后，才能获取焦点。
+                //el.focus();
+            },
+            inserted: function (el) {//表示元素 插入到DOM中的时候，会执行 inserted 函数，只执行一次
+                el.focus();
+            },
+            updated: function () {//当VNode更新的时候，会执行 updated，可能会执行多次
+            }
+        });
+
+        //2、创建一个Vue的实例
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                date: new Date()
+            },
+            methods: {
+                ResponTest() {
+                    alert("Hello World!");
+                }
+
+            }
+        });
+    </script>
+</body>
+
+</html>

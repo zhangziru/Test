@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue自定义指令之指令参数传递（设置字体颜色）.html</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-color="'blue'">
+    </div>
+
+    <script>
+        //自定义一个 设置字体颜色的指令
+        Vue.directive("color", {
+            bind: function (el,binding) {
+                //样式，只要通过指令绑定给了元素，不管这个元素有没有被插入到页面中去，这个元素肯定有了一个内联样式
+                //【bind在内存中】将来元素肯定会显示到页面中，这个时候，浏览器的渲染引擎必然会解析样式，应用给这个元素
+                //样式相关在bind中设置，和JS相关的有关操作，最好在 inserted 中去执行，bind中放置 JS不生效。
+                //el.style.color = "red";
+                el.style.color = binding.value;
+                console.log(binding);
+            },
+            inserted: function (el) {//表示元素 插入到DOM中的时候，会执行 inserted 函数，只执行一次
+                //【页面渲染时执行】
+                //el.focus();
+            },
+            updated: function () {//当VNode更新的时候，会执行 updated，可能会执行多次
+            }
+        });
+
+        //2、创建一个Vue的实例
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                date: new Date()
+            },
+            methods: {
+                ResponTest() {
+                    alert("Hello World!");
+                }
+
+            }
+        });
+    </script>
+</body>
+
+</html>

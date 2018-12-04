@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>品牌列表-从数据库获取列表</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-resource-v1.5.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <!-- 为了让所有的东西能在一行显示，添加form-inline -->
+            <div class="panel-body form-inline">
+                <label>
+                    Name：
+                    <input type="text" v-model="name">
+                </label>
+
+                <button type="button" class="btn btn-primary" @click="add">添加</button>
+
+            </div>
+        </div>
+
+
+        <!-- table-striped 隔行变色 -->
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>CTime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.CTime }}</td>
+                    <td>
+                        <a href="" @click.prevent="del(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            Name: "",
+            list: [
+                { id: 1, name: "五菱宏光", CTime: new Date() },
+                { id: 2, name: "众泰", CTime: new Date() },
+            ]
+        },
+        methods: {
+            getAllList() {//获取所有的品牌列表
+                //分析：
+                //1、由于已经导入了 Vue-resource这个包，所以，可以直接通过 this.$http来发起数据请求
+                //2、根据接口API文档，知道，获取列表的时候，应该发起一个 get 请求
+                //3、thi.$http.get("url").then(function(result){});
+                //4、当通过  then 指定回调函数之后，在回调函数中，可以拿到数据服务器返回的 result
+                //5、通过返回的结果，判断请求的状态。成功了就把数据 赋值给 this.list;如果失败，可以弹框提醒，获取数据失败！
+                thi.$http.get("http://vue.studyit.io/api/getprodlist").then(function (result) {
+                    var result = result.body;
+                    if (result.status == 0) {
+                        //成功
+                        //this.list =result.message//取回数据库数据
+                    }
+                    else {
+                        //失败
+                        alert("添加失败");
+                    }
+                });
+            },
+            add() {//post请求
+                this.$http.post("http://vue.studyit.io/api/addproduct", { name: this.name }, { emulateJSON: true }).then(
+                    function (result) {
+                        if (result.body.status == 0) {
+                            //成功
+                            //添加完成后，只需要手动再调用一下 getAllList()就能刷新品牌列表
+                            this.getAllList();//Api有问题，请设置有效的Api
+                        }
+                        else {
+
+                        }
+                    },
+                    function (error) { }
+                )
+            },
+            del(id) {//get请求
+                this.$http.get("http://vue.studyit.io/api/delproduct/" + id).then(
+                    function (result) {
+                        if (result.body.status == 0) {
+                            //删除成功
+                            //远程删除，重新发送Ajax加载数据
+                            this.getAllList();//Api有问题，请设置有效的Api
+                        }
+                        else {
+                            alert("删除失败");
+                        }
+                    },
+                    function (error) {
+
+                    })
+            }
+        },
+        created: function () {//当vm 实例的 data 和 methods 初始化完毕后，vm实例会自动执行created 这个生命周期函数
+            this.getAllList();//在页面未挂载到浏览器的时候进行异步请求。异步请求越早越好。vm实例自动帮我调用（最早也只能在Created中）
+            //其实在mounted这个阶段也可以发异步请求，但是，这个时候页面已经挂载到了浏览器了。这时候再发，页面就会有一些假数据。
+        }
+    });
+</script>
+
+</html>

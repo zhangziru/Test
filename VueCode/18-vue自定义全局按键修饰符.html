@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue自定义全局按键修饰符</title>
+    <!--1、导入Vue的包-->
+    <script src="./lib/vue.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        文本框中按键回车，触发事件。<br>
+        <input type="text" @keyup.enter="ResponTest"><br>
+        文本框中按键F2，触发事件。<br>
+        <input type="text" @keyup.F2="ResponTest">
+    </div>
+
+    <script>
+        //自定义全局按键修饰符
+        Vue.config.keyCodes.F2 = 113;
+
+        //2、创建一个Vue的实例
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                date: new Date()
+            },
+            methods:{
+                ResponTest(){
+                    alert("Hello World!");
+                }
+
+            }
+        });
+    </script>
+</body>
+
+</html>
