@@ -1,9 +1,9 @@
 1、TransactionScope块中的代码，只要一个操作失败，它会自动回滚
 2、C#数据库事务对象，Commit表示事务完成。错误的理解：调用Commit（）方法是提交事务。事实上，它的作用的表示本事务完成，它一般放在try{}的结尾处
 参考链接（数据库事务，C#事务，WCF中的事务）：https://www.cnblogs.com/leslies2/archive/2012/01/05/2289106.html
-3、在“TransactionScope块”中，除非显示调用Complete()方法。否则，系统不会自动提交这个事务。如果在代码运行退出这个block后，还未调用Complete()，那么事务自动回滚了。
+3、在“TransactionScope块”中，事务的释放行为（OnDispose）为Rollback，除非显示调用Complete()方法。否则，系统不会自动提交这个事务。如果在代码运行退出这个block后，还未调用Complete()，那么事务自动回滚了。（如何不设置该行为或者设置为Commit,只要不手动调用Rollback,就不会回滚，默认执行完就会提交）
 参考链接（C#事务）：https://blog.csdn.net/wangxiaojia42121/article/details/53321625
-4、数据库中的事务，使用 Transaction 关键字
+4、数据库中的事务，使用 Transaction 关键字。这个比较简单，事务完成就用complete，回滚就用rollback
 参考链接：https://www.cnblogs.com/knowledgesea/p/3714417.html
 5、Castle中的事务与WCF中的事务思想有点相同。事务声明的时候，可以控制，事务在未显示调用Complete（）方法的时候，是进行操作回滚，还是进行操作的提交。
 6、事务完成以后，事务的提交都是由系统自动提交的。【不过，对于我们来说，事务完成了，就算事务提交了。】但是话说回来，事务完成一般都写在所有操作的最后面，如果将其写在操作的中间，后续还有操作，如果后续的操作报错，前面的所有操作还是会回滚掉的，因为操作并没有提交。
