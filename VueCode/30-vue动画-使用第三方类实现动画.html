@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画-修改vue动画v-前缀</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-resource-v1.5.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+    <!-- 引入第三方动画类库，就不用我们用v-enter动画了 -->
+    <link rel="stylesheet" href="./lib/animate-3.7.0.css">
+    <style>
+        /* 入场 bounceIn  离场 bounceOUt */
+        /* 【注意】使用上边的两个类样式，要加上一个基础的类：animated。才可以生效。见下面的代码 */
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 需求：点击按钮，让 h3 显示，再点击，让 h3 隐藏 -->
+        <button type="button" class="btn btn-large btn-block btn-default" @click="flag=!flag">toggle</button>
+        <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOUt" :duration="400">
+            <h3 v-if="flag">这是一个H3</h3>
+        </transition>
+        <!-- animated类可以写一次，不用重复写 -->
+        <!-- 使用 :duration = "毫秒值" 来统一设置 入场 和 离场 时候的动画时长 -->
+        <transition enter-active-class="bounceIn" leave-active-class="bounceOUt" :duration="800">
+            <h3 v-if="flag" class="animated">这是一个H3</h3>
+        </transition>
+       <!-- 使用 :duration="{enter:400,leave:800}" 来设置 入场 和 离场 的动画时间 -->
+        <transition enter-active-class="bounceIn" leave-active-class="bounceOUt" :duration="{enter:1500,leave:1500}">
+            <h3 v-if="flag" class="animated">这是一个H3</h3>
+        </transition>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            flag: false
+        }
+    });
+</script>
+
+</html>

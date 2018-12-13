@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-queiv="X-UA-Compatible" content="ie=edge">
+    <title>vue获取DOM元素和组件</title>
+    <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="获取元素" @click="getElement">
+        <h3 id="myh3" ref="myh3">哈哈，天气降温了！</h3>
+        <login ref="mylogin"></login>
+    </div>
+
+
+</body>
+<script>
+    var login = {
+        data: function () {
+            return {
+                msg: "子组件数据"
+            }
+        },
+        template: "<h1>登录组件</h1>",
+        methods: {
+            show() {
+                console.log("子组件方法！");
+            }
+        }
+    }
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            list: [
+                { id: Date.now(), user: '李白', content: '天生我才必有用' },
+                { id: Date.now(), user: '江小白', content: '劝君更尽一杯酒' },
+                { id: Date.now(), user: '小马', content: '风吹草地见牛羊' }
+            ]
+        },
+        methods: {
+            getElement() {
+                console.log(document.getElementById("myh3").innerText);//此方法Vue不推荐
+                //ref 标记要引用的 DOM 元素，在页面上标记完，从VM实例的 $refs 中获取标记的DOM元素。
+                console.log(this.$refs.myh3.innerText);
+                //对子组件的引用，可以调用子组件身上的数据和方法。
+                console.log(this.$refs.mylogin.msg);
+                this.$refs.mylogin.show();
+            }
+        },
+        components: {
+            login
+        }
+    });
+
+</script>
+
+</html>

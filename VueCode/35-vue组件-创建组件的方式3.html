@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件-创建组件的方式3</title>
+    <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 如果要使用组件，直接，把组件的名称，以 HTML 标签的形式，引入到页面中，即可 -->
+        <mycom2></mycom2>
+    </div>
+
+    <div id="app1">
+        <!-- 如果要使用组件，直接，把组件的名称，以 HTML 标签的形式，引入到页面中，即可 -->
+        <mycom2></mycom2>
+        <login></login>
+    </div>
+    <!-- 在 被控制的 #app 外面，使用 template 元素，定义组件的HTML模板结构 它不会自动显示在页面上-->
+    <template id="tmp1">
+        <div>
+            <h1>这是通过 template 元素，在外部定义的组件结构，这个方式，有代码的智能提示和高亮</h1>
+            <h2>好用，不错！</h2>
+        </div>
+    </template>
+    <template id="tmp2">
+        <div>
+            <h1>这是一个私有的 login 组件</h1>
+        </div>
+    </template>
+
+</body>
+<script>
+    Vue.component('mycom2', {
+        template: '#tmp1'//把template 抽离出来，放到页面的template元素中去，通过CSS选择器来获取
+    });
+    var vm1 = new Vue({
+        el: "#app",
+        data: {
+            id: "",
+        },
+        methods: {
+        }
+    });
+
+    var vm2 = new Vue({
+        el: "#app1",
+        data: {
+            id: "",
+        },
+        methods: {
+        },
+        filters: {},
+        directives: {},
+        components: {//定义 实例内部私有组件的，只能在 app1 中使用
+            login: {
+                //template: '<h1>这是一个私有的 login 组件</h1>'
+                template: '#tmp2'//上边写法的变形
+            }
+        },
+
+        beforeCreate() { },
+        created() { },
+        beforeMount() { },
+        mounted() { },
+        beforeUpdate() { },
+        updated() { },
+        beforeDestory() { },
+        destoryed() { }
+    });
+</script>
+
+</html>

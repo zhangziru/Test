@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画-修改vue动画v-前缀</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-resource-v1.5.js"></script>
+    <link href="./lib/bootstrap.css" rel="stylesheet" />
+    <style>
+        /*  自定义两组样式，来控制 transition区域内元素 实现动画 */
+
+        /* v-enter 【这是一个时间点】 是进入之前，元素的起始状态，此时还没有开始进入 */
+
+        /* v-leave-to 【这是一个时间点】 是动画离开之后，离开的终止状态，此时，元素动画 已经结束 */
+
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+            /*来个x轴位移（不是很懂）*/
+        }
+
+        /*.v-enter-to,.v-leave{opacity: 1;} */
+
+        /* v-enter-active 【入场动画的时间段】 */
+
+        /* v-leave-active 【离场动画的时间段】 */
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.4s ease;
+            /*第一个参数：过渡的属性，第二个参数：过渡时间，第三个参数：状态*/
+        }
+
+
+        .my-enter,
+        .my-leave-to {
+            opacity: 0;
+            transform: translateY(150px);
+            /*来个x轴位移（不是很懂）*/
+        }
+
+        /*.my-enter-to,.v-leave{opacity: 1;} */
+
+        /* my-enter-active 【入场动画的时间段】 */
+
+        /* my-leave-active 【离场动画的时间段】 */
+
+        .my-enter-active,
+        .my-leave-active {
+            transition: all 0.4s ease;
+            /*第一个参数：过渡的属性，第二个参数：过渡时间，第三个参数：状态*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 需求：点击按钮，让 h3 显示，再点击，让 h3 隐藏 -->
+        <!-- 1、使用 transition 元素，把 需要被动画控制的元素 包裹起来 -->
+        <!-- transition 元素，是vue 官方提供的 -->
+        <button type="button" class="btn btn-large btn-block btn-default" @click="flag=!flag">toggle</button>
+        <transition>
+            <h3 v-if="flag">这是一个H3</h3>
+        </transition>
+
+        <br>
+        <span>前缀的作用：区分不同组之间的动画</span>
+        <button type="button" class="btn btn-large btn-block btn-default" @click="flag2=!flag2">toggle2</button>
+        <transition name="my">
+            <h3 v-if="flag2">这是一个H3</h3>
+        </transition>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            flag: false,
+            flag2:false
+        }
+    });
+</script>
+
+</html>

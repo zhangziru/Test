@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-queiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件-组件之间的切换</title>
+    <script src="./lib/vue.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        .v-enter-active,
+        .v-leave.active {
+            transition: all 1s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <a href="" @click.prevent="comName='login'">登录</a>
+        <a href="" @click.prevent="comName='register'">注册</a>
+        <!-- 通过 mode 属性，设置组件切换时候的 模式 -->
+        <transition mode="out-in">
+            <component :is="comName"></component>
+        </transition>
+
+    </div>
+</body>
+<script>
+    //组件名称 是字符串
+    Vue.component('login', {
+        template: '<h3>登录组件</h3>',
+        data: function () {
+            return { count: 0 };
+        },
+        methods: {
+        }
+    });
+    Vue.component('register', {
+        template: '<h3>注册组件</h3>',
+        data: function () {
+            return { count: 0 };
+        },
+        methods: {
+        }
+    });
+    var vm1 = new Vue({
+        el: "#app",
+        data: {
+            comName: 'login',
+        },
+        methods: {
+        }
+    });
+
+</script>
+
+</html>

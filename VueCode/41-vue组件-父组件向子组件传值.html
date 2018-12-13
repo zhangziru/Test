@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-queiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件-父组件向子组件传值</title>
+    <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <a href="" @click.prevent="comName='login'">登录</a>
+        <a href="" @click.prevent="comName='register'">注册</a>
+        <!-- 父组件将方法传递给 子组件 -->
+        <com1 v-bind:parentmsg="msg" v-on:func="show"></com1>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "123~父组件中的数据",
+        },
+        methods: {
+            show(data) {
+                console.log("调用了父组件身上的 show 方法： ----" + data);
+                this.msg = data;//子组件，给父组件传值。
+            }
+        },
+        components: {
+            //结论：子组件中，默认无法访问到 父组件中的 data 上的数据 和 methods 中的方法
+            //需求：子组件 访问 父组件上的 数据。怎么做？父组件如何向子组件传值？
+            //方法：
+            //1、子组件 可以通过 属性绑定的形式（v-bind:）  来传递父组件中的 数据。
+            //2、子组件如何用？子组件通过props属性来进行进行引用一下，它的值为一个数组
+            //3、该数组中的值必须与父组件传递的属性一致，这样才能使用这个数据
+            com1: {
+                /* template: '<h1>这是一个子组件---{{msg}}</h1>', */
+                template: '<div><h1>这是一个子组件---{{ parentmsg }}</h1><button @click="myclick">点我</button></div>',
+                //注意：组件中的 所有 props 中的数据，都是通过 父组件传递给子组件的。
+                //props 中的数据，都是只读的，无法重新赋值。
+                props: ['parentmsg'],
+                //注意：子组件中的 data 数据，并不是通过 父组件传递过来的，而是子组件自身私有的。
+                //data 中的数据，都是可读可写的。
+                data: function () {
+                    return {
+                        content: '子组件内容'
+                    };
+                },
+                methods: {
+                    myclick() {
+                        this.$emit('func', this.content);
+                    },
+                }
+            }
+        }
+    });
+
+</script>
+
+</html>
