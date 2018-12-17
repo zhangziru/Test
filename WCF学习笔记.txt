@@ -1,175 +1,175 @@
-���ǻ��ϣ�����˭ 2018/07/23 19:21:57
-WCF�Ƕ�����Windowsƽ̨��ͨ�ż��������ϡ�
-���ǻ��ϣ�����˭ 2018/07/25 08:51:37
-WCF�������ڲ�ͬӦ�ü���л�ͨ�ŵ�һ����̿�ܡ�
-���ǻ��ϣ�����˭ 2018/07/25 08:53:22
-WCF��.NetFramework��ƫ����ͨ�ŵ���Ҫ��ɲ��֡�
-���ǻ��ϣ�����˭ 2018/07/25 19:23:53
-SOA(Service-Oriented-Architecture),Ӧ�ü�ͨ��
-���ǻ��ϣ�����˭ 2018/07/25 19:26:33
-WCF��һ��ͳһ����ͨ�ű�̿���ģ�͡�
-���ǻ��ϣ�����˭ 2018/07/26 08:38:58
-WCF�ǰ���SOA�ļܹ�ԭ����Ƶķֲ�ʽ������������������Ͽ�����Ա����ʵ�ָ���Service�ṩ���ͻ��������������á�WCF�ṩ�˸��ָ����Ļ����ṹ�����̶ȵ�Ϊ������Ա�ṩ�����Ժ�����ԣ�������Ч�ع���WebServiceӦ�á�
-���ǻ��ϣ�����˭ 2018/07/26 19:03:52
-���ĵ�Web�����׼(SOAP��WSDL)�𽥱��㷺�Ĳ��ɺ�Ӧ�á�
-���ǻ��ϣ�����˭ 2018/07/26 19:12:21
-.Net�·ֲ�ʽ�����ļ���:ASP.NET����Web������ǿ��.Net Remoting��MSMQ�ȣ���Щ�������Զ��������ģ�Ͳ���ϴ��޷���һ��ͳһ�ı��ģ�ͽ��зֲ�ʽӦ�ó���Ŀ�����
-���ǻ��ϣ�����˭ 2018/07/27 08:45:06
-.Net Framework 3.0�汾����WCF
-���ǻ��ϣ�����˭ 2018/07/27 08:52:45
-����е�һ������:����ڶ༼���������ԡ���������ɹ����ɹ��޷����ã�WCF�ĳ��ֿ���ʹ��ȫ�򿪷���Աʹ��һ�֡�
-���ǻ��ϣ�����˭ 2018/07/27 08:54:41
-WCF����չ�Ժ������
-���ǻ��ϣ�����˭ 2018/07/27 09:16:39
-������������֮���ͳ�ֿ��������Ŀ���չ�ԣ��Ҿ������Ƿǳ�ֵ������ѧϰ�ġ������汾�ݽ�����Ӧ���Ƕ�������ƽ�����չ�Ĺ��̣������ǲ��϶�������ƽ��з�����µĹ��̡�~�����
-���ǻ��ϣ�����˭ 2018/08/01 18:59:31
-WCF��������Ͷ��֮ǰ�����Ⱥú�ѧϰһ��SOA
-���ǻ��ϣ�����˭ 2018/08/01 19:01:51
-WCF�鼮�����Լ���Դ����:http://blog.csdn.net/bvbook
-���ǻ��ϣ�����˭ 2018/08/01 19:07:47
-.Net�·ֲ�ʽ�����ļ���:ASP.NET����(XML Web Service)��Web������ǿ(WSE)��.Net Remoting��MSMQ
-���ǻ��ϣ�����˭ 2018/08/02 08:38:23
-Web Services Enhancements 2.0 for Microsoft .NET (WSE)��һ����������Web����ġ�NET��⣬��֧�����µ�Web����Э�飬����WS-Security��WS-SecureConversation��WS-Trust��WS-Policy��WS-SecurityPolicy��WS-Addressing�� WS-Attachments��
-���ǻ��ϣ�����˭ 2018/08/02 08:40:31
-WSE��ʹ������Ա�簲ȫƽ̨����������ġ���ȫ��Web������֧�ֵĴ���ķ�ʽ��SOAP������Ϣ��������HTTP��
-���ǻ��ϣ�����˭ 2018/08/02 08:47:46
-������SOA�������Ƽ��㣬����Ҫ���һ�����ĵ����⣬�Ǿ���ͨ��(Communition),��WCF����ľ���ͨ�����⡣WCF�ġ�������λ�������֪
-���ǻ��ϣ�����˭ 2018/08/13 08:35:52
-�������(SO:Service Orientation)��������һ�����������������(OO:Object Orientation)���������CO(Component Orientation)һ�������ֵ���һ�ֶԹؼ���ֽ��˼�룬��������Ǻͼ����޹صġ�
-���ǻ��ϣ�����˭ 2018/08/13 08:40:42
-Web����(����ָ���ǹ����Web���񣬰���΢��ƽ̨�µ�ASP.NET Web�����WCF,Ҳ��������ƽ̨��Web����)��һ��ʵ��SOA������ļ����ֶΡ�
-���ǻ��ϣ�����˭ 2018/08/13 08:44:12
-Σ��˼��:����ܹ���������һ��web����������ɡ�
-���ǻ��ϣ�����˭ 2018/08/14 08:35:21
-SOAǿ�������:��������ϵͳ������ʽ��������Ĳ�ͬ��SOAͨ��"��Լ"ʵ�ֿͻ��˶Է���ĵ��á�˫��ֻ��Ҫ�����ܹ�ƥ�����Լ�����ܱ�֤�����Ľ�����������Լ�ķ��񽻻���ֻҪ��Լ�������ı䣬�������ı仯��������ʵ�֡�
-���ǻ��ϣ�����˭ 2018/08/15 19:06:56
-WCF�������ṩһ������̡���������¿�����ķ�����á�
-���ǻ��ϣ�����˭ 2018/08/15 19:11:33
-WCF�����ܹ����Ĵ��ڣ���Ҫ�����������ŵ�һ�������У����ǰѳ���WCF����Ľ��̳�Ϊ������Ϊ����ָ�������Ĺ��̳�Ϊ�������(Service Hosting)��
-���ǻ��ϣ�����˭ 2018/08/16 08:34:46
-�����ǵļ������Ӧ���У����������ַ�����޷�ʽ:1��ͨ�����Ҽ���(Self- Hosting)�ķ�ʽ����һ������̨Ӧ�ã���Ϊ��������������޽���ΪHosting.exe����2��ͨ��IIS���޷�ʽ�����������IIS��(���޽���ΪIIS�Ĺ�������W3wp.exe)���ͻ���ͨ����һ������̨Ӧ��ģ��(����ΪClient.exe)
-���ǻ��ϣ�����˭ 2018/08/16 19:23:11
-ͨ��Ӧ��ServiceContractAttribute���Խ��ӿڶ���ɷ�����Լ֮�󣬽ӿڵķ�����Ա�������Զ���Ϊ����Ĳ������ڴ˷��棬WCF���õ�����ʾѡ��Ĳ���:������Ҫ����Ӧ�Ĳ�������������ʾ��Ӧ��OperationContractAttribute���ԡ�
-���ǻ��ϣ�����˭ 2018/08/20 08:49:47
-������޵�Ŀ��:���ǿ���һ�����̣�ΪWCF�ṩһ�����еĻ�����ͨ��Ϊ��������һ�������ս�㣬ʹ֮��¶��Ǳ�ڵķ��������ߡ��������������ͨ����ƥ����ս��Ը÷�����е��á�[������ȫ����ͨ������ķ�ʽ������з�����޵Ĺ�����]
-���ǻ��ϣ�����˭ 2018/08/20 09:08:14
-�����Ĵ���:��WCF��pdf��38ҳ
-���ǻ��ϣ�����˭ 2018/08/21 08:34:23
-WCF�������ͨ��һ������Ķ������:ServiceHost��
-���ǻ��ϣ�����˭ 2018/08/21 08:58:48
-�������SOA��һ������������WCFӦ���пͻ��˺ͷ���˵�����������ڿͻ���ֻ��Ҫ�˽�WCF�������������������֪�������ʵ��ϸ�ڣ��Ϳ���ʵ�������ķ�����á�
-���ǻ��ϣ�����˭ 2018/08/21 09:29:16
-WCF���������ͨ��Ԫ���ݣ�Metadata������ʽ����������WCF��Ԫ���ݵķ���ͨ��һ������ķ�����ΪServiceMetaBehavior��ʵ�֡�
-���ǻ��ϣ�����˭ 2018/08/21 10:02:02
-ͨ��������ʵ�֣�����Ϊ������ServiceHost������ServiceMetaBehavior,�������˻���HTTP-GET��Ԫ���ݻ�ȡ��ʽ��Ԫ���ݵķ�����ַͨ��ServiceMetaBehavior��HttpGetUrlָ����
-���ǻ��ϣ�����˭ 2018/08/21 12:30:08
-��WCFʵ��Ӧ���С�һ�㲻��ͨ������ķ�ʽ�����ս������Ӻͷ�����Ϊ�Ķ��壬����ͨ�����õķ�ʽ���С������ս��Ͷ��������Ϊ�Ĵ��������һ�´�������:��WCF��������P39��
-���ǻ��ϣ�����˭ 2018/08/21 13:13:43
-WCF�����ã����ڳ�ѧ�ߣ�����ͨ�����ӻ�����������á������ͨ��VS���ߣ�Tools���˵���ͨ��ѡ��WCF Service Configuration Editor���������������һ�����ñ༭����
-���ǻ��ϣ�����˭ 2018/08/27 19:17:59
-�ͻ���ͨ���������������з���ĵ��ã��̳���ClientBase<T>�����Ͷ�����з�����á�ʵ���ϣ���������һ�ִ�����������ķ���������ͨ��ChannelFactory<T>��
-���ͻ��˺ͷ���˷ֿ������������������Լ����ͨ��ChannelFactory<ICalculator>���������������ֱ�ӽ�����Ӧ�ķ�����á�����:WCF��������P43
-���ǻ��ϣ�����˭ 2018/08/28 08:50:01
-�ڴ���ChannelFactory<T>��ʱ���ڹ��캯����ָ���ս������Ҫ�أ���Լͨ���������ͱ�ʾ����ַ�Ͱ���ͨ������ָ��������ABC�󶨡�
-���ǻ��ϣ�����˭ 2018/08/28 09:16:18
-��������WCF�У��󶼲������õķ�ʽ�����ս��Ķ��塣���ô����P44����Ϊ���õ��ս��ָ��һ������name�������ڳ����оͿ���ͨ������������ChannelFactory<T>,����ָ���ս�����Ҫ�ء������������ս�㣬�Լ����������ʹ�á�
-���ǻ��ϣ�����˭ 2018/08/30 19:54:59
-����IIS�ķ������Ҫ����Ӧ��WCF���������Ӧ��.svc�ļ���.svc�ļ�������IISվ���У���WCF����ĵ��������ڶ�.svc�ļ��ķ����ϡ�
-���ǻ��ϣ�����˭ 2018/08/30 20:01:35
-.svc�ļ������ݺܼ򵥣���������һ��ServiceHostָ�Directive��,��ָ�����һ�������Service���Ժ�һЩ��ѡ�����ԡ�������򵥵�.svc��������Service���ԣ�������ָ������Ӧ��WCF�������Ч���ͣ���ServiceHostָ�
-���ǻ��ϣ�����˭ 2018/08/30 20:04:38
-��򵥵�.svc�ļ�����:
+我是皇上，我怕谁 2018/07/23 19:21:57
+WCF是对现有Windows平台下通信技术的整合。
+我是皇上，我怕谁 2018/07/25 08:51:37
+WCF是用来在不同应用间进行互通信的一个编程框架。
+我是皇上，我怕谁 2018/07/25 08:53:22
+WCF是.NetFramework中偏重于通信的重要组成部分。
+我是皇上，我怕谁 2018/07/25 19:23:53
+SOA(Service-Oriented-Architecture),应用间通信
+我是皇上，我怕谁 2018/07/25 19:26:33
+WCF是一个统一化的通信编程开发模型。
+我是皇上，我怕谁 2018/07/26 08:38:58
+WCF是按照SOA的架构原则设计的分布式计算基础环境，在其上开发人员可以实现各种Service提供给客户端消费者来调用。WCF提供了各种各样的基础结构来最大程度地为开发人员提供方便性和灵活性，快速有效地构建WebService应用。
+我是皇上，我怕谁 2018/07/26 19:03:52
+核心的Web服务标准(SOAP和WSDL)逐渐被广泛的采纳和应用。
+我是皇上，我怕谁 2018/07/26 19:12:21
+.Net下分布式开发的技术:ASP.NET服务、Web服务增强、.Net Remoting、MSMQ等，这些技术各自独立，编程模型差异较大，无法用一种统一的编程模型进行分布式应用程序的开发。
+我是皇上，我怕谁 2018/07/27 08:45:06
+.Net Framework 3.0版本才有WCF
+我是皇上，我怕谁 2018/07/27 08:52:45
+编程中的一大问题:面对众多技术，“方言”往往会造成工作成果无法重用，WCF的出现可以使得全球开发人员使用一种。
+我是皇上，我怕谁 2018/07/27 08:54:41
+WCF的延展性和灵活性
+我是皇上，我怕谁 2018/07/27 09:16:39
+如何在软件设计之初就充分考虑软件的可扩展性，我觉得这是非常值得我们学习的。软件版本演进过程应该是对现有设计进行扩展的过程，而不是不断对现有设计进行否定与革新的过程。~蒋金楠
+我是皇上，我怕谁 2018/08/01 18:59:31
+WCF在你真正投入之前建议先好好学习一下SOA
+我是皇上，我怕谁 2018/08/01 19:01:51
+WCF书籍勘误以及资源下载:http://blog.csdn.net/bvbook
+我是皇上，我怕谁 2018/08/01 19:07:47
+.Net下分布式开发的技术:ASP.NET服务(XML Web Service)、Web服务增强(WSE)、.Net Remoting、MSMQ
+我是皇上，我怕谁 2018/08/02 08:38:23
+Web Services Enhancements 2.0 for Microsoft .NET (WSE)是一个用来建设Web服务的·NET类库，它支持最新的Web服务协议，包括WS-Security、WS-SecureConversation、WS-Trust、WS-Policy、WS-SecurityPolicy、WS-Addressing和 WS-Attachments。
+我是皇上，我怕谁 2018/08/02 08:40:31
+WSE可使开发人员跨安全平台建设可升级的、安全的Web服务。它支持的传输的方式用SOAP发送消息，而不是HTTP。
+我是皇上，我怕谁 2018/08/02 08:47:46
+不论是SOA，还是云计算，都需要解决一个核心的问题，那就是通信(Communition),而WCF解决的就是通信问题。WCF的“江湖地位”可想而知
+我是皇上，我怕谁 2018/08/13 08:35:52
+面向服务(SO:Service Orientation)代表的是一种设计理念，和面向对象(OO:Object Orientation)、面向组件CO(Component Orientation)一样，体现的是一种对关键点分解的思想，面向服务是和技术无关的。
+我是皇上，我怕谁 2018/08/13 08:40:42
+Web服务(这里指的是广义的Web服务，包括微软平台下的ASP.NET Web服务和WCF,也包含其它平台的Web服务)是一种实现SOA最理想的技术手段。
+我是皇上，我怕谁 2018/08/13 08:44:12
+危险思想:服务架构仅仅是由一堆web服务堆砌而成。
+我是皇上，我怕谁 2018/08/14 08:35:21
+SOA强调松耦合:基于类型系统交互方式面向组件的不同，SOA通过"契约"实现客户端对服务的调用。双方只需要采用能够匹配的契约，就能保证正常的交互。基于契约的服务交互，只要契约不发生改变，服务本身的变化可以自由实现。
+我是皇上，我怕谁 2018/08/15 19:06:56
+WCF本质上提供一个跨进程、跨机器以致跨网络的服务调用。
+我是皇上，我怕谁 2018/08/15 19:11:33
+WCF服务不能孤立的存在，须要寄宿于运行着的一个进程中，我们把承载WCF服务的进程称为宿主，为服务指定宿主的过程称为服务寄宿(Service Hosting)。
+我是皇上，我怕谁 2018/08/16 08:34:46
+在我们的计算服务应用中，采用了两种服务寄宿方式:1、通过自我寄宿(Self- Hosting)的方式创建一个控制台应用，作为服务的宿主（寄宿进程为Hosting.exe）；2、通过IIS寄宿方式将服务寄宿于IIS中(寄宿进程为IIS的工作进程W3wp.exe)。客户端通过另一个控制台应用模拟(进程为Client.exe)
+我是皇上，我怕谁 2018/08/16 19:23:11
+通过应用ServiceContractAttribute特性将接口定义成服务契约之后，接口的方法成员并不能自动成为服务的操作。在此方面，WCF采用的是显示选择的策略:我们须要在相应的操作方法上面显示地应用OperationContractAttribute特性。
+我是皇上，我怕谁 2018/08/20 08:49:47
+服务寄宿的目的:就是开启一个进程，为WCF提供一个运行的环境。通过为服务添加一个或多个终结点，使之暴露给潜在的服务消费者。服务消费者最后通过相匹配的终结点对该服务进行调用。[我们完全可以通过代码的方式完成所有服务寄宿的工作。]
+我是皇上，我怕谁 2018/08/20 09:08:14
+上述的代码:见WCF的pdf第38页
+我是皇上，我怕谁 2018/08/21 08:34:23
+WCF服务寄宿通过一个特殊的对象完成:ServiceHost。
+我是皇上，我怕谁 2018/08/21 08:58:48
+松耦合是SOA的一个基本特征，WCF应用中客户端和服务端的松耦合体现在客户端只需要了解WCF服务基本描述，而无须知道具体的实现细节，就可以实现正常的服务调用。
+我是皇上，我怕谁 2018/08/21 09:29:16
+WCF服务的描述通过元数据（Metadata）的形式发布出来。WCF中元数据的发布通过一个特殊的服务行为ServiceMetaBehavior来实现。
+我是皇上，我怕谁 2018/08/21 10:02:02
+通过代码来实现，我们为创建的ServiceHost添加了ServiceMetaBehavior,并才用了基于HTTP-GET的元数据获取方式，元数据的发布地址通过ServiceMetaBehavior的HttpGetUrl指定。
+我是皇上，我怕谁 2018/08/21 12:30:08
+【WCF实际应用中】一般不会通过编码的方式进行终结点的添加和服务行为的定义，而是通过配置的方式进行。添加终结点和定义服务行为的代码可以用一下代码配置:见WCF技术剖析P39。
+我是皇上，我怕谁 2018/08/21 13:13:43
+WCF的配置，对于初学者，可以通过可视化界面进行配置。你可以通过VS工具（Tools）菜单，通过选择“WCF Service Configuration Editor”子项，开启这样的一个配置编辑器。
+我是皇上，我怕谁 2018/08/27 19:17:59
+客户端通过服务代理对象进行服务的调用，继承自ClientBase<T>的类型对象进行服务调用。实际上，还有另外一种创建服务代理的方法，就是通过ChannelFactory<T>。
+将客户端和服务端分开，借助于这个服务契约，并通过ChannelFactory<ICalculator>创建服务代理对象，直接进行相应的服务调用。代码:WCF技术解析P43
+我是皇上，我怕谁 2018/08/28 08:50:01
+在创建ChannelFactory<T>的时候，在构造函数中指定终结点的相关要素（契约通过泛型类型表示，地址和绑定则通过参数指定）。【ABC绑定】
+我是皇上，我怕谁 2018/08/28 09:16:18
+在真正的WCF中，大都采用配置的方式进行终结点的定义。配置代码见P44，并为配置的终结点指定一个名称name。这样在程序中就可以通过名称来创建ChannelFactory<T>,无需指定终结点相关要素。【代码配置终结点，以及程序中如何使用】
+我是皇上，我怕谁 2018/08/30 19:54:59
+基于IIS的服务寄宿要求相应的WCF服务具有相应的.svc文件，.svc文件部署于IIS站点中，对WCF服务的调用体现在对.svc文件的访问上。
+我是皇上，我怕谁 2018/08/30 20:01:35
+.svc文件的内容很简单，仅仅包含一个ServiceHost指令（Directive）,该指令具有一个必须的Service属性和一些可选的属性。所以最简单的.svc仅仅包含Service属性（该属性指明了相应的WCF服务的有效类型）的ServiceHost指令。
+我是皇上，我怕谁 2018/08/30 20:04:38
+最简单的.svc文件如下:
 <%@ServiceHost Service= " Artech .WcfServices . Services .Calculatorservice"%> ;
-���ǻ��ϣ�����˭ 2018/08/30 20:31:32
-һ��WebӦ�ó��������е�ʱ��Ĭ�ϴ�λ�ڸ�Ŀ¼��BinĿ¼���س��򼯡�Ȼ�������ʱ��Ĭ������£������ĳ��򼯻��Զ����浽Bin/Debug/ReleaseĿ¼�¡�����ͨ��VS�޸���Ŀ���ԣ����������Ŀ¼���ó�Bin��
-���ǻ��ϣ�����˭ 2018/09/03 09:26:35
-������޽���������ͨ����Ԫ���ݵ���ʽ��������������Ӧ�Ŀͻ��˾Ϳ��Ի�ȡ��ЩԪ���ݣ������ͻ��˳�����з�������ѡ����ԣ������ӷ�����(AddService References)" ���ڵ�ַ���ϼ��롾����Ԫ���ݡ�������Դ��ַ: http://127.0.0.1:9999/clalatorserice/metadata����ָ��һ�������ռ䣬���OK��ť��VSΪ������һϵ�����ڷ�����õĴ�������á�
-���ǻ��ϣ�����˭ 2018/09/04 18:55:20
-�����з�����޳��������£����ӷ������á�
-���ǻ��ϣ�����˭ 2018/09/05 08:52:11
-WCF���ṩ�ߣ�service provider����������������ͨ��һ�������ս�㷢����Ǳ�ڵķ��������ߣ�service consumer����
-���ǻ��ϣ�����˭ 2018/09/05 08:53:31
-������������ͨ����֮ƥ����ս��Է���������ѡ�
-���ǻ��ϣ�����˭ 2018/09/05 08:56:53
-�ս����Ҫ��:
-1����ַ:��λһ�������λ�ã�
-2����:�ṩѰַ��Addressing���ĸ�����Ϣ��
-3����Լ:��ʶ�������ʵ���ݣ�
-���ǻ��ϣ�����˭ 2018/09/10 09:06:50
-Soap��Ϣ��һ����Ϣ���壨Body����������Ϣ��ͷ(Header)��ɡ�
-���ǻ��ϣ�����˭ 2018/09/10 19:28:21
-RESTful WCF����������ѭ�ϸ����Ϣ��ʽ�����������õ���XML��ʽ(POX:Plain Of XML)��Ϣ��
-���ǻ��ϣ�����˭ 2018/09/11 08:30:39
-��һ���ֲ�ʽӦ�û����У���ȫ(Security)����������Ҫ�ģ�ͬʱҲ������ʵ�ֵĹ��ܡ�
-���ǻ��ϣ�����˭ 2018/09/11 08:42:19
-����һ����ȫϵͳ(Security Infrastructure)��˵,���ݵ�ʶ������ݵ���֤(Identity Authentication)��������������ȫ��ܵĻ�����
-���ǻ��ϣ�����˭ 2018/09/11 08:44:55
-�ڶԷ�����е���֮ǰȷ���������ʵ����ͬ���Ǳز����ٵġ����ڡ�˫����֤���������ᡣ
-���ǻ��ϣ�����˭ 2018/09/12 08:56:57
-HTTPЭ����������ص�:
-1��HTTP�ṩ�򵥵�����/�ظ�(request/reply)��Ϣ���䷽ʽ��
-2��HTTP����״̬�ģ�ÿ��HTTP�������໥�����ģ�
-3��HTTP�������ӵģ�����HTTP�����ݴ����������ȴ����ӣ�
-���ǻ��ϣ�����˭ 2018/09/12 19:21:48
-HTTP��HTTPS��URI�ֱ�ʹ��http��https��Ϊ����Э��ǰ׺(scheme),����Ĭ��ʹ�õĶ˿ڷֱ�Ϊ80��443����������URI�ǵ�Ч��:
-�Ӷ˿ں�
+我是皇上，我怕谁 2018/08/30 20:31:32
+一个Web应用程序在运行的时候，默认从位于根目录下Bin目录加载程序集。然而编译的时候，默认情况下，编译后的程序集会自动保存到Bin/Debug/Release目录下。所以通过VS修改项目属性，将编译输出目录设置成Bin。
+我是皇上，我怕谁 2018/09/03 09:26:35
+服务寄宿将服务描述通过【元数据的形式】发布出来，相应的客户端就可以获取这些元数据，创建客户端程序进行服务的消费。所以，“添加服务用(AddService References)" ，在地址栏上键入【服务元数据】发布的源地址: http://127.0.0.1:9999/clalatorserice/metadata，并指定一个命名空间，点击OK按钮，VS为你生成一系列用于服务调用的代码和配置。
+我是皇上，我怕谁 2018/09/04 18:55:20
+在运行服务寄宿程序的情况下，添加服务引用。
+我是皇上，我怕谁 2018/09/05 08:52:11
+WCF的提供者（service provider）即宿主，将服务通过一个或多个终结点发布给潜在的服务消费者（service consumer）。
+我是皇上，我怕谁 2018/09/05 08:53:31
+服务消费者则通过与之匹配的终结点对服务进行消费。
+我是皇上，我怕谁 2018/09/05 08:56:53
+终结点三要素:
+1、地址:定位一个服务的位置；
+2、绑定:提供寻址（Addressing）的辅助信息；
+3、契约:标识服务的真实身份；
+我是皇上，我怕谁 2018/09/10 09:06:50
+Soap消息由一个消息主体（Body）和若干消息报头(Header)组成。
+我是皇上，我怕谁 2018/09/10 19:28:21
+RESTful WCF服务无须遵循严格的消息格式，所以它采用单纯XML格式(POX:Plain Of XML)消息。
+我是皇上，我怕谁 2018/09/11 08:30:39
+在一个分布式应用环境中，安全(Security)往往是最重要的，同时也是最难实现的功能。
+我是皇上，我怕谁 2018/09/11 08:42:19
+对于一个安全系统(Security Infrastructure)来说,身份的识别或身份的验证(Identity Authentication)往往又是整个安全框架的基础。
+我是皇上，我怕谁 2018/09/11 08:44:55
+在对服务进行调用之前确定服务的真实身份同样是必不可少的。关于“双向验证”后续再提。
+我是皇上，我怕谁 2018/09/12 08:56:57
+HTTP协议具有如下特点:
+1、HTTP提供简单的请求/回复(request/reply)消息传输方式；
+2、HTTP是无状态的，每次HTTP请求都是相互独立的；
+3、HTTP是无连接的，基于HTTP的数据传输无须事先打开连接；
+我是皇上，我怕谁 2018/09/12 19:21:48
+HTTP和HTTPS的URI分别使用http和https作为传输协议前缀(scheme),它们默认使用的端口分别为80和443，下面两组URI是等效的:
+加端口号
 http://artch.com:80/index.html
 https://artch.com:443/index.html
-��
-���Ӷ˿ں�
+与
+不加端口号
 http://artch.com/index.html
 https://artch.com/index.html
 
-��Ч
-���ǻ��ϣ�����˭ 2018/09/13 19:03:42
-IPC(Inter Process Communication),ͬһ̨�����ϲ�ͬ����֮���ͨ�ţ�WCF��ר�ŵ�ʵ�ַ�ʽ:�����ܵ�(Named Pipes)��
-���ǻ��ϣ�����˭ 2018/09/13 19:15:41
-��Ȼ�����ܵ���������ʵ�ֿ������ͨ�ţ�����WCFȴ�������ܵ�ר������ͬһ̨�����Ŀ����ͨ�ţ����Ի���IPC��URI���������ƻ�������IP��ַ����ֻ���Ǳ����Ļ�����������localhost��127.0.0.1
-���ǻ��ϣ�����˭ 2018/09/15 13:20:13
-����IPC��URI,������net.pipeǰ׺���ڻ���ͬһ̨�����Ĳ�ͬ���̼�ͨ���У��˿�û���κ����塣eg:
+等效
+我是皇上，我怕谁 2018/09/13 19:03:42
+IPC(Inter Process Communication),同一台机器上不同进程之间的通信，WCF有专门的实现方式:命名管道(Named Pipes)。
+我是皇上，我怕谁 2018/09/13 19:15:41
+虽然命名管道本身可以实现跨机器的通信，但是WCF却将命名管道专门用于同一台机器的跨进程通信，所以基于IPC的URI的主机名称或域名或IP地址部分只能是本机的机器名或者是localhost或127.0.0.1
+我是皇上，我怕谁 2018/09/15 13:20:13
+基于IPC的URI,都具有net.pipe前缀。在基于同一台机器的不同进程间通信中，端口没有任何意义。eg:
 net.pipe://127.0.0.1/myservices/Calculator
-���ǻ��ϣ�����˭ 2018/09/17 19:41:35
+我是皇上，我怕谁 2018/09/17 19:41:35
 Net.Msmq URI
-      ��Ϣ����(Messge Quecuing,Ҳ��MSMQ),��΢������Ϣ��������Ŀ����Գ��ԡ�������Ϣ���в����������ͨ�Ż��ƣ����ڸ��ƺ����ϵͳ�Ŀ���չ�ԣ�Scalability���͸߿�����(High Availability��������Ҫ�����塣��Ϣ���а��տɷ����Կɷ�Ϊ�������͵Ķ��С�
-      1��������Ϣ����:������Ϣ���з����ڻĿ¼(AD: Active Directory) �б��У��������Ƶ�Windows��(Domain)����Ϊ�����ڲ�֪���������ڻ������Ƶ�����¶Թ������н��м�����������������д�һ̨������Ƶ���һ̨�ϣ�������Կͻ���Ӧ�����Ӱ�졣
-      2��˽����Ϣ����:˽����Ϣ����һ����û��AD�Ĺ�����(Workgroup) ������ʹ�ã����ǲ�֧��������֤��������Ҫ�������ڵļ�������Ʒ��ܶ�λ��
-      WCF�£�������Ϣ���е�URI,����net.msmqǰ׺��net.msmq��ַ����Ҫָ�����е�����(���ж���: public ˽�ж���: private)�� ����Ĭ��Ϊ���ж��С����Զ��ڹ��ж��У��������Ͳ��ֿ���ʡ�ԡ�
-    net.msmq://artech.com/myservice(���ж���) 
-net.msmq://artech.com/private/myservices (˽�ж�)
-���ǻ��ϣ�����˭ 2018/09/20 08:38:13
-WCF�������Ҽ�����IIS���޲�ͬ��IIS���޵ķ�ʽ����ҪΪ���񴴽�һ��.svc�ļ�������������ͨ������.svc�ļ����з���ĵ��ã����Ը�.svc�ļ����Ƿ���ĵ�ַ������������ͨ������ָ���ս��ĵ�ַ��
-���ǻ��ϣ�����˭ 2018/09/20 08:50:17
-WCF�л���ַ����Ե�ַ:����һ��������˵������ָ��һ����������ַ�����Ƕ���һ�ִ���Э�����ͣ�Scheme��,ֻ�ܾ���һ��Ψһ�ĵ�ַ��
-���ǻ��ϣ�����˭ 2018/09/21 09:16:56
-WCF�ս�������ָ��������Ե�ַ����ôWCFϵͳ�ͻ���ݡ��󶨡����õĴ���Э�飬Ȼ���ڻ���ַ�б���Ѱ����֮ƥ��Ļ���ַ����Ե�ַ�ͻ���ַ���ȷ���ս��ľ��Ե�ַ��
-���ǻ��ϣ�����˭ 2018/09/21 09:31:55
-���ڻ���ַ����Ե�ַƥ��Ĺ�ϵ�Ǹ��ݰ󶨶�����õĴ���Э��ȷ���ģ����Զ���һ��ȷ���Ĵ���Э�飬���ֻ����һ������ַ��
-���ǻ��ϣ�����˭ 2018/09/21 09:52:30
-WCF����ע��:
-��������˴���������ļ��ķ�ʽ�����߶�����Ч�����Ա���ȷ���������õ����ݲ����໥��ͻ�������ظ��ˣ��ᱨ��ArgumentException���쳣��
-���ǻ��ϣ�����˭ 2018/09/26 08:45:30
-���ڻ���ͬһ������������ս������������һ��ֻʵ��Ψһһ����Լ�����������ս�㹲����ͬ�ķ�����Լ��
-���ǻ��ϣ�����˭ 2018/09/27 08:44:39
-WCF���ս��İ󶨶������ĸ����������ṩ����ͨ�ŵ�ʵ�֣�WCFϵͳͨ���󶨶��󹹽�һ���ŵ�ջ(Channel Stack),������һ��ͨ�ŵ�������
-���ǻ��ϣ�����˭ 2018/09/27 09:22:50
-�����������壬ͬһ������ָ�������ս��(����ʵ�ֲ�ͬ����Լ����Լ��ͬ�������ս��)��ͨ������ָ���������ս��ʹ�õ���ͬһ���ŵ�ջ��
-���ǻ��ϣ�����˭ 2018/09/27 19:21:19
-WCF�ڿͻ��ˣ������ֳ����ķ�����÷�ʽ:
-��һ�ַ�ʽ��ͨ������������(����SvcUtil.exe)�����ӷ������õ���Ԫ�������ɷ���������͡�
-��һ�ַ�ʽ������ͨ��ChannelFactory<T>��DuplexChannelFactory<T>ֱ�Ӵ��������������
-���ǻ��ϣ�����˭ 2018/10/08 09:27:34
-WCF������ս������������ͨ�����÷�ʽ�ṩ���Ϳ���ͨ���ս���������ƴ����̳���ClientBase<TChannel>�ķ�������Ŀͻ�����Ķ���������ڷ�����ս������������Ψһ�ģ����û����Բ���ָ���κβ����������P63��
-���ǻ��ϣ�����˭ 2018/10/11 08:44:30
-WCF��һ��������Ϣ��ͨ�ſ�ܣ�����һ����Ϣ�����ܵ�����Ϣ�����ùܵ���ͬ��λ�ã�Ҫ����Ϣ������Ӧ�Ĵ�������Ȼ����REST/POX��WebServeiceԽ��Խ���У����ǻ���SOAP��WebService����������
-���ǻ��ϣ�����˭ 2018/10/11 08:54:31
-SOAP�Ѿ���Ϊ��WebService��ʵ�ϵı�׼��SOAPͬʱҲ������WS-*��ϵ�ṹ�Ļ�����
-���ǻ��ϣ�����˭ 2018/10/11 21:44:59
-SOAP���ĵ�λ�������ڿ���չ��SOAP��Ϣ�ṹ:SOAP��ͷ+��Ϣ���塣���ǿ��԰Ѹ��ָ����Ŀ�����Ϣ����SOAP��װ(Envelope)�ı�ͷ�����У�����WS-*Э�飨����WS-Addressing��WS-Reliable Messaging��WS-Security�ȣ�ͨ��������Ե�SOAP��ͷ����ʵ��
-���ǻ��ϣ�����˭ 2018/10/13 08:49:42
-���͵�Ѱַ��صı�ͷ����:<wsa: To>��<wsa: Via>��<wsa: ReplyTo>�ȡ�
-���ǻ��ϣ�����˭ 2018/10/13 09:14:50
-·��:���ǵ���������MVC���󣬽���������Ӧ�Ĵ�����������������������е�·�ɣ���������������ָ�����豸��
-���ǻ��ϣ�����˭ 2018/10/18 08:33:55
+      消息队列(Messge Quecuing,也称MSMQ),是微软对消息服务领域的开创性尝试。由于消息队列采用了特殊的通信机制，对于改善和提高系统的可扩展性（Scalability）和高可用性(High Availability）具有重要的意义。消息队列按照可访问性可分为两种类型的队列。
+      1、公共消息队列:公共消息队列发布于活动目录(AD: Active Directory) 列表中，井被复制到Windows域(Domain)。因为可以在不知道队列所在机器名称的情况下对公共队列进行检索，因而将公共队列从一台计算机移到另一台上，并不会对客户端应用造成影响。
+      2、私有消息队列:私有消息队列一般在没有AD的工作组(Workgroup) 环境中使用，它们不支持身份验证，并且需要队列所在的计算机名称方能定位。
+      WCF下，基于消息队列的URI,具有net.msmq前缀。net.msmq地址中须要指明队列的类型(公有队列: public 私有队列: private)。 由于默认为公有队列。所以对于公有队列，队列类型部分可以省略。
+    net.msmq://artech.com/myservice(公有队列) 
+net.msmq://artech.com/private/myservices (私有队)
+我是皇上，我怕谁 2018/09/20 08:38:13
+WCF服务自我寄宿与IIS寄宿不同，IIS寄宿的方式必须要为服务创建一个.svc文件。服务消费者通过访问.svc文件进行服务的调用，所以该.svc文件就是服务的地址，所以无需再通过配置指定终结点的地址。
+我是皇上，我怕谁 2018/09/20 08:50:17
+WCF中基地址和相对地址:对于一个服务来说，可以指定一个或多个基地址，但是对于一种传输协议类型（Scheme）,只能具有一个唯一的地址。
+我是皇上，我怕谁 2018/09/21 09:16:56
+WCF终结点中如果指定的是相对地址，那么WCF系统就会根据“绑定”采用的传输协议，然后在基地址列表中寻找与之匹配的基地址，相对地址和基地址结合确定终结点的绝对地址。
+我是皇上，我怕谁 2018/09/21 09:31:55
+由于基地址和相对地址匹配的关系是根据绑定对象采用的传输协议确定的，所以对于一个确定的传输协议，最多只能有一个基地址。
+我是皇上，我怕谁 2018/09/21 09:52:30
+WCF配置注意:
+如果采用了代码和配置文件的方式，两者都会生效，所以必须确保两者设置的内容不能相互冲突。配置重复了，会报“ArgumentException”异常。
+我是皇上，我怕谁 2018/09/26 08:45:30
+对于基于同一个服务的若干终结点来讲，服务一般只实现唯一一个契约，所以所有终结点共享相同的服务契约。
+我是皇上，我怕谁 2018/09/27 08:44:39
+WCF中终结点的绑定对象，它的根本功能是提供基于通信的实现，WCF系统通过绑定对象构建一个信道栈(Channel Stack),创建了一座通信的桥梁。
+我是皇上，我怕谁 2018/09/27 09:22:50
+从上述的意义，同一服务下指定两个终结点(服务实现不同的契约，契约不同的两个终结点)，通过配置指定的两个终结点使用的是同一个信道栈。
+我是皇上，我怕谁 2018/09/27 19:21:19
+WCF在客户端，有两种常见的服务调用方式:
+第一种方式，通过代码生成器(比如SvcUtil.exe)或添加服务引用导入元数据生成服务代理类型。
+另一种方式，则是通过ChannelFactory<T>或DuplexChannelFactory<T>直接创建服务代理对象。
+我是皇上，我怕谁 2018/10/08 09:27:34
+WCF中如果终结点的所有配置项都通过配置方式提供，就可以通过终结点配置名称创建继承于ClientBase<TChannel>的服务代理的客户端类的对象。如果基于服务的终结点在配置中是唯一的，设置还可以不用指定任何参数。详情见P63。
+我是皇上，我怕谁 2018/10/11 08:44:30
+WCF是一个基于消息的通信框架，具有一个消息处理管道。消息流到该管道不同的位置，要对消息进行相应的处理。虽然基于REST/POX的WebServeice越来越流行，但是基于SOAP的WebService还是主流。
+我是皇上，我怕谁 2018/10/11 08:54:31
+SOAP已经成为了WebService事实上的标准，SOAP同时也是整个WS-*体系结构的基础。
+我是皇上，我怕谁 2018/10/11 21:44:59
+SOAP如今的地位，得益于可扩展的SOAP消息结构:SOAP报头+消息主体。我们可以把各种各样的控制信息置于SOAP封装(Envelope)的报头集合中，各种WS-*协议（比如WS-Addressing、WS-Reliable Messaging、WS-Security等）通过定义各自的SOAP报头得以实现
+我是皇上，我怕谁 2018/10/13 08:49:42
+典型的寻址相关的报头包含:<wsa: To>、<wsa: Via>、<wsa: ReplyTo>等。
+我是皇上，我怕谁 2018/10/13 09:14:50
+路由:就是导航。对于MVC请求，将导航到对应的处理程序反馈结果；对于网络中的路由，将数据引导流入指定的设备。
+我是皇上，我怕谁 2018/10/18 08:33:55
 using (ServiceHost servicehost = new ServiceHost (typeof(ICalculacorService)))
 {
       string headervalue = "Licenaed User";
@@ -181,8 +181,131 @@ using (ServiceHost servicehost = new ServiceHost (typeof(ICalculacorService)))
   ServiceEndpoint serviceEndpoint = new ServiceEndpoint(Contract.Description.GetContract(typeof(ICalculator)),new BasicHttpBinding() , endpointAddress);
       ServiceHost.Description.Endpoints.Add(serviceEndpoint);
 serviceHost.Open();
-//��������
+//其它代码
 }
 
-���ǻ��ϣ�����˭ 2018/10/18 08:37:22
-���ϴ���:ͨ������ķ�ʽΪ����ָ��AddressHeader
+我是皇上，我怕谁 2018/10/18 08:37:22
+以上代码:通过代码的方式为服务指定AddressHeader
+
+我是皇上，我怕谁 2018/10/22 08:54:42
+WCF由于在服务端我们为服务的终结点指定了AddressHeader,就意味着该终结点只接受消息报头和与此AddressHeader相匹配的消息请求。
+我是皇上，我怕谁 2018/10/23 08:53:46
+【异常】WCF将客户端AddressHeader的值改成与服务端的AddressHeader不一样，就会报错(EndPointNotFoundException)异常。
+我是皇上，我怕谁 2018/10/23 08:56:36
+消息筛选(MessageFilter):解决的问题是如何通过接收的消息选择相应的终结点的问题。
+我是皇上，我怕谁 2018/10/23 09:07:29
+地址筛选(AddressFilter):是消息筛选(MessageFilter)的一种类型。WCF默认采用完全地址匹配的模式，即:地址的URI和AddressHeader均完全匹配。
+我是皇上，我怕谁 2018/10/23 19:11:13
+为了让服务端的终结点在AddressHeader和消息的报头不匹配的情况下也能处理消息请求，我们可以通过ServiceBehaviorAttribute改变筛选模式(AddressFilterMode),通过ServiceBehaviorAttribute属性将AddressFilterMode设置为AddressFilterMode.Any,从而避免了异常的抛出。
+我是皇上，我怕谁 2018/10/25 09:01:05
+Tcp/Ip的基础知识:
+1、在基于TCP/IP的对等网络通信下，相互通信的“应用程序”运行于各自的“应用进程”中，处于“应用层的进程”将数据封装成数据报，并通过“传输层的TCP或UDP”进行网络通信。【TCP和UDP则通过一个16bit(位)的端口】来识别不同的应用程序。
+2、对于一些【常用网络服务】，它们都有一个知名的端口号与之匹配。比如，“FTP服务”用的TCP端口为21；Telnet服务的TCP端口为23等。而“客户端”通常对所使用的端口并不关心，只须要保证端口在本机是唯一的就可以了，这样的端口又成为临时端口，【临时端口】一般在1024～5000之间。
+3、一般来讲，在某个时刻，一个端口号只能供应一个应用程序使用。
+我是皇上，我怕谁 2018/10/25 09:15:40
+WCF,两个不同的应用程序对两个服务Service1和Service2进行寄宿，两个服务的终结点地址共享相同的端口号9999。同时运行【抛出AdressAlreadyInUseException异常】，提示端口号9999已经用于网络侦听。
+
+然而，接下来要解决的是让【不同的应用程序】能够“共享一个端口”。
+我是皇上，我怕谁 2018/10/26 08:44:15
+网络安全基础知识:
+在一般的网络环境中，为了尽可能避免网络攻击，都会通过“防火墙”将绝大部分的端口号进行屏蔽，仅仅【保留那些常用的网络服务所用的端口】，或者【仅为某一类应用保留少量的端口】。
+总而言之，我们【不能保证每个跨防火墙通信的应用都具有一个唯一的端口】，他们只能共享一个或少量的几个端口。
+我是皇上，我怕谁 2018/10/29 08:50:43
+计算机中，端口共享的意义:
+在Intranet内部，为了保证部署于局域网内的其它计算机的网络应用能够与本机进行正常通信，通常会在本机的防火墙中预留少数几个可用的端口。Intranet内部的主机之间可以使用这些预留的端口通过相应的传输协议，比如TCP、HTTP、Named Pipe等，进行通信。而对于处于Internet和本地网络之间的防火墙，通常只保留80和443端口，保证基于HTTP和HTTPS的网络通信能够正常进行。所以，无论是基于Intranet（内网）还是Internet（互联网），无论采用何种传输协议，端口共享都具有重要的现实意义。
+我是皇上，我怕谁 2018/11/02 09:02:11
+WCF,将某个服务寄宿于一个进程中，实际上就是通过该进程监听和处理来自客户端的Socket请求。
+我是皇上，我怕谁 2018/11/05 08:59:03
+在一般情况下，一个端口被一个监听进程独占使用，也就是说，如果主机上部署了若干服务，而这些服务寄宿于不同的应用程序中，对于这种寄宿应用程序来说，监听的端口必须不同。（没有部署端口共享的情况下）
+我是皇上，我怕谁 2018/11/06 08:51:00
+通过采用特殊途径，实现基于WCF寄宿的端口共享。采用不同的传输协议，有不同的解决方案。对于【HTTP协议】，可以通过IIS的寄宿方式实现端口的共享；对于【TCP协议】，.NET Framework 3.0提供了一个特殊的Windows服务:Net.TCP Port Sharing Service，帮助我们轻松地实现【端口共享】
+我是皇上，我怕谁 2018/11/07 09:03:23
+【HTTP协议】包含:http协议和https协议
+基于HTTP的 80端口 共享
+基于HTTPS的 443端口 共享
+1、部署于同一主机上的所有Web应用能够共享相同的监听端口。
+2、IIS是所有Web应用的宿主。【关键点】
+3、我们可以借助于IIS的相应的机制实现基于HTTP|HTTPS的端口共享。（怎么做？）
+我是皇上，我怕谁 2018/11/07 09:19:32
+IIS的V5以及之前版本，都是通过进程InetInfo.exe绑定到80|443端口进行HTTP请求的侦听。
+6.0以后版本，IIS通过引入HTTP.SYS采用了一种全新的监听机制。严格来说不属于IIS范畴，它是一个用于侦听网络请求的网络驱动。
+我是皇上，我怕谁 2018/11/08 19:26:30
+【TCP协议】IIS只能接受“HTTP”协议的服务。为了实现基于TCP的端口共享，在.NET Framework 3.0中，提供了一个特殊的Windows服务:Net.TCP端口共享服务（Net.TCP Port Sharing Service），WCF基于。
+所以，安装有.NET Framework 3.0的操作系统都具有该Windows服务，但是在默认的情况下，该服务是不可用的。当你第一次使用Net.TCP Port Sharing Service,或者发现该服务被禁用时，须要手工启用该服务。
+注:通过“开始”->“控制面板”->“管理工具”->“服务”，自己对应名字定位。
+我是皇上，我怕谁 2018/11/08 19:31:40
+【Net.TCP端口共享服务】从功能上讲，Net.TCP端口共享服务实现了和HTTP.SYS相同的功能:请求的监听和分发。唯一不同是，HTTP.SYS运行在内核模式（Kemel Mode）下，而Net.TCP Port Sharing Service运行在用户模式（User Mode）下。
+我是皇上，我怕谁 2018/11/08 19:41:23
+在基于TCP的WCF通信中，NetTcpBinding实现了通信的所有细节，这些细节也包括端口的共享。
+在NetTcpBinding中，定义了一个特殊的属性，PortSharingEnabled,表明是否启动端口共享机制。如果要启动端口共享，须要通过如下编程或配置的方式将NetTcpBinding的PortSharingEnabled属性设置为true，代码如下所示:
+我是皇上，我怕谁 2018/11/09 08:56:00
+代码设置如下:
+using(ServiceHost serviceHost = new ServiceHost(typeof(Service1)))
+{
+NetTcpBinding binding = new NetTcpBinding();
+binding.PortSharingEnabled = true;
+serviceHost.AddServiceEndpoint(typeof(IService1),binding,"net.tcp://127.0.01:9999/service1");
+serviceHost.Open();
+Console.Read();
+}
+我是皇上，我怕谁 2018/11/09 09:12:43
+配置文件，配置如下:
+<configuration>
+<system.serviceModel>
+<bindings>
+<netTcpBinding>
+<binding name="portSharingBinding" portSharingEnabled="true"/>
+</netTcpBinding>
+</bindings>
+<services>
+<service name="Artech.WcfServices.Services.CalculatorService">
+<endpoint binding="netTcpBinding" contract="Artech.WcfServices.Contracts.ICalculator" />
+</service>
+</services>
+</system.serviceModel>
+</configuration>
+我是皇上，我怕谁 2018/11/21 08:50:41
+路由的实现，本质上就是实现逻辑地址和物理地址的分离。
+我是皇上，我怕谁 2018/11/26 08:25:19
+对于客户端/服务器端模型，将对外提供某种功能实现的称为服务端(Service),将功能的使用者称之为客户端(Client)。
+我是皇上，我怕谁 2018/11/26 08:34:19
+SOA的原理，面向服务和面向对象一样，仅仅是一种关注点(concern)分解的方式。面向服务就是将关注点分解成一个个自治的、独立的服务，服务之间通过松耦合的方式进行交互。
+我是皇上，我怕谁 2018/11/26 08:38:54
+从这个意义上来讲，SOA下服务的范围是很宽泛的，能够向外界提供某项独立功能的对象都可以称为服务。按照实现具体功能，服务具有不同的粒度，而且服务具有可组合性，一个服务可以将若干子服务进行组合、编排以完成一个完整的功能。
+我是皇上，我怕谁 2018/11/27 08:27:52
+在具体的服务调用中，传统的客户端和服务端更准确的定义应该是服务的提供者(Service Provider)和服务的消费者(Service Consumer)。在很多情况下，一个服务除了这两种角色，还具有第三种角色:中介服务。
+我是皇上，我怕谁 2018/11/27 08:32:31
+中介服务，一般并不提供具体业务功能的实现，而是将接收到的请求转发给对应的服务提供者。eg:提供负载均衡功能的服务，它的功能就是接收所有服务消息请求，并将其转发到部署在低负载主机中的服务。
+我是皇上，我怕谁 2018/11/27 19:25:18
+WCF中，每个终结点都包含两个不同的地址:逻辑地址和物理地址。
+逻辑地址:终结点Address属性表示的地址。
+物理地址:对于消息发送端，就是消息被真正发送的目的地址;对于消息接收端，就是监听器真正监听的地址。
+我是皇上，我怕谁 2018/11/27 19:27:06
+按照WS-Addressing的说法，逻辑地址和物理地址分别对应着To和Via。
+我是皇上，我怕谁 2018/11/28 08:36:37
+客户端和服务端的物理配置方式不一样。详细配置见P77。
+我是皇上，我怕谁 2018/11/28 08:43:17
+物理地址其实就是消息发送的真正的地址，客户端作为消息的发送端，客户端的物理地址通过一个特殊的终结点行为(EndpointBehavior)来指定ClientViaBehavior,ClientViaBehavior定义的URI代表该物理地址。
+我是皇上，我怕谁 2018/11/28 19:23:26
+WCF消息筛选中两个特殊的对象:ChannelDispatcher和ChannelListener。这两个对象在整个WCF的消息分发系统中具有重要的地位。
+我是皇上，我怕谁 2018/11/29 19:21:26
+WCF中，1个服务、3个终结点、2个监听地址(指定了物理地址)。当服务被成功寄宿时，WCF会创建两个信道分发器(ChannelDispatcher)对象，每个信道分发器各拥有属于自己的信道监听器(ChannelListener),它们分别绑定到两个监听地址对应的端口进行服务调用请求的监听。
+此外，WCF还会为服务的3个终结点创建3个终结点分发器(EndpointDispatcher),当信道分发器通过信道监听器接收到消息时，将会根据消息自身携带的信息选择与之匹配的终结点分发器(EndpointDispatcher)。
+
+根据消息进行终结点分发器的选择机制称为"消息筛选"(Message Filter)。
+我是皇上，我怕谁 2018/11/30 19:31:36
+在WCF整个消息监听与分发系统中，信道分发器和终结点分发器是两个核心的对象。
+我是皇上，我怕谁 2018/12/03 08:47:01
+在WCF整个消息监听与分发体系中，信道分发器和终结点分发器是两个核心的对象。信道分发器进行请求的监听和消息接收，终结点分发器最终完成对消息的处理。信道分发器接收到的消息最终需要分发给相应的终结点分发器，而消息筛选解决了对终结点的选择问题。消息筛选依赖于终结点分发器两个重要的对象:AddressFilter和Contractfilter,它们分别实现基于终结点地址和服务契约的消息筛选。
+我是皇上，我怕谁 2018/12/05 09:01:38
+WCF是遵循WS-*标准的，WS-*标准是通过一系列的协议制定了一套业界普遍遵循的Web Service标准，使得不同厂商、不同平台之间的互操作成为可能。
+我是皇上，我怕谁 2018/12/12 09:19:18
+《WCF中的绑定》任何一种绑定类型对应着一种确定的传输方式，比如BasicHttpBinding和WsHttpBinding采用HTTP协议传输;NetTcpBinding采用TCP协议传输;NetMsmqBinding采用MSMQ的传输方式。
+我是皇上，我怕谁 2018/12/17 14:39:22
+《WCF中绑定的实现》当进行服务寄宿的时候，在执行ServiceHost的Open方法之前，可以为绑定对象进行相应的定制，设置相关的属性(AllowCookie、HostNameComparisonMode和MaxBufferPoolSize)。
+所有的绑定对象都具有一些共同的属性，比如，OpenTimeout、CloseTimeout、SendTimeout、ReceiveTimeout等。此外，不同的绑定对象也有一些属于自己的属性。如果没有显式地对这些属性进行设置，那么将采用这些属性的默认值。
+我是皇上，我怕谁 2018/12/17 14:46:33
+Binding在配置文件中配置方式，需要将相关设置定义在binding 列表中。在配置文件:<binding>/<basicHttpBinding>中添加一个BasicHttpBinding,并为其指定了一系列的属性，并将该BasicHttpBinding命名为"MyBinding",在具体的终结点中，通过bindingConfiguration根据名称对绑定进行引用。【重点】
+我是皇上，我怕谁 2018/12/17 14:47:14
+详情见，P106
+
