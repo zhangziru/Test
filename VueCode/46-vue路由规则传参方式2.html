@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>vue路由规则中定义参数</title>
+    <title>vue路由规则传参方式2</title>
     <!--1、导入Vue的包-->
-    <script src=".././lib/vue.js"></script>
+    <script src="./lib/vue.js"></script>
     <!-- 安装 vue-router 路由模块 【只要导入这个包，我们的链接就会用hash路由】-->
-    <script src=".././lib/vue.router-v3.0.2.js"></script>
+    <script src="./lib/vue.router-v3.0.2.js"></script>
 </head>
 
 <body>
 
     <div id="app">
-        <!-- 如果在路由中，使用 查询字符串，给路由传递参数，则 不需要修改 路由规则的 path 属性 -->
-        <router-link to="/login?id=10" tag="span">登录</router-link>
+        <router-link to="/login/10" tag="span">登录</router-link>
         <router-link to="/register">注册</router-link>
         <router-view></router-view>
     </div>
@@ -24,8 +23,8 @@
         var login = {
             template: "<h1>登录组件</h1>",
             created() {//组件的生命周期 钩子函数
-                console.log(this.$route);
-                console.log(this.$route.query.id);
+                console.log(this.$route);//路由对象中，的path和fullpath是一样的。通过params获取路由 中的参数。
+                console.log(this.$route.params.id);
             }
         }
         var register = {
@@ -33,7 +32,9 @@
         }
         var routerObj = new VueRouter({
             routes: [
-                { path: '/login', component: login },
+                //其中的 冒号":" 是占位符的意思。在使用时，直接写id值就可以了。见上边的示例
+                //所以我们也可以，将路由改装成以下的这种
+                { path: '/login/:id', component: login },
                 { path: '/register', component: register }
             ]
         });

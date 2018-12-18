@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-queiv="X-UA-Compatible" content="ie=edge">
+    <title>vue计算属性computed应用-名称案例-方式3</title>
+    <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="firstname">+
+        <input type="text" v-model="middlename">+
+        <input type="text" v-model="lastname">
+        <input type="text" v-model="fullname">
+
+        <p>{{ fullname }}</p>
+        <p>{{ fullname }}</p>
+        <p>{{ fullname }}</p>
+        <p>{{ fullname }}</p>
+    </div>
+</body>
+<script>
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            firstname: '',
+            lastname: '',
+            middlename:''
+        },
+        methods: {},
+        computed: {//在computed中 可以定义一些属性，这些属性，叫做 【计算属性】
+            //计算属性的本质，就是一个方法。只不过，我们在使用 这些计算属性的时候，是把 它们的 名称，直接当作 属性来使用的。
+            //并不会把，计算属性 当作方法 来用。
+
+            //【注意1】计算属性，在引用的时候，一定不要加 () 去调用，直接把它 当做 普通 属性去使用就好了；
+            //【注意2】只要 计算属性，这个 function 内部，所用到的 任何 data 中的数据发生了变化，就会立即重新计算 这个 计算属性的值
+            //【注意3】计算属性的求值结果，会被缓存起来，方便下次直接使用；如果 计算属性方法中，所依赖的任何数据，都没有发生过变化，则，不会重新对 计算属性求值。
+
+            //注意事项中的，第2，第3点很重要。
+            fullname:function(){
+                console.log("ok");//页面中调用了 5次，里面的值没有改变，看是否会出现5次ok。如果没有，则表明，其它4个调用都是取缓存中的值。
+                //这样可以帮助我们的程序提高运行效率
+               return this.firstname + '-' + this.middlename + '-' + this.lastname;
+            }
+        }
+    });
+
+</script>
+
+</html>
