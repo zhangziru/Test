@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EChart初次会晤</title>
+    <!--解决ECharts 因X轴数据过多导致重叠显示不全的问题:https://blog.csdn.net/zheng_xiao_xin/article/details/80882113-->
+    <!-- 【第一步】引入 ECharts 文件 -->
+    <script src="./lib/echarts.js"></script>
+</head>
+
+<body>
+    <!-- 【第二步】在绘图前我们需要为 ECharts 准备一个具备高宽的 DOM 容器。 -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+</body>
+<!-- 【第三步】JS 通过 echarts.init 方法初始化一个 echarts 实例-->
+<!-- 并通过 setOption 方法生成一个简单的柱状图，下面是完整代码-->
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('main'));
+    var option = {
+        xAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], },
+        yAxis: { type: 'value' },
+        series: [
+            {
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'bar',
+                barWidth: 30,
+                barGap: '20%'/*多个并排柱子设置柱子之间的间距*/
+                //barCategoryGap: '50%',/*多个并排柱子设置柱子之间的间距*/
+            }
+        ],
+        dataZoom: {
+            show: true,
+            realtime: true, //拖动滚动条时是否动态的更新图表数据 
+            height: 25,//滚动条高度 
+            start: 40,//滚动条开始位置（共100等份） 
+            end: 65,//结束位置（共100等份）
+            minSpan: 10,
+            maxSpan: 30
+        }
+    };
+
+    myChart.setOption(option);
+</script>
+
+</html>

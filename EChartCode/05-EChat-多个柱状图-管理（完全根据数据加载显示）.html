@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EChart-dataset多个柱状图</title>
+    <!-- 【第一步】引入 ECharts 文件 -->
+    <script src="./lib/echarts.js"></script>
+</head>
+
+<body>
+    <div id="main" style="width: 1000px;height:400px;"></div>
+</body>
+<script type="text/javascript">
+    //表数据
+    var arr = {
+        Bu1: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        Bu2: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        Bu3: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        DFBU: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        GCS: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    }
+    //X周坐标的定义
+    var xAxisData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+
+    var legendData = [];
+    var selectedLegend = [];
+    var seriesData = [];
+    for (var key in arr) {
+        legendData.push(LegendDataFormatter(key));
+        seriesData.push(SeriesDataFormatter(key,arr[key]));
+    }
+    //根据key 返回 legend.data 元素项
+    function LegendDataFormatter(key) {
+        return {
+            name: key,
+            // 强制设置图形为圆。
+            /*  icon: 'circle', */
+            // 设置文本为红色
+            textStyle: {
+                color: 'black'
+            }
+        }
+    }
+    //根据key 和 值 返回 series.data 元素项
+    function SeriesDataFormatter(key, value) {
+       return {
+                name: key,
+                type: 'bar',
+                label: { //顶部显示数值
+                    show: true, //开启显示
+                    position: 'top', //在上方显示
+                    textStyle: { //数值样式
+                        color: 'black',
+                        fontSize: 12
+                    }
+                },
+                data: value//按照图例 将数据依次加载 到坐标轴上
+            }
+    }
+   
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    option = {
+        //设置 标题(内容、位置)
+        title: {
+            text: 'CR审批个数 By 业务单元(By Month)',//主标题
+            //subtext: '纯属虚构',//子标题
+            x: 'center'
+        },
+        tooltip: {},
+        //设置 系列&图例 颜色
+        color: ['#4472C4', '#ED7D31', '#A5A5A5', '#FFC000', '#5B9BD5'],
+        //设置 图例 位置
+        legend: {
+            x: 'center',
+            y: 'bottom',
+            data: legendData
+        },
+        // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+        xAxis: {
+            type: 'category',
+            data: xAxisData
+        },
+        // 声明一个 Y 轴，数值轴。
+        yAxis: {},
+        // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+        series: seriesData
+    }
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+</html>

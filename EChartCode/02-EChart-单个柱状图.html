@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EChart-dataset数据集管理数据</title>
+    <!-- 【第一步】引入 ECharts 文件 -->
+    <script src="./lib/echarts.js"></script>
+</head>
+
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+</body>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var dataAxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Now', 'Dec', 'Total'];
+    //var data = [{ value: 1000, label: { position: 'top' } }, 0, 2000, 2000, { value: -1000, label: { position: 'bottom' } }, { value: -2000, label: { position: 'bottom' } }, 0, 3000, 3000, { value: -1000, label: { position: 'bottom' } }, { value: -2000, label: { position: 'bottom' } }, { value: -2000, label: { position: 'bottom' } }, 2000];
+    var data = [1000, '', 2000, 2000, -1000, -2000, '', 3000, 3000, -1000, -2000, -2000, 2000];
+    data = dataFormat(data);
+    option = {
+        title: {
+            text: '项目EBIT影响',
+            x: 'center'
+        },
+        xAxis: {
+            data: dataAxis,
+            axisLabel: {
+                textStyle: {
+                    color: '#000000'
+                }
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: false,
+
+            },
+            z: 10
+        },
+        dataZoom:[
+                    { //Y轴固定,让内容滚动
+                        type: 'slider',
+                        show: false,
+                        xAxisIndex: [0],
+                        start: 1,
+                        end: 80,//设置X轴刻度之间的间隔(根据数据量来调整)
+                        zoomLock: true, //锁定区域禁止缩放(鼠标滚动会缩放,所以禁止)
+                    },
+                    {
+                        type: 'inside',
+                        xAxisIndex: [0],
+                        start: 1,
+                        end: 80,
+                        zoomLock: true, //锁定区域禁止缩放
+                    },
+ 
+                ],
+        yAxis: {
+            axisLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                textStyle: {
+                    color: '#999'
+                }
+            },
+            max: function (value) {
+                var max = value.max>Math.abs(value.min)?value.max:Math.abs(value.min)
+                max = max * 1.2
+                // max = Math.ceil(max / 100) * 100;
+                return max;
+            },
+            min: function (value) {
+                var max = value.max>Math.abs(value.min)?value.max:Math.abs(value.min)
+                max = max * 1.2
+                // max = Math.ceil(max / 100) * 100;
+                return -max;
+            }
+        },
+        dataZoom: [
+            {
+                type: 'inside'
+            }
+        ],
+        series: [
+            {
+                type: 'bar',
+                label: {
+
+                    show: true
+                },
+                itemStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                { offset: 0, color: '#83bff6' },
+                                { offset: 0.5, color: '#188df0' },
+                                { offset: 1, color: '#188df0' }
+                            ]
+                        ),
+                        label: { //顶部显示数值
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: 'black',
+                                fontSize: 12
+                            }
+                        }
+
+                    },
+                    emphasis: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                { offset: 0, color: '#2378f7' },
+                                { offset: 0.7, color: '#2378f7' },
+                                { offset: 1, color: '#83bff6' }
+                            ]
+                        )
+                    }
+                },
+                data: data
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    //格式化 柱状图数据
+    function dataFormat(arr) {
+        if (arr && arr.length > 0) {
+
+            for (var i in arr) {
+
+                if (arr[i] < 0) {
+                    //格式化负数的显示位置
+                    arr[i] = { value: arr[i], label: { position: "bottom" } };
+                }
+            }
+            return arr;
+        }
+        return [];
+    }
+</script>
+
+</html>

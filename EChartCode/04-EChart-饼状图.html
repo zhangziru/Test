@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EChart-饼状图</title>
+    <!-- 【第一步】引入 ECharts 文件 -->
+    <script src="./lib/echarts.js"></script>
+</head>
+
+<body>
+    <div id="main" style="width: 500px;height:400px;"></div>
+</body>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var seriesData = [
+        { name: "BU1", value: "156" },
+        { name: "BU2", value: "70" },
+        { name: "BU3", value: "221" },
+        { name: "DFBU", value: "45" },
+        { name: "GCS", value: "75" }
+    ];
+    //图例的名字：系列数据的名字
+    var legendData = ["BU1", "BU2", "BU3", "DFBU", "GCS"];
+    //选中的图例（设置默认选中的图例）
+    var selectedLegend = {"BU1":false,"BU2":false};
+    option = {
+        title: {
+            text: 'CR审批个数 By 业务单元(2018)',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            type: 'scroll',//plain：平铺（默认）；scroll：分页（当图例较多时，使用）
+            orient: 'vertical',//图例列表的布局方向
+            right: 10,
+            top: 80,
+            data: legendData,//所有图例的数据
+            selected: selectedLegend//选中的图例名称
+        },
+        //设置 系列 颜色
+        color: ['#5B9BD5', '#ED7D31', '#A5A5A5', '#FFC000','#4472C4'],
+        series: [
+            {
+                name: 'CR审批个数',
+                type: 'pie',
+                radius: '55%',
+                center: ['40%', '50%'],
+                data: seriesData,
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+</html>
