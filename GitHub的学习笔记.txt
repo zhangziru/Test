@@ -187,5 +187,6 @@ git checkout[commit] [file]  ：恢复某个commit的指定文件（本地仓库
 git checkout .	:恢复"暂存区"的所有文件到"工作区"
 git reset --soft HEAD^  :恢复“本地仓库”的最新提交到“暂存区”
 git reset --mixed HEAD^  :恢复“本地仓库”的最新提交到“工作区”
+git checkout -- file     :可以丢弃工作区的修改，即：撤销更改
 【Git 命令 查看未推送的记录】
 git cherry -v	:查看本地仓库未推送的记录
