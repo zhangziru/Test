@@ -1,0 +1,17 @@
+SQL Server导入超大SQL文件的方法：https://blog.csdn.net/u012413535/article/details/73116469
+1、Win+R 键入：cmd 命令，开启命令行工具；
+2、键入命令：sqlcmd -S localhost -U username -P 123456 -d dbname -i db.sql
+例如：sqlcmd -S localhost -U sa -P sasa -d bomone -i C:\Users\wewin\Documents\script.sql
+
+3、命令导入数据以后报错：
+模块 'BOM_EBOMCopy' 取决于缺少的对象 'SP_P_RequestPDNumber'。仍将创建此模块；但是，只有在该对象存在之后它才能成功运行。
+模块 'BOM_EBOMPartCopyStruct' 取决于缺少的对象 'SP_P_RequestPDNumber'。仍将创建此模块；但是，只有在该对象存在之后它才能 成功运行。
+模块 'BOM_EBOMPartReplace_EPIC' 取决于缺少的对象 'SP_P_RequestPDNumber'。仍将创建此模块；但是，只有在该对象存在之后它才 能成功运行。
+模块 'SP_CBOMVS_BOMImport' 取决于缺少的对象 'dbo.SP_CBOMVS_DeleteEndItem'。仍将创建此模块；但是，只有在该对象存在之后它 才能成功运行。
+模块 'SP_Get_HisTree_EBomPart' 取决于缺少的对象 'dbo.SP_Get_Tree_EBomPart'。仍将创建此模块；但是，只有在该对象存在之后它才能成功运行。
+已将数据库上下文更改为 'master'。
+
+4、原因：没有导出相应的存储过程。
+SQL SERVER 导出存储过程脚本：https://jingyan.baidu.com/article/215817f7a9ade31eda14232d.html
+
+
