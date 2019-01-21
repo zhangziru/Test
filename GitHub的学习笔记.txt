@@ -190,3 +190,8 @@ git reset --mixed HEAD^  :恢复“本地仓库”的最新提交到“工作区
 git checkout -- file     :可以丢弃工作区的修改，即：撤销更改
 【Git 命令 查看未推送的记录】
 git cherry -v	:查看本地仓库未推送的记录
+【Git 本地，拉取服务器上的代码异常，使用服务器上的分支，强制覆盖本地】
+git reset --hard origin/master (这里master要修改为对应的分支名)
+【Git 查看当前配置 用户名，邮箱】
+git config user.name  --查看用户名
+git config user.email  --查看箱地址
