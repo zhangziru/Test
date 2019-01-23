@@ -1,0 +1,32 @@
+C#中的Linq学习笔记
+参考链接：https://www.cnblogs.com/lanpingwang/p/6602708.html
+温馨提示：想要了解整个Linq，看第7点。
+
+1、C#中Linq语法有两种：方法语法和查询语法。
+2、Linq（方法语法），eg：Join() 和GroupJoin()
+	1）Join()的效果和SQL中的inner join一样【内联接】
+	2）GroupJoin(),效果一样，不一样的是返回值是一个Group。【注意】GroupJoin根据key联合两个序列并根据key分组
+3、Linq（查询语法），查询语法 中的join和 方法语法 有些不同，它需要外部序列、内部序列、key选择器和结果选择器 
+	Linq-Join()（查询语法）eg:
+		from ... in outerSequence //外部序列
+
+		join ... in innerSequence  //内部序列
+
+		on outerKey equals innerKey	//key选择器
+
+		select ...	//结果选择器
+		
+	Linq-GroupJoin()（查询语法）eg:
+		from ... in outerSequence
+
+		join ... in innerSequence  
+
+		on outerKey equals innerKey
+
+		into groupedCollection    
+
+		select ...
+4、查询操作 Select、 SelectMany的使用。链接：https://www.cnblogs.com/lanpingwang/p/6602906.html
+5、Quantifier Operators（量词操作符）： All 、Any 、Contain的使用。链接：https://www.cnblogs.com/lanpingwang/p/6602969.html
+6、Aggregate（聚合函数）的使用：链接https://www.cnblogs.com/lanpingwang/p/6603101.html
+7、Linq中涉及的语法，目录汇总，链接：https://www.cnblogs.com/lanpingwang/p/6602024.html
