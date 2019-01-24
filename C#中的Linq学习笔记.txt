@@ -30,3 +30,12 @@ C#中的Linq学习笔记
 5、Quantifier Operators（量词操作符）： All 、Any 、Contain的使用。链接：https://www.cnblogs.com/lanpingwang/p/6602969.html
 6、Aggregate（聚合函数）的使用：链接https://www.cnblogs.com/lanpingwang/p/6603101.html
 7、Linq中涉及的语法，目录汇总，链接：https://www.cnblogs.com/lanpingwang/p/6602024.html
+
+8、linq 中into的用法，涉及到左连接查询【很核心的东西】
+问题的描述连接：https://q.cnblogs.com/q/59084/
+linq 中into的用法（详解）：http://www.cnblogs.com/c-jquery-linq-sql-net-problem/archive/2011/01/17/LINQ_Inner_Join_Group_Join_Left_Join.html#printSource
+Linq学习的连接（这个博主，写得很好，很全面）：https://www.cnblogs.com/lanpingwang/p/6602708.html
+备注：对于C#中的集合 连接查询 ，只有内联和左外连接。
+提供的方法语法有Join和GroupJoin
+提供的查询语法，使用到的关键字有 join on和join on into
+【重点】分组思想是一样的，将数据分组，对每一组中的数据然后处理
