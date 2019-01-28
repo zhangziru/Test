@@ -17,7 +17,9 @@ namespace CSharp测试项目20181203
             //Linq_Join_Demo();//Linq-Join方法的Demo
             //Linq_GroupJoin_Demo();//Linq-GroupJoin方法的Demo
             //Linq_GroupBy_Demo();//Linq-Join方法的Demo
-            Linq_ToLookup_Demo();//Linq_ToLookup方法的Demo
+            //Linq_ToLookup_Demo();//Linq_ToLookup方法的Demo
+            //Linq_OrderBy_Demo();//Linq_OrderBy方法的Demo
+            Linq_OrderByDescending_Demo();//Linq_OrderByDescending方法的Demo
         }
         #endregion
 
@@ -344,6 +346,90 @@ namespace CSharp测试项目20181203
             #endregion
         }
 
+        #endregion
+
+        #region OrderBy 和 OrderByDescending 的Demo
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6602258.html
+        //OrderBy 和 OrderByDescending对集合进行排序
+        //1、LINQ包含五种排序操作:OrderBy、OrderByDescending、ThenBy、ThenByDescending、Reverse
+        //2、查询语言不支持OrderByDescending、ThenBy、ThenByDescending、Reverse，它仅支持Order By从句后面跟ascending、descending
+        //3、查询语法支持多字段排序
+        #endregion
+
+        /// <summary>
+        /// Linq-OrderBy 语法 使用案例
+        /// </summary>
+        public void Linq_OrderBy_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 15 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 25 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 19 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+
+            var studentsInAscOrder = studentList.OrderBy(s => s.StudentName);
+
+            foreach (var item in studentsInAscOrder)
+            {
+                Console.WriteLine("姓名排序：{0}",item.StudentName);
+            }
+
+            #endregion
+            Console.WriteLine("-------------------------");
+            #region Linq 查询语法
+
+            var orderByResult = from s in studentList
+                                orderby s.StudentName
+                                select s;
+            foreach (var item in orderByResult)
+            {
+                Console.WriteLine("姓名排序：{0}", item.StudentName);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-OrderByDescending 语法 使用案例
+        /// </summary>
+        public void Linq_OrderByDescending_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 15 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 25 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 19 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+
+            var studentsInDescOrder = studentList.OrderByDescending(s => s.StudentName);
+            foreach (var item in studentsInDescOrder)
+            {
+                Console.WriteLine("姓名排序：{0}", item.StudentName);
+            }
+            #endregion
+            Console.WriteLine("-------------------------");
+            #region Linq 查询语法
+
+            var orderByDescendingResult = from s in studentList
+                                          orderby s.StudentName descending
+                                          select s;
+            foreach (var item in orderByDescendingResult)
+            {
+                Console.WriteLine("姓名排序：{0}", item.StudentName);
+            }
+            #endregion
+        }
         #endregion
 
         #region TemplateDemo
