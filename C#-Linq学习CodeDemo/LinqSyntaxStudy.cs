@@ -15,7 +15,9 @@ namespace CSharp测试项目20181203
         public LinqSyntaxStudy()
         {
             //Linq_Join_Demo();//Linq-Join方法的Demo
-            Linq_GroupJoin_Demo();//Linq-GroupJoin方法的Demo
+            //Linq_GroupJoin_Demo();//Linq-GroupJoin方法的Demo
+            //Linq_GroupBy_Demo();//Linq-Join方法的Demo
+            Linq_ToLookup_Demo();//Linq_ToLookup方法的Demo
         }
         #endregion
 
@@ -45,7 +47,7 @@ namespace CSharp测试项目20181203
                 "Two",
                 "Five",
                 "Six"
-            }; 
+            };
             #endregion
 
             #region 获取两个 数据集合 中相同的元素（Linq_Join应用1）           
@@ -149,7 +151,7 @@ namespace CSharp测试项目20181203
                 new Standard(){ StandardID = 1, StandardName="Standard 1"},
                 new Standard(){ StandardID = 2, StandardName="Standard 2"},
                 new Standard(){ StandardID = 3, StandardName="Standard 3"}
-            }; 
+            };
             #endregion
 
             #region Linq  方法语法
@@ -216,75 +218,224 @@ namespace CSharp测试项目20181203
                         {
                             Students = groupedCollection,
                             StandarFulldName = outer.StandardName
-                        }; 
+                        };
             #endregion
         }
 
         #endregion
-    }
 
-    #region 当前测试对象 辅助类
-    public class Student
-    {
-        public int StudentID { get; set; }
-        public string StudentName { get; set; }
-        public int StandardID { get; set; }
-    }
-
-    public class Standard
-    {
-        public int StandardID { get; set; }
-        public string StandardName { get; set; }
-    }
-
-    #region 自定义对象比较器
-    //参考链接：https://q.cnblogs.com/q/55678/
-
-    #region 相同对象之间的比较
-    /// <summary>
-    /// 自定义对象比较器【相同对象之间的比较器】
-    /// 相同对象之间的比较 直接使用该比较器。
-    /// 如果对象的类型不同，需要多一步，来的构建不同对象 共同的属性 对象
-    /// </summary>
-    public class ComparetorCustormTest : IEqualityComparer<CommonCompareObj>
-    {
-        Func<CommonCompareObj, CommonCompareObj, bool> pre;
-        public ComparetorCustormTest(Func<CommonCompareObj, CommonCompareObj, bool> pre)
-        {
-            this.pre = pre;
-        }
-        public bool Equals(CommonCompareObj x, CommonCompareObj y)
-        {
-            return pre(x, y);
-        }
+        #region GroupBy 和 ToLookup 的Demo
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6602449.html
+        //Join对集合进行分组
+        #endregion
 
 
         /// <summary>
-        /// 【注意】如果IEqualityComparer获取的HashCode不相等，那它的Equal方法都不执行。
+        /// Linq中GroupBy方法 [分组]使用案例
+        /// GroupBy操作返回根据一些键值进行分组，每组代表IGrouping<TKey,TElement>对象
+        /// foreach遍历group，每个Group包含一个key和内部的集合
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public int GetHashCode(CommonCompareObj obj)
+        public void Linq_GroupBy_Demo()
         {
-            return obj.StandardID;
-        }
-    }
-    #endregion
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Abram" , Age = 21 }
+            };
+            #endregion
 
-    //不同对象之间 通过个别的属性进行 比较，来判断是否相等。解决方案：
-    //1、创建 比较的对象（里面包含要比较的共同属性）
-    //2、创建 比较对象的比较器 （是针对比较对象的）
+            #region Linq 方法语法【根据单个属性，进行分组】
+            //与GroupJoin的用法极其的类似，不同之处是，该方法不需要将组元素的集合，输出出来就可以使用
+            var groupedResult = studentList.GroupBy(s => s.Age);
+
+            foreach (var ageGroup in groupedResult)
+            {
+                Console.WriteLine("Age Group: {0}", ageGroup.Key);  //Each group has a key 
+
+                foreach (Student s in ageGroup)  //Each group has a inner collection  
+                    Console.WriteLine("Student Name: {0}", s.StudentName);
+            }
+
+            #endregion
+
+            #region Linq 查询语法【根据单个属性，进行分组】
+
+            var groupedResult1 = from s in studentList
+                                 group s by s.Age;
+
+            //iterate each group        
+            foreach (var ageGroup in groupedResult1)
+            {
+                Console.WriteLine("Age Group: {0}", ageGroup.Key); //Each group has a key 
+
+                foreach (Student s in ageGroup) // Each group has inner collection
+                    Console.WriteLine("Student Name: {0}", s.StudentName);
+            }
+            #endregion
+
+            #region Linq 方法语法【根据多个属性，进行分组】
+            //与GroupJoin的用法极其的类似，不同之处是，该方法不需要将组元素的集合，输出出来就可以使用
+            var groupedResult2 = studentList.GroupBy(s => new { Name = s.StudentName, Age = s.Age });
+
+            foreach (var ageGroup in groupedResult2)
+            {
+                Console.WriteLine("StudentName & Age Group: Name={0},Age={1}", ageGroup.Key.Name, ageGroup.Key.Age);  //Each group has a key 
+
+                foreach (Student s in ageGroup)  //Each group has a inner collection  
+                    Console.WriteLine("Student Name: {0}", s.StudentName);
+            }
+
+            #endregion
+
+            #region Linq 查询语法【根据多个属性，进行分组】
+
+            var groupedResult3 = from s in studentList
+                                 group s by new { Name = s.StudentName, Age = s.Age };
+
+            //iterate each group        
+            foreach (var ageGroup in groupedResult3)
+            {
+                Console.WriteLine("StudentName & Age Group: Name={0},Age={1}", ageGroup.Key.Name, ageGroup.Key.Age);  //Each group has a key 
+
+                foreach (Student s in ageGroup) // Each group has inner collection
+                    Console.WriteLine("Student Name: {0}", s.StudentName);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        ///  Linq中ToLookup方法 [分组]使用案例
+        ///  ToLookup与GroupBy相同;唯一的区别是GroupBy的执行被延迟，而ToLookup立即执行。
+        /// </summary>
+        public void Linq_ToLookup_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Abram" , Age = 21 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+
+            var lookupResult = studentList.ToLookup(s => s.Age);
+
+            foreach (var group in lookupResult)
+            {
+                Console.WriteLine("Age Group: {0}", group.Key);  //Each group has a key 
+
+                foreach (Student s in group)  //Each group has a inner collection  
+                    Console.WriteLine("Student Name: {0}", s.StudentName);
+            }
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        #endregion
+
+        #region TemplateDemo
+        /// <summary>
+        /// Linq 语法测试模板
+        /// </summary>
+        public void Linq_Template_Demo()
+        {
+            #region 测试数据
+
+            #endregion
+
+            #region Linq 方法语法
+
+
+
+            #endregion
+
+            #region Linq 查询语法
+
+
+            #endregion
+        }
+        #endregion
+    }
+
+
+}
+
+#region 当前测试对象 辅助类
+public class Student
+{
+    public int StudentID { get; set; }
+    public string StudentName { get; set; }
+    public int StandardID { get; set; }
+    public int Age { get; set; }
+}
+
+public class Standard
+{
+    public int StandardID { get; set; }
+    public string StandardName { get; set; }
+}
+
+#region 自定义对象比较器
+//参考链接：https://q.cnblogs.com/q/55678/
+
+#region 相同对象之间的比较
+/// <summary>
+/// 自定义对象比较器【相同对象之间的比较器】
+/// 相同对象之间的比较 直接使用该比较器。
+/// 如果对象的类型不同，需要多一步，来的构建不同对象 共同的属性 对象
+/// </summary>
+public class ComparetorCustormTest : IEqualityComparer<CommonCompareObj>
+{
+    Func<CommonCompareObj, CommonCompareObj, bool> pre;
+    public ComparetorCustormTest(Func<CommonCompareObj, CommonCompareObj, bool> pre)
+    {
+        this.pre = pre;
+    }
+    public bool Equals(CommonCompareObj x, CommonCompareObj y)
+    {
+        return pre(x, y);
+    }
+
 
     /// <summary>
-    /// 比较器 针对不同对象 共同的对象（比较对象）
+    /// 【注意】如果IEqualityComparer获取的HashCode不相等，那它的Equal方法都不执行。
     /// </summary>
-    public class CommonCompareObj
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public int GetHashCode(CommonCompareObj obj)
     {
-        public int StandardID { get; set; }
-
-        public string StudentName { get; set; }
+        return obj.StandardID;
     }
-    #endregion
-
-    #endregion
 }
+#endregion
+
+//不同对象之间 通过个别的属性进行 比较，来判断是否相等。解决方案：
+//1、创建 比较的对象（里面包含要比较的共同属性）
+//2、创建 比较对象的比较器 （是针对比较对象的）
+
+/// <summary>
+/// 比较器 针对不同对象 共同的对象（比较对象）
+/// </summary>
+public class CommonCompareObj
+{
+    public int StandardID { get; set; }
+
+    public string StudentName { get; set; }
+}
+#endregion
+
+#endregion
+
