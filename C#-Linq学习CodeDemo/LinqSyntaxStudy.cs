@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,9 @@ namespace CSharp测试项目20181203
             //Linq_GroupBy_Demo();//Linq-Join方法的Demo
             //Linq_ToLookup_Demo();//Linq_ToLookup方法的Demo
             //Linq_OrderBy_Demo();//Linq_OrderBy方法的Demo
-            Linq_OrderByDescending_Demo();//Linq_OrderByDescending方法的Demo
+            //Linq_OrderByDescending_Demo();//Linq_OrderByDescending方法的Demo
+            Linq_OfType_Demo();//Linq_OfType方法的Demo
+
         }
         #endregion
 
@@ -428,6 +431,45 @@ namespace CSharp测试项目20181203
             {
                 Console.WriteLine("姓名排序：{0}", item.StudentName);
             }
+            #endregion
+        }
+        #endregion
+
+        #region OfType 的Demo
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6602145.html
+        //OfType操作根据集合中的元素是否是给定的类型进行筛选
+        #endregion
+
+        /// <summary>
+        /// Linq-OfType 语法 使用案例
+        /// OfType操作根据集合中的元素是否是给定的类型进行筛选
+        /// </summary>
+        public void Linq_OfType_Demo()
+        {
+            #region 测试数据
+            IList mixedList = new ArrayList();
+            mixedList.Add(0);
+            mixedList.Add("One");
+            mixedList.Add("Two");
+            mixedList.Add(3);
+            mixedList.Add(new Student() { StudentID = 1, StudentName = "Bill" });
+            #endregion
+
+            #region Linq 方法语法
+
+            var stringResult = mixedList.OfType<string>();
+
+            #endregion
+
+            #region Linq 查询语法
+
+            var stringResult1 = from s in mixedList.OfType<string>()
+                               select s;
+
+            var intResult = from s in mixedList.OfType<int>()
+                            select s;
             #endregion
         }
         #endregion
