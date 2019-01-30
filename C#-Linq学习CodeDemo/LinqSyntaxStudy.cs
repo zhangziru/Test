@@ -21,7 +21,8 @@ namespace CSharp测试项目20181203
             //Linq_ToLookup_Demo();//Linq_ToLookup方法的Demo
             //Linq_OrderBy_Demo();//Linq_OrderBy方法的Demo
             //Linq_OrderByDescending_Demo();//Linq_OrderByDescending方法的Demo
-            Linq_OfType_Demo();//Linq_OfType方法的Demo
+            //Linq_OfType_Demo();//Linq_OfType方法的Demo
+            Linq_Where_Demo();//Linq_Where方法的Demo
 
         }
         #endregion
@@ -470,6 +471,64 @@ namespace CSharp测试项目20181203
 
             var intResult = from s in mixedList.OfType<int>()
                             select s;
+            #endregion
+        }
+        #endregion
+
+        #region Where 的Demo
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6602122.html
+        //需要记住的几点：
+        //1.Where根据特定条件来筛选集合元素
+        //2.where扩展方法有2个重载，使用第二个重载方法可以知道当前元素在集合中的索引位置
+        //3.方法语法需要整个lambda表达式，而查询语法仅仅需要表达式主体
+        //4.在单一的LINQ查询中可以使用多个where从句
+        #endregion
+
+
+        /// <summary>
+        /// Linq-Where 语法 使用案例
+        /// 使用很简单
+        /// where的第二个扩展方法包含集合的index索引【值得一看】
+        /// </summary>
+        public void Linq_Where_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13} ,
+                new Student() { StudentID = 2, StudentName = "Moin",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20} ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 15 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+            //使用第二扩展方法（第一个方法过于简单，自己尝试）【值得一看】，如果要在 查询语言众写，需要自己定义 委托变量或者创建一个方法来实现。总体来说 不利于阅读。但是可以实现是真的。
+            var filteredResult = studentList.Where((s, i) => {
+                if (i % 2 == 0) // if it is even element
+                    return true;
+
+                return false;
+            });
+
+            foreach (var std in filteredResult)
+                Console.WriteLine(std.StudentName);
+
+            //第一个扩展方法，使用多个Where
+            var filteredResult2 = studentList.Where(s => s.Age > 12).Where(s => s.Age < 20);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //使用多个Where
+            var filteredResult1 = from s in studentList
+                                 where s.Age > 12
+                                 where s.Age < 20
+                                 select s;
+
             #endregion
         }
         #endregion
