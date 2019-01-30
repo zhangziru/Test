@@ -22,7 +22,11 @@ namespace CSharp测试项目20181203
             //Linq_OrderBy_Demo();//Linq_OrderBy方法的Demo
             //Linq_OrderByDescending_Demo();//Linq_OrderByDescending方法的Demo
             //Linq_OfType_Demo();//Linq_OfType方法的Demo
-            Linq_Where_Demo();//Linq_Where方法的Demo
+            //Linq_Where_Demo();//Linq_Where方法的Demo
+            //Linq_SelectMany_Demo();//Linq_SelectMany方法的Demo
+            Linq_All_Demo();//Linq_All方法的Demo
+            Linq_Any_Demo();//Linq_Any方法的Demo
+            Linq_Contain_Demo();//Linq_Contain方法的Demo
 
         }
         #endregion
@@ -382,7 +386,7 @@ namespace CSharp测试项目20181203
 
             foreach (var item in studentsInAscOrder)
             {
-                Console.WriteLine("姓名排序：{0}",item.StudentName);
+                Console.WriteLine("姓名排序：{0}", item.StudentName);
             }
 
             #endregion
@@ -467,7 +471,7 @@ namespace CSharp测试项目20181203
             #region Linq 查询语法
 
             var stringResult1 = from s in mixedList.OfType<string>()
-                               select s;
+                                select s;
 
             var intResult = from s in mixedList.OfType<int>()
                             select s;
@@ -506,7 +510,8 @@ namespace CSharp测试项目20181203
 
             #region Linq 方法语法
             //使用第二扩展方法（第一个方法过于简单，自己尝试）【值得一看】，如果要在 查询语言众写，需要自己定义 委托变量或者创建一个方法来实现。总体来说 不利于阅读。但是可以实现是真的。
-            var filteredResult = studentList.Where((s, i) => {
+            var filteredResult = studentList.Where((s, i) =>
+            {
                 if (i % 2 == 0) // if it is even element
                     return true;
 
@@ -525,9 +530,143 @@ namespace CSharp测试项目20181203
 
             //使用多个Where
             var filteredResult1 = from s in studentList
-                                 where s.Age > 12
-                                 where s.Age < 20
-                                 select s;
+                                  where s.Age > 12
+                                  where s.Age < 20
+                                  select s;
+
+            #endregion
+        }
+        #endregion
+
+        #region SelectMany 的Demo
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6602906.html 
+        //SelectMany 是  GroupBy 的一个逆向操作（将分好组的数据，重新还原为一个完整的集合）
+        //一般结合Where来使用
+        #endregion
+
+        /// <summary>
+        /// Linq-SelectMany 使用案例
+        /// Select 可以输出一个对象
+        /// SelectMany 可以输出多个对象
+        /// 一般结合Where来使用
+        /// </summary>
+        public void Linq_SelectMany_Demo()
+        {
+            #region 测试数据
+            List<Teacher> teachers = new List<Teacher>
+            {
+                new Teacher("a",new List<Student_01>{ new Student_01(100),new Student_01(90),new Student_01(30) }),
+                new Teacher("b",new List<Student_01>{ new Student_01(100),new Student_01(90),new Student_01(60) }),
+                new Teacher("c",new List<Student_01>{ new Student_01(100),new Student_01(90),new Student_01(40) }),
+                new Teacher("d",new List<Student_01>{ new Student_01(100),new Student_01(90),new Student_01(60) }),
+                new Teacher("e",new List<Student_01>{ new Student_01(100),new Student_01(90),new Student_01(50) }),
+                new Teacher("f",new List<Student_01>{ new Student_01(100),new Student_01(90),new Student_01(60) }),
+                new Teacher("g",new List<Student_01>{ new Student_01(100),new Student_01(90),new Student_01(60) })
+            };
+            #endregion
+
+            #region Linq 方法语法
+
+            var list2 = teachers.SelectMany(t => t.Students);
+
+            var list3 = teachers.SelectMany(
+            t => t.Students,
+            (t, s) => new { t.Name, s.Score });
+
+            #endregion
+
+            #region Linq 查询语法
+
+
+
+            #endregion
+        }
+        #endregion
+
+        #region All 、 Any 和 Contain （量词）的Demo
+        /// <summary>
+        /// Linq-All 的使用案例
+        /// 判断所有的元素是否满足条件
+        /// </summary>
+        public void Linq_All_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 15 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 25 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 19 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+            //All量词的应用
+            bool areAllStudentsTeenAger = studentList.All(s => s.Age > 12 && s.Age < 20);
+
+            #endregion
+
+            #region Linq 查询语法
+            //没有对应的 查询方法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Any 的使用案例
+        /// 判断存在一个元素满足条件
+        /// </summary>
+        public void Linq_Any_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 15 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 25 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 19 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+            //Any量词的应用
+            bool isAnyStudentTeenAger = studentList.Any(s => s.Age > 12 && s.Age < 20);
+
+            #endregion
+
+            #region Linq 查询语法
+            //没有对应的 查询方法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Contain 的使用案例
+        /// 判断是否包含元素，一般在值集合中 使用比较 普遍。在对象集合列表中使用，需要自己定制 对象比较器。
+        /// </summary>
+        public void Linq_Contain_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 15 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 25 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 19 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+            //Contain量词的应用
+            Student std = new Student() { StudentID = 3, StudentName = "Bill" };
+            bool result = studentList.Contains(std, new Student_01Comparer()); //returns true
+
+            #endregion
+
+            #region Linq 查询语法
+            //没有对应的 查询方法
 
             #endregion
         }
@@ -567,6 +706,30 @@ public class Student
     public string StudentName { get; set; }
     public int StandardID { get; set; }
     public int Age { get; set; }
+}
+
+public class Student_01
+{
+    public int Score { get; set; }
+
+    public Student_01(int score)
+    {
+        this.Score = score;
+    }
+}
+
+public class Teacher
+{
+    public string Name { get; set; }
+
+    public List<Student_01> Students;
+
+    public Teacher(string order, List<Student_01> students)
+    {
+        this.Name = order;
+
+        this.Students = students;
+    }
 }
 
 public class Standard
@@ -621,6 +784,25 @@ public class CommonCompareObj
     public int StandardID { get; set; }
 
     public string StudentName { get; set; }
+}
+#endregion
+
+#region 另外一套比较器
+public class Student_01Comparer : IEqualityComparer<Student>
+{
+    public bool Equals(Student x, Student y)
+    {
+        if (x.StudentID == y.StudentID &&
+                    x.StudentName.ToLower() == y.StudentName.ToLower())
+            return true;
+
+        return false;
+    }
+
+    public int GetHashCode(Student obj)
+    {
+        return obj.GetHashCode();
+    }
 }
 #endregion
 
