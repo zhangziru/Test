@@ -24,10 +24,16 @@ namespace CSharp测试项目20181203
             //Linq_OfType_Demo();//Linq_OfType方法的Demo
             //Linq_Where_Demo();//Linq_Where方法的Demo
             //Linq_SelectMany_Demo();//Linq_SelectMany方法的Demo
-            Linq_All_Demo();//Linq_All方法的Demo
-            Linq_Any_Demo();//Linq_Any方法的Demo
-            Linq_Contain_Demo();//Linq_Contain方法的Demo
-
+            //Linq_All_Demo();//Linq_All方法的Demo
+            //Linq_Any_Demo();//Linq_Any方法的Demo
+            //Linq_Contain_Demo();//Linq_Contain方法的Demo
+            
+            //聚合函数
+            Linq_Aggregate_Demo();//Linq_Aggregate方法的Demo
+            Linq_Average_Demo();//Linq_Average方法的Demo
+            Linq_Count_Demo();//Linq_Count方法的Demo
+            Linq_Max_Demo();//Linq_Max方法的Demo
+            Linq_Sum_Demo();//Linq_Sum方法的Demo
         }
         #endregion
 
@@ -586,6 +592,14 @@ namespace CSharp测试项目20181203
         #endregion
 
         #region All 、 Any 和 Contain （量词）的Demo
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6602969.html
+        //All 判断所有的元素是否满足条件
+        //Any 判断存在一个元素满足条件
+        //Contain 判断是否包含元素
+        #endregion
+
         /// <summary>
         /// Linq-All 的使用案例
         /// 判断所有的元素是否满足条件
@@ -672,6 +686,250 @@ namespace CSharp测试项目20181203
         }
         #endregion
 
+        #region 聚合函数（Aggregate）Demo
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6603101.html
+        //Aggregate 在集合上执行自定义聚集操作
+        //Average 求平均数
+        //Count 求集合的总数
+        //LongCount 求集合的总数
+        //Max 最大值
+        //Min 最小值
+        //Sum 总数
+        #endregion
+
+        /// <summary>
+        /// Linq-Aggregate 使用案例
+        /// 在集合上执行自定义聚集操作【操作原理：“斐波那契数列”的思想，第三个值是前两个值的一个操作结果..循环】
+        /// </summary>
+        public void Linq_Aggregate_Demo()
+        {
+            #region 测试数据
+            //数值集合
+            IList<string> strList = new List<string>() { "One", "Tow", "Three", "Four", "Five" };
+
+            //对象列表
+            // Student collection
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 } ,
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 } ,
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+            };
+            string commaSeparatedString = strList.Aggregate<string>(
+                                        (s1, s2) => s1 + "," + s2); //第一次计算之后，计算的结果会替换掉第一个参数，继续参与下一次计算。
+
+            string commaSeparatedStudentNames = studentList.Aggregate<Student, string>(//第一个类型：数据源类型；第二个类型：累积变量 的类型。
+                                        "Student Names: ",  // seed value（初始值，如果没有，则是集合中的 第一个元素）
+                                        (str, s) => str += s.StudentName + ",");
+            Console.WriteLine(commaSeparatedString);
+            Console.WriteLine(commaSeparatedStudentNames);
+            #endregion
+
+            #region Linq 方法语法
+
+
+
+            #endregion
+
+            #region Linq 查询语法
+
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Average(平均数) 使用案例 
+        /// 支持 数字的 基本类型 集合：float,double,decimal,int,long
+        /// </summary>
+        public void Linq_Average_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 20, 30 };
+
+            //测试数据二
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+
+            #endregion
+
+            #region Linq 方法语法
+            //测试数据一 案例
+            var avg = intList.Average();
+
+            Console.WriteLine("Average: {0}", avg);
+            //测试数据二 案例
+            var avgAge = studentList.Average(s => s.Age);
+
+            Console.WriteLine("Average Age of Student: {0}", avgAge);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Max(最大值) 使用案例 
+        /// </summary>
+        public void Linq_Count_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 20 }
+             };
+
+            #endregion
+
+            #region Linq 方法语法            
+            var numOfStudents = studentList.Count();
+
+            Console.WriteLine("Number of Students: {0}", numOfStudents);
+
+            //添加过滤条件，然后计数【不使用Where过滤 计数】
+            var numOfStudents1 = studentList.Count(s => s.Age >= 18);
+
+            Console.WriteLine("Number of Students: {0}", numOfStudents1);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            var totalAge = (from s in studentList
+                            select s.Age).Count();
+
+            Console.WriteLine("totalAge of Students: {0}", totalAge);
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Max(最大值) 使用案例  
+        ///支持 数字的 基本类型 集合：float,double,decimal,int,long
+        /// </summary>
+        public void Linq_Max_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 21, 30, 45, 50, 87 };
+
+            //测试数据二
+            IList<Student> studentList = new List<Student> () {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+            //测试数据一 案例            
+            var largest = intList.Max();
+
+            Console.WriteLine("Largest Element: {0}", largest);
+            //求偶数 里面的最大值。（Max中的 方法参数 功能：元素的转换）
+            var largestEvenElements = intList.Max(i => {
+                if (i % 2 == 0)
+                    return i;
+
+                return 0;
+            });
+
+            Console.WriteLine("Largest Even Element: {0}", largestEvenElements);
+
+            //测试数据二 案例（Max中的 方法参数 功能：元素的转换）
+            var oldest = studentList.Max(s => s.Age);
+
+            Console.WriteLine("Oldest Student Age: {0}", oldest);
+
+            var studentWithLongName = studentList.Max(); //【重点】如果直接对 对象进行Max 操作，该对象需要实现 IComparable接口
+
+            Console.WriteLine("Student ID: {0}, Student Name: {1}", studentWithLongName.StudentID, studentWithLongName.StudentName);
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Sum(求和、总数) 使用案例  
+        ///支持 数字的 基本类型 集合：float,double,decimal,int,long
+        /// </summary>
+        public void Linq_Sum_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 21, 30, 45, 50, 87 };
+
+            //测试数据二
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+            //测试数据一 案例            
+            var total = intList.Sum();
+
+            Console.WriteLine("Sum: {0}", total);
+            //计算所有偶数的和（结合 元素转换方法 参数 来实现）
+            //如果是正常情况下，我们肯定使用的是，遍历整个集合，将偶数加起来。现在我们不需要写很长的代码就可以实现了。Linq中的Sum方法也可以实现。
+            var sumOfEvenElements = intList.Sum(i => {
+                if (i % 2 == 0)
+                    return i;
+
+                return 0;
+            });
+
+            Console.WriteLine("Sum of Even Elements: {0}", sumOfEvenElements);
+
+            //测试数据二 案例（Sum中的 方法参数 功能：元素的转换）
+            var sumOfAge = studentList.Sum(s => s.Age);
+
+            Console.WriteLine("Sum of all student's age: {0}", sumOfAge);
+            //数据汇总（结合 元素转换方法 参数 来实现，同时可以实现元素的过滤）
+            var numOfAdults = studentList.Sum(s => {
+
+                if (s.Age >= 18)
+                    return s.Age;
+                else
+                    return 0;
+            });
+
+            Console.WriteLine("Total Adult Students: {0}", numOfAdults);
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+        #endregion
+
         #region TemplateDemo
         /// <summary>
         /// Linq 语法测试模板
@@ -700,12 +958,27 @@ namespace CSharp测试项目20181203
 }
 
 #region 当前测试对象 辅助类
-public class Student
+public class Student : IComparable<Student>
 {
     public int StudentID { get; set; }
     public string StudentName { get; set; }
     public int StandardID { get; set; }
     public int Age { get; set; }
+
+    /// <summary>
+    /// 比较器
+    /// </summary>
+    /// <param name="other">下一个（other）对象</param>
+    /// <returns>返回值的含义如下：值 小于 0 此对象小于 other参数。</returns>
+    /// <returns>返回值的含义如下：值 等于 0 此对象等于 other参数。</returns>
+    /// <returns>返回值的含义如下：值 大于 0 此对象大于 other参数。</returns>
+    public int CompareTo(Student other)
+    {
+        if (this.StudentName.Length >= other.StudentName.Length)
+            return 1;
+
+        return 0;
+    }
 }
 
 public class Student_01
