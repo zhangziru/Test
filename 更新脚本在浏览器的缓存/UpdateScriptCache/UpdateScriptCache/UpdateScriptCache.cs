@@ -435,7 +435,7 @@ namespace UpdateScriptCache
             //如果是更新的，筛选出引用文件
             isEdit = false;
             try
-            {             
+            {
                 string scriptRelativePath = scriptPath.Substring(projectRootPath.Length + 1).Replace("\\", "/");//脚本相对路径
                 string scriptContent = File.ReadAllText(scriptPath, Encoding.Default);
                 string scriptMD5 = MD5(scriptContent);//脚本文件的MD5码
@@ -610,10 +610,42 @@ namespace UpdateScriptCache
             foreach (var item in ((ListBox)ctmRigthControl.SourceControl).SelectedItems)
             {
                 selectText += item.ToString() + Environment.NewLine;
-            }            
+            }
             if (selectText != "")
             {
                 Clipboard.SetText(selectText);
+            }
+        }
+
+        private void 全选ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListBox sourceControl = ((ListBox)ctmRigthControl.SourceControl);
+            for (int i = 0; i < sourceControl.Items.Count; i++)
+            {
+                sourceControl.SetSelected(i, true);
+            }
+        }
+        private void 全部取消ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListBox sourceControl = ((ListBox)ctmRigthControl.SourceControl);
+            for (int i = 0; i < sourceControl.Items.Count; i++)
+            {
+                sourceControl.SetSelected(i, false);
+            }
+        }
+        private void 反选ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListBox sourceControl = ((ListBox)ctmRigthControl.SourceControl);
+            for (int i = 0; i < sourceControl.Items.Count; i++)
+            {
+                if (sourceControl.GetSelected(i))
+                {
+                    sourceControl.SetSelected(i, false);
+                }
+                else
+                {
+                    sourceControl.SetSelected(i, true);
+                }
             }
         }
         //项目路径文本框双击
@@ -735,7 +767,7 @@ namespace UpdateScriptCache
                 {
                     MessageBox.Show("您给定的引用文件路径不存在！");
                     return;
-                } 
+                }
                 #endregion
 
                 lbxScriptOutput.Items.Clear();
@@ -861,5 +893,7 @@ namespace UpdateScriptCache
                 MessageBox.Show("当前的脚本引用替换出错！");
             }
         }
+
+
     }
 }

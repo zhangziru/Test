@@ -59,6 +59,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.tbxScriptPath = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.全选ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.全部取消ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.反选ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -233,14 +236,17 @@
             // ctmRigthControl
             // 
             this.ctmRigthControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.全选ToolStripMenuItem,
+            this.全部取消ToolStripMenuItem,
+            this.反选ToolStripMenuItem,
             this.复制ToolStripMenuItem});
             this.ctmRigthControl.Name = "ctmRigthControl";
-            this.ctmRigthControl.Size = new System.Drawing.Size(101, 26);
+            this.ctmRigthControl.Size = new System.Drawing.Size(153, 114);
             // 
             // 复制ToolStripMenuItem
             // 
             this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.复制ToolStripMenuItem.Text = "复制";
             this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
             // 
@@ -367,6 +373,27 @@
             this.label6.TabIndex = 1;
             this.label6.Text = "脚本路径";
             // 
+            // 全选ToolStripMenuItem
+            // 
+            this.全选ToolStripMenuItem.Name = "全选ToolStripMenuItem";
+            this.全选ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.全选ToolStripMenuItem.Text = "全选";
+            this.全选ToolStripMenuItem.Click += new System.EventHandler(this.全选ToolStripMenuItem_Click);
+            // 
+            // 全部取消ToolStripMenuItem
+            // 
+            this.全部取消ToolStripMenuItem.Name = "全部取消ToolStripMenuItem";
+            this.全部取消ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.全部取消ToolStripMenuItem.Text = "全部取消";
+            this.全部取消ToolStripMenuItem.Click += new System.EventHandler(this.全部取消ToolStripMenuItem_Click);
+            // 
+            // 反选ToolStripMenuItem
+            // 
+            this.反选ToolStripMenuItem.Name = "反选ToolStripMenuItem";
+            this.反选ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.反选ToolStripMenuItem.Text = "反选";
+            this.反选ToolStripMenuItem.Click += new System.EventHandler(this.反选ToolStripMenuItem_Click);
+            // 
             // UpdateScriptCache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -428,6 +455,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tbxScriptPath;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolStripMenuItem 全选ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 全部取消ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 反选ToolStripMenuItem;
     }
 }
 
