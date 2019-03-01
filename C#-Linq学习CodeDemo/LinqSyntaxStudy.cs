@@ -27,13 +27,21 @@ namespace CSharp测试项目20181203
             //Linq_All_Demo();//Linq_All方法的Demo
             //Linq_Any_Demo();//Linq_Any方法的Demo
             //Linq_Contain_Demo();//Linq_Contain方法的Demo
-            
+
             //聚合函数
-            Linq_Aggregate_Demo();//Linq_Aggregate方法的Demo
-            Linq_Average_Demo();//Linq_Average方法的Demo
-            Linq_Count_Demo();//Linq_Count方法的Demo
-            Linq_Max_Demo();//Linq_Max方法的Demo
-            Linq_Sum_Demo();//Linq_Sum方法的Demo
+            //Linq_Aggregate_Demo();//Linq_Aggregate方法的Demo
+            //Linq_Average_Demo();//Linq_Average方法的Demo
+            //Linq_Count_Demo();//Linq_Count方法的Demo
+            //Linq_Max_Demo();//Linq_Max方法的Demo
+            //Linq_Sum_Demo();//Linq_Sum方法的Demo
+
+            //查询操作（ElementAt, ElementAtOrDefault）
+            //Linq_ElementAt_Demo();//Linq_ElementAt方法的Demo
+            //Linq_ElementAtOrDefault_Demo();//Linq_ElementAtOrDefault方法的Demo
+            //Linq_First_Demo();//Linq_First方法的Demo【Linq_Last同理】
+            //Linq_FirstOrDefault_Demo();//Linq_FirstOrDefault方法的Demo【Linq_LastOrDefault同理】
+            //Linq_Single_Demo();//Linq_Single方法的Demo
+            Linq_SingleOrDefault_Demo();//Linq_SingleOrDefault方法的Demo
         }
         #endregion
 
@@ -271,7 +279,7 @@ namespace CSharp测试项目20181203
             foreach (var ageGroup in groupedResult)
             {
                 Console.WriteLine("Age Group: {0}", ageGroup.Key);  //Each group has a key 
-
+                var list = ageGroup.ToList();//可以获取分组后的对象列表
                 foreach (Student s in ageGroup)  //Each group has a inner collection  
                     Console.WriteLine("Student Name: {0}", s.StudentName);
             }
@@ -829,7 +837,7 @@ namespace CSharp测试项目20181203
             IList<int> intList = new List<int>() { 10, 21, 30, 45, 50, 87 };
 
             //测试数据二
-            IList<Student> studentList = new List<Student> () {
+            IList<Student> studentList = new List<Student>() {
                 new Student() { StudentID = 1, StudentName = "John", Age = 13 },
                 new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
                 new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
@@ -844,7 +852,8 @@ namespace CSharp测试项目20181203
 
             Console.WriteLine("Largest Element: {0}", largest);
             //求偶数 里面的最大值。（Max中的 方法参数 功能：元素的转换）
-            var largestEvenElements = intList.Max(i => {
+            var largestEvenElements = intList.Max(i =>
+            {
                 if (i % 2 == 0)
                     return i;
 
@@ -897,7 +906,8 @@ namespace CSharp测试项目20181203
             Console.WriteLine("Sum: {0}", total);
             //计算所有偶数的和（结合 元素转换方法 参数 来实现）
             //如果是正常情况下，我们肯定使用的是，遍历整个集合，将偶数加起来。现在我们不需要写很长的代码就可以实现了。Linq中的Sum方法也可以实现。
-            var sumOfEvenElements = intList.Sum(i => {
+            var sumOfEvenElements = intList.Sum(i =>
+            {
                 if (i % 2 == 0)
                     return i;
 
@@ -911,7 +921,8 @@ namespace CSharp测试项目20181203
 
             Console.WriteLine("Sum of all student's age: {0}", sumOfAge);
             //数据汇总（结合 元素转换方法 参数 来实现，同时可以实现元素的过滤）
-            var numOfAdults = studentList.Sum(s => {
+            var numOfAdults = studentList.Sum(s =>
+            {
 
                 if (s.Age >= 18)
                     return s.Age;
@@ -928,6 +939,260 @@ namespace CSharp测试项目20181203
 
             #endregion
         }
+        #endregion
+
+        #region ElementAt, ElementAtOrDefault 的Demo
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6607355.html
+        //ElementAt             返回  指定索引的元素，如果索引超过集合长度，则抛出异常
+        //ElementAtOrDefault    返回  指定索引的元素，如果索引超过集合长度，则返回元素的默认值，不抛出异常
+        //First                 返回  集合的第一个元素，可以根据指定条件返回
+        //FirstOrDefault        返回  集合的第一个元素，可以根据指定条件返回，如果集合不存在元素，则返回元素的默认值
+        //Last                  返回  集合中的最后一个元素，可以根据条件返回
+        //LastOrDefault         返回  集合中的最后一个元素，可以根据条件返回，如果集合不存在，则返回元素的默认值
+        //Single                返回  集合中的一个元素，可以根据条件返回，如果集合不在存元素或有多个元素，则抛出异常
+        //SingleOrDefault       返回  集合中的一个元素，可以根据条件返回，如果集合不在存元素，则返回元素默认值，如果存在多个元素，则抛出异常
+        #endregion
+
+        /// <summary>
+        /// Linq-ElementAt使用案例
+        /// 返回：指定索引的元素（索引超出异常）
+        /// </summary>
+        public void Linq_ElementAt_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 20, 30 };
+
+            //测试数据二
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+            foreach (var item in intList)
+            {
+                Console.Write("{0},", item);
+            }
+            Console.WriteLine();
+            Console.WriteLine("第{0}个元素是：{1}", 1, intList.ElementAt(0));
+            Student model = studentList.ElementAt(0);//集合中第 1 个元素
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-ElementAtOrDefault使用案例
+        /// 返回：指定索引的元素（索引超出返回默认值，不抛异常）
+        /// 值类型 数据组，索引超出 返回默认值
+        /// 引用类型（包括string）数组，索引超出返回 null
+        /// </summary>
+        public void Linq_ElementAtOrDefault_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 20, 30 };
+            IList<string> strList = new List<string>() { "10", "20", "30" };
+            //测试数据二
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+            foreach (var item in intList)
+            {
+                Console.Write("{0},", item);
+            }
+            Console.WriteLine();
+            Console.WriteLine("第{0}个元素是：{1}", 4, intList.ElementAtOrDefault(3));//值类型数据组，索引超出 返回默认值
+            var tempt = strList.ElementAtOrDefault(3);//string类型的数组 测试
+            Student model = studentList.ElementAtOrDefault(5);//引用类型（包括string）数组，索引超出返回 null
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-First使用案例
+        /// 返回：集合的第一个元素，可以根据指定条件返回
+        /// 加条件的重载参数 是一个Lambda表达式（即：一个方法）
+        /// </summary>
+        public void Linq_First_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 20, 30 };
+            //测试数据二
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+            foreach (var item in intList)
+            {
+                Console.Write("{0},", item);
+            }
+            Console.WriteLine();
+            Console.WriteLine("第{0}个元素是：{1}", 1, intList.First());//返回数组中第一个元素
+            //添加指定的条件
+            var tempt = intList.First(p=>p>10);//返回元素集合中大于10 的第一个元素
+
+            Student model = studentList.First();//返回数组中第一个对象
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-FirstOrDefault使用案例
+        /// 返回：集合的第一个元素，如果集合不存在元素，则返回元素的默认值（针对加条件重载，过滤集合可能为空）
+        /// 加条件的重载参数 是一个Lambda表达式（即：一个方法）
+        /// </summary>
+        public void Linq_FirstOrDefault_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 20, 30 };
+            //测试数据二
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+            foreach (var item in intList)
+            {
+                Console.Write("{0},", item);
+            }
+            Console.WriteLine();
+            Console.WriteLine("第{0}个元素是：{1}", 1, intList.FirstOrDefault());//返回数组中第一个元素
+            //添加指定的条件
+            var tempt = intList.FirstOrDefault(p => p > 30);//过滤元素集合中没有元素   返回元素的默认值（值类型：默认值。引用类型：null）
+
+            Student model = studentList.FirstOrDefault(p=>p.Age>21);//返回null
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Single使用案例
+        /// 返回：集合中的 唯一 一个元素 ；(如果集合不在存元素或有多个元素，则抛出异常),可以根据指定条件返回
+        /// 加条件的重载参数 是一个Lambda表达式（即：一个方法）
+        /// </summary>
+        public void Linq_Single_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 20, 30 };
+            //测试数据二
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+            foreach (var item in intList)
+            {
+                Console.Write("{0},", item);
+            }
+            Console.WriteLine();
+            //添加指定的条件
+            var tempt = intList.Single(p => p > 20);//过滤元素集合中 仅有一个元素 则 返回，否则抛出异常
+            //intList.Single();
+            Student model = studentList.Single(p => p.Age > 20);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-SingleOrDefault使用案例
+        /// 返回：集合中的 唯一 一个元素 ；(如果集合“不在存元素”，则 “返回元素默认值”，如果“存在多个元素”，则“抛出异常”)
+        /// 加条件的重载参数 是一个Lambda表达式（即：一个方法）
+        /// </summary>
+        public void Linq_SingleOrDefault_Demo()
+        {
+            #region 测试数据
+            //测试数据一
+            IList<int> intList = new List<int>() { 10, 20, 30 };
+            //测试数据二
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+            foreach (var item in intList)
+            {
+                Console.Write("{0},", item);
+            }
+            Console.WriteLine();
+            //添加指定的条件
+            //1、过滤元素集合中 仅有一个元素 则 返回
+            var tempt = intList.SingleOrDefault(p => p > 20);
+            //2、过滤元素集合中 没有元素（为空） 则 返回 元素的默认值
+            var tempt1 = intList.SingleOrDefault(p => p > 30);
+            //3、过滤元素集合中多个元素 则 抛异常
+            //Student model = studentList.SingleOrDefault(p => p.Age > 10);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+
         #endregion
 
         #region TemplateDemo
