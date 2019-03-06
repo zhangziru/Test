@@ -1,0 +1,129 @@
+参考链接：http://www.cnblogs.com/moss_tan_jun/archive/2011/11/26/2263988.html
+1、本文只讲使用，不讲意义，使用场景。
+2、定义一个游标，
+	1）语法：
+			DECLARE cursor_name CURSOR [ LOCAL | GLOBAL ] 
+			[ FORWARD_ONLY | SCROLL ] 
+			[ STATIC | KEYSET | DYNAMIC | FAST_FORWARD ] 
+			[ READ_ONLY | SCROLL_LOCKS | OPTIMISTIC ] 
+			[ TYPE_WARNING ] 
+			FOR select_statement 
+			[ FOR UPDATE [ OF column_name [ ,...n ] ] ]
+			[;]
+	2）[]  符号，表示可选项。
+	3）|   符号，表示 或 关系。任意一项
+3、游标分为 游标类型 和 游标变量
+	1）游标类型：定义后直接赋值
+		eg：DECLARE test_Cursor CURSOR FOR 
+			SELECT * FROM dbo.Table
+	2）游标变量：先定义后赋值（和使用一般的变量没有什么区别）
+		eg：DECLARE @test_Cursor CURSOR -- 定义变量
+			SET @test_Cursor = CURSOR FOR --重新赋值
+			SELECT * FROM dbo.Table
+4、创建完游标以后，在打开游标以后，游标内操作方式 获取的数据源 都来自于游标实例对象（就是声明的游标）。【核心】
+5、定义游标的参数选择，总共分5组
+	1）第一组，LOCAL和GLOBAL二选一
+		（1）LOCAL（局部游标）：游标的生存周期只在 批处理 或 函数 或 存储过程 中可见
+		（2）GLOBAL（全局游标）：全局内有效
+	2）第二组，FORWARD_ONLY 和 SCROLL 二选一
+		（1）FORWARD_ONLY：游标只能从开始向后读取数据，FETCH NEXT是唯一的选项
+		（2）SCROLL：游标可以向任何方向 和 任何位置 移动，来读取数据。
+		（3）取游标指向的数据，用关键字 FECTH 关键字，结合INTO关键，将从游标中取出的数据填充到指定的变量中【重点，核心功能】
+		（4）游标的指向关键字：第一行（FIRST),最后一行(LAST),下一行(NEXT),上一行(PRIOR),跳到某行(ABSOLUTE(n)),相对于当前位置向后移动几行(RELATIVE(n))
+		（5）所以，第一组 选 FORWARD_ONLY ，游标的指向，只能选择 NEXT 关键字。
+	3）第三组，STATIC  KEYSET  DYNAMIC  和 FAST_FORWARD 四选一
+		（1）STATIC（静态，默认）:游标中的内容 和 表内底层 数据互相独立，底层不会影响游标中的数据
+		（2）DYNAMIC（动态）：恰好于STATIC（静态，默认）相反，底层中的数据改变，游标中的内容 会随之 改变。
+		（3）FAST_FORWARD：根据情况，自动选择使用STATIC（静态，默认），还是DYNAMIC（动态）；
+		（4）KEYSET：游标内存的是 底层表中的主键。
+	4）第四组， READ_ONLY  SCROLL_LOCKS  OPTIMISTIC 三选一 
+		（1）READ_ONLY（只读）：只能读取数据,游标不能做任何更新操作
+		（2）SCROLL_LOCKS （滚动_锁定）： 将读入游标的所有数据进行锁定，防止其他程序进行更改
+		（3）OPTIMISTIC:看推荐的链接吧，不常用，我也没看懂。
+6、定义完毕，上述步骤都是在储备，定义游标。接下来打开游标。
+	1）当 LOCAL(局部游标)和GLOBAL（全局游标）变量重名时，默认打开 GLOBAL（全局游标）
+	2）语法：
+		eg：OPEN 游标变量名
+7、使用游标：
+	1）其实，只需要设置第一组，第二组参数 即可。其它组采用默认值即可满足需求。
+	2）代码如下：
+			DECLARE test_Cursor CURSOR --定义游标变量
+			FOR --赋值
+			SELECT name FROM dbo.Table
+			OPEN test_Cursor --打开游标
+			DECLARE @temptValue NVARCHAR(10)--声明接收数据的变量
+			--读取下一行，接收数据
+			FECTH NEXT FROM test_Cursor --从当前游标中取数据（游标时一行行来读取数据的）
+			INTO @temptValue  --将取出的数据，填充到 接收数据的变量中
+	3）FECTH NEXT ... 	INTO  ...只能读取一次，所以，游标经常会和 全局变量（@@FECTH_STATUS）与 循环（WHILE）来共同使用，以达到遍历 游标所在的数据集的目的。
+		（1）代码如下：
+			DECLARE test_Cursor CURSOR --定义游标变量
+			FOR --赋值
+			SELECT name FROM dbo.Table
+			OPEN test_Cursor --打开游标
+			DECLARE @temptValue NVARCHAR(10)--声明接收数据的变量
+			
+			
+			--循环
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+				--读取下一行，接收数据
+				FECTH NEXT FROM test_Cursor --从当前游标中取数据（游标时一行行来读取数据的）
+				INTO @temptValue  --将取出的数据，填充到 接收数据的变量中
+			END
+			
+			CLOSE test_Cursor --关闭游标
+			DEALLOCATE test_Cursor --释放游标
+		（2）上述代码代码有一个问题，执行一遍后，就查不到数据了。问题的原因，出在了 全局变量@@FETCH_STATUS中。
+	4）@@FETCH_STATUS是MSSQL的一个全局变量，它的值有三种（返回整形）：0,-1,-2
+		（1）0 ：FETCH 语句成功，即：提取数据成功
+		（2）-1: FETCH 语句失败或此行不在结果集中，即：提取数据失败 或者 游标已经不在结果集合中
+		（3）-2：被提取的行不存在，这种情况只可能出现在 游标的跳到指定位置，和 相对当前位置 进行 游标的移动的操作里面。
+		（4）参考链接：https://www.cnblogs.com/onmyway20xx/articles/3626734.html
+	5）上述的 第 3）>（2） 中的@@FETCH_STATUS 问题，解决方案：
+		（1）问题分析：由于 @@FETCH_STATUS 相当于一个静态变量，所以当我们第一次执行完毕以后，游标读取到了结果集最后，此时提取失败，返回-1。即：执行完一遍以后@@FETCH_STATUS = -1;所以再次执行的时候，读取不出来数据。
+		（2）解决方案：我们可以采用do-while的思想，对于这个游标，我们让它进来之前 都先提取一下数据，此刻 @@FETCH_STATUS=0，然后再循环判断，就OK了。
+		（3）参考代码：
+			DECLARE tempt_cursor CURSOR LOCAL --定义游标变量
+			FOR --赋值
+			SELECT DT_Code
+			FROM B_Dict
+			WHERE DT_Type = 'wire_factory'
+
+			OPEN tempt_cursor --打开游标
+
+			--声明局部变量
+			DECLARE @code VARCHAR(50)
+			DECLARE @flag INT = 0
+			--提取第一次
+			FETCH NEXT
+			FROM tempt_cursor
+			INTO @code
+
+
+			--再循环
+			WHILE @@FETCH_STATUS = 0
+				IF @flag = 0
+				BEGIN
+					SET @flag = 1
+					--更新操作
+					print @code --首次输出
+				END
+				ELSE
+				BEGIN
+					FETCH NEXT
+					FROM tempt_cursor
+					INTO @code --后续提取
+					
+					if @@FETCH_STATUS = 0 --提取成功 再进行相关操作。因为最后一次失败，也会执行后续的代码
+					begin
+					--更新操作
+					print @code
+					end
+				END
+
+			CLOSE tempt_cursor
+
+			DEALLOCATE tempt_cursor
+			GO
+		（4）总结：全局变量@@FETCH_STATUS 的值取决 于 FETCH .. INTO。只要执行成功就返回了0。所以也是支持游标嵌套的。因为最底层的提取失败后，退出了循环。回到上层 又执行了一次Fetch ...INTO.. 全局@@FETCH_STATUS（提取状态）就会被重置为0.直到最上层也提取失败为止。	
