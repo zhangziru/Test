@@ -41,7 +41,21 @@ namespace CSharp测试项目20181203
             //Linq_First_Demo();//Linq_First方法的Demo【Linq_Last同理】
             //Linq_FirstOrDefault_Demo();//Linq_FirstOrDefault方法的Demo【Linq_LastOrDefault同理】
             //Linq_Single_Demo();//Linq_Single方法的Demo
-            Linq_SingleOrDefault_Demo();//Linq_SingleOrDefault方法的Demo
+            //Linq_SingleOrDefault_Demo();//Linq_SingleOrDefault方法的Demo
+
+            //判断集合相等(SequenceEqual)
+            //Linq_SequenceEqual_Demo();//Linq_SequenceEqual方法的Demo
+
+            //同类型元素集合的连接（Concat）
+            //Linq_Concat_Demo();//Linq_Concat方法的Demo
+
+            //集合为空的处理方式(DefaultIfEmpty)
+            //Linq_DefaultIfEmpty_Demo();//Linq_DefaultIfEmpty方法的Demo
+
+            // Enumerable 静态方法的使用  Empty、Range、Repeat
+            //Linq_Empty_Demo();//Linq_Empty方法的Demo【快速构建一个 指定类型的空集合】
+            //Linq_Range_Demo();//Linq_Range方法的Demo【快速构建一个 自增值的整形集合】
+            Linq_Repeat_Demo();//Linq_Repeat方法的Demo【快速构建一个 重复值的整形集合】
         }
         #endregion
 
@@ -1060,7 +1074,7 @@ namespace CSharp测试项目20181203
             Console.WriteLine();
             Console.WriteLine("第{0}个元素是：{1}", 1, intList.First());//返回数组中第一个元素
             //添加指定的条件
-            var tempt = intList.First(p=>p>10);//返回元素集合中大于10 的第一个元素
+            var tempt = intList.First(p => p > 10);//返回元素集合中大于10 的第一个元素
 
             Student model = studentList.First();//返回数组中第一个对象
 
@@ -1102,7 +1116,7 @@ namespace CSharp测试项目20181203
             //添加指定的条件
             var tempt = intList.FirstOrDefault(p => p > 30);//过滤元素集合中没有元素   返回元素的默认值（值类型：默认值。引用类型：null）
 
-            Student model = studentList.FirstOrDefault(p=>p.Age>21);//返回null
+            Student model = studentList.FirstOrDefault(p => p.Age > 21);//返回null
 
             #endregion
 
@@ -1195,6 +1209,186 @@ namespace CSharp测试项目20181203
 
         #endregion
 
+        #region 判断集合相等（SequenceEqual）的Demo
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6607355.html
+        //SequenceEqual             判断集合相等
+        //判断集合相等(基本类型的判断，和引用类型的判断，是不相同的。)
+        //1、如果集合的元素是简单类型，则判断两个集合的元素个数，元素值，出现的位置是否一样
+        //2、如果集合的元素是复杂类型，则判断两个集合的元素引用是否相同、元素个数，元素值，出现的位置是否一样
+        //2.1、如果要判断集合元素为复杂类型的值是否相等，则要实现IEqualityComparer<T>接口
+        //2.2、比较器的定义，见下述中 “另外一套比较器”区域（region）中的定义
+        //2.3、引用对象之间的比较，需要自己定义一个比较器【重点】
+        #endregion
+
+        /// <summary>
+        /// Linq-SequenceEqual（顺序等值比较） 使用案例
+        /// 判断集合相等【没什么用】
+        /// </summary>
+        public void Linq_SequenceEqual_Demo()
+        {
+            #region 测试数据
+            //基本的类型集合（两组）
+            List<int> list1 = new List<int>() { 1, 2, 3, 4, 5 };
+            List<int> list2 = new List<int>() { 1, 2, 3, 4, 5 };
+
+            //复杂类型的集合
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            IList<Student> studentList1 = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13 },
+                new Student() { StudentID = 2, StudentName = "Moin", Age = 21 },
+                new Student() { StudentID = 3, StudentName = "Bill", Age = 18 },
+                new Student() { StudentID = 4, StudentName = "Ram", Age = 20 },
+                new Student() { StudentID = 5, StudentName = "Ron", Age = 15 }
+             };
+            #endregion
+
+            #region Linq 方法语法
+
+            bool result = list1.SequenceEqual(list2);//基本类型，直接使用
+
+            bool result1 = studentList.SequenceEqual(studentList1, new Student_01Comparer());//引用类型的比较，需要自定义 比较器
+            #endregion
+            //没有对应的查询语法
+            #region Linq 查询语法
+
+
+            #endregion
+        }
+        #endregion
+
+        #region 连接两个元素类型相同的集合（Concat）的Demo
+        /// <summary>
+        /// Linq-Concat 的使用案例
+        /// 连接两个元素类型相同的集合
+        /// 返回 新的集合
+        /// </summary>
+        public void Linq_Concat_Demo()
+        {
+            #region 测试数据
+
+            IList<string> collection1 = new List<string>() { "One", "Two", "Three" };
+            IList<string> collection2 = new List<string>() { "Five", "Six" };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var collection3 = collection1.Concat(collection2);
+
+            foreach (string str in collection3)
+                Console.WriteLine(str);
+
+
+            #endregion
+
+            #region Linq 查询语法
+
+
+            #endregion
+        }
+        #endregion
+
+        #region 集合为空的处理（DefaultIfEmpty ）的Demo
+        /// <summary>
+        /// Linq-DefaultIfEmpty 的使用案例
+        /// 1、如果集合元素个数为0，调用DefaultIfEmpty后，则返回一个新的集合，且包含一个元素（元素值为默认值）
+        /// 2、另一个方法重载接收一个参数，代替默认值返回
+        /// 【注意】调用该方法，返回的仍然是一个集合。
+        /// </summary>
+        public void Linq_DefaultIfEmpty_Demo()
+        {
+            #region 测试数据
+
+            IList<string> emptyList = new List<string>();
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var newList1 = emptyList.DefaultIfEmpty();//集合为空的默认处理方式
+            var newList2 = emptyList.DefaultIfEmpty("None");//集合为空的指定处理方式
+
+            Console.WriteLine("Count: {0}", newList1.Count());
+            Console.WriteLine("Value: {0}", newList1.ElementAt(0));
+
+            Console.WriteLine("Count: {0}", newList2.Count());
+            Console.WriteLine("Value: {0}", newList2.ElementAt(0));
+            #endregion
+
+            #region Linq 查询语法
+
+
+            #endregion
+        }
+        #endregion
+
+        #region Empty、Range、Repeat方法的Demo
+
+        /// <summary>
+        /// Linq-Empty 的使用案例
+        /// Empty不是IEnumerable的扩展方法，是Enumerable的静态方法
+        /// 返回 指定类型的空集合
+        /// </summary>
+        public void Linq_Empty_Demo()
+        {
+            #region Linq 方法语法
+            var emptyCollection1 = Enumerable.Empty<string>();
+            var emptyCollection2 = Enumerable.Empty<Student>();
+
+            Console.WriteLine("Count: {0} ", emptyCollection1.Count());
+            Console.WriteLine("Type: {0} ", emptyCollection1.GetType().Name);
+
+            Console.WriteLine("Count: {0} ", emptyCollection2.Count());
+            Console.WriteLine("Type: {0} ", emptyCollection2.GetType().Name);
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Range  的使用案例
+        /// 方法返回指定元素个数的集合，集合以给定的值开始 （元素类型为int），是Enumerable的静态方法
+        /// 返回 整形的一个自增编号集合
+        /// </summary>
+        public void Linq_Range_Demo()
+        {
+            #region Linq 方法语法
+
+            var intCollection = Enumerable.Range(10, 10);
+            Console.WriteLine("Total Count: {0} ", intCollection.Count());
+
+            for (int i = 0; i < intCollection.Count(); i++)
+                Console.WriteLine("Value at index {0} : {1}", i, intCollection.ElementAt(i));
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Repeat  的使用案例
+        /// 返回指定元素个数的集合，且元素的值一样，是Enumerable的静态方法
+        /// </summary>
+        public void Linq_Repeat_Demo()
+        {
+            #region Linq 方法语法
+
+            var intCollection = Enumerable.Repeat<int>(10, 10);
+            Console.WriteLine("Total Count: {0} ", intCollection.Count());
+
+            for (int i = 0; i < intCollection.Count(); i++)
+                Console.WriteLine("Value at index {0} : {1}", i, intCollection.ElementAt(i));
+
+            #endregion
+        }
+
+        #endregion
+
         #region TemplateDemo
         /// <summary>
         /// Linq 语法测试模板
@@ -1239,9 +1433,10 @@ public class Student : IComparable<Student>
     /// <returns>返回值的含义如下：值 大于 0 此对象大于 other参数。</returns>
     public int CompareTo(Student other)
     {
-        if (this.StudentName.Length >= other.StudentName.Length)
+        if (this.StudentName.Length > other.StudentName.Length)
             return 1;
-
+        if (this.StudentName.Length < other.StudentName.Length)
+            return -1;
         return 0;
     }
 }
