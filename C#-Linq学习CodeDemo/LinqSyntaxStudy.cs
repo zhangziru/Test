@@ -53,9 +53,15 @@ namespace CSharp测试项目20181203
             //Linq_DefaultIfEmpty_Demo();//Linq_DefaultIfEmpty方法的Demo
 
             // Enumerable 静态方法的使用  Empty、Range、Repeat
-            //Linq_Empty_Demo();//Linq_Empty方法的Demo【快速构建一个 指定类型的空集合】
-            //Linq_Range_Demo();//Linq_Range方法的Demo【快速构建一个 自增值的整形集合】
-            Linq_Repeat_Demo();//Linq_Repeat方法的Demo【快速构建一个 重复值的整形集合】
+            //Enumerable_Empty_Demo();//Enumerable_Empty方法的Demo【快速构建一个 指定类型的空集合】
+            //Enumerable_Range_Demo();//Enumerable_Range方法的Demo【快速构建一个 自增值的整形集合】
+            //Enumerable_Repeat_Demo();//Enumerable_Repeat方法的Demo【快速构建一个 重复值的整形集合】
+
+            //Linq查询操作 Distinct、Except、Intersect、Union
+            //Linq_Distinct_Demo();//Linq_Distinct方法的Demo 去重
+            //Linq_Except_Demo();//Linq_Except方法的Demo 差集
+            //Linq_Intersect_Demo();//Linq_Intersect方法的Demo 交集
+            //Linq_Union_Demo();//Linq_Union方法的Demo 并集(同时去除重复的数据)
         }
         #endregion
 
@@ -1337,7 +1343,7 @@ namespace CSharp测试项目20181203
         /// Empty不是IEnumerable的扩展方法，是Enumerable的静态方法
         /// 返回 指定类型的空集合
         /// </summary>
-        public void Linq_Empty_Demo()
+        public void Enumerable_Empty_Demo()
         {
             #region Linq 方法语法
             var emptyCollection1 = Enumerable.Empty<string>();
@@ -1357,7 +1363,7 @@ namespace CSharp测试项目20181203
         /// 方法返回指定元素个数的集合，集合以给定的值开始 （元素类型为int），是Enumerable的静态方法
         /// 返回 整形的一个自增编号集合
         /// </summary>
-        public void Linq_Range_Demo()
+        public void Enumerable_Range_Demo()
         {
             #region Linq 方法语法
 
@@ -1374,7 +1380,7 @@ namespace CSharp测试项目20181203
         /// Linq-Repeat  的使用案例
         /// 返回指定元素个数的集合，且元素的值一样，是Enumerable的静态方法
         /// </summary>
-        public void Linq_Repeat_Demo()
+        public void Enumerable_Repeat_Demo()
         {
             #region Linq 方法语法
 
@@ -1388,6 +1394,142 @@ namespace CSharp测试项目20181203
         }
 
         #endregion
+
+        #region 查询操作 Distinct、Except、Intersect、Union
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6608024.html
+        //Distinct 去掉集合的重复项
+        //Except 返回两个集合的不同，第一个集合的元素不能出现在第二个集合中
+        //Intersect   返回两个集合的交集，即元素同时出现在两个集合中
+        //Union
+        #endregion
+
+        /// <summary>
+        /// Linq-Distinct 的使用Demo
+        /// 去掉集合的重复项,返回一个新的集合
+        ///元素类型是: 基本类型可以直接使用，如果是引用类型的 需要自己定义比较器(这里不做展示)
+        /// </summary>
+        public void Linq_Distinct_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList = new List<string>() { "One", "Two", "Three", "Two", "Three" };
+
+            IList<int> intList = new List<int>() { 1, 2, 3, 2, 4, 4, 3, 5 };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var distinctList1 = strList.Distinct();
+
+            foreach (var str in distinctList1)
+                Console.WriteLine(str);
+
+            var distinctList2 = intList.Distinct();
+
+            foreach (var i in distinctList2)
+                Console.WriteLine(i);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Except 的使用Demo
+        /// 排除第一个集合中 在第二个集合中的元素，返回一个新的集合
+        /// </summary>
+        public void Linq_Except_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList1 = new List<string>() { "One", "Two", "Three", "Four", "Five" };
+            IList<string> strList2 = new List<string>() { "Four", "Five", "Six", "Seven", "Eight" };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var result = strList1.Except(strList2);
+
+            foreach (string str in result)
+                Console.WriteLine(str);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Intersect 的使用Demo
+        /// 返回两个集合的交集
+        /// </summary>
+        public void Linq_Intersect_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList1 = new List<string>() { "One", "Two", "Three", "Four", "Five" };
+            IList<string> strList2 = new List<string>() { "Four", "Five", "Six", "Seven", "Eight" };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var result = strList1.Intersect(strList2);
+
+            foreach (string str in result)
+                Console.WriteLine(str);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Union 的使用Demo
+        /// 两个集合的并集(会去除其中的 重复项)
+        /// </summary>
+        public void Linq_Union_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList1 = new List<string>() { "One", "Two", "three", "Four" };
+            IList<string> strList2 = new List<string>() { "Two", "THREE", "Four", "Five" };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var result = strList1.Union(strList2);
+
+            foreach (string str in result)
+                Console.WriteLine(str);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+        #endregion
+
+
 
         #region TemplateDemo
         /// <summary>
