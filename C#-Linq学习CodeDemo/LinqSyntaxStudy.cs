@@ -62,6 +62,11 @@ namespace CSharp测试项目20181203
             //Linq_Except_Demo();//Linq_Except方法的Demo 差集
             //Linq_Intersect_Demo();//Linq_Intersect方法的Demo 交集
             //Linq_Union_Demo();//Linq_Union方法的Demo 并集(同时去除重复的数据)
+
+            //Linq_Skip_Demo();//Linq_Skip方法的Demo
+            //Linq_SkipWhile_Demo();//Linq_SkipWhile方法的Demo
+            //Linq_Take_Demo();//Linq_Take方法的Demo
+            Linq_TakeWhile_Demo();//Linq_TakeWhile方法的Demo
         }
         #endregion
 
@@ -1529,7 +1534,146 @@ namespace CSharp测试项目20181203
         }
         #endregion
 
+        #region 查询操作 Skip、SkipWhile、Take、TakeWhile
 
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6608091.html
+        //Skip 跳过序列中指定数量元素，然后返回剩余序列
+        //SkipWhile   只要满足条件，就跳过序列中的元素，然后返回剩余函数
+        //Take    从序列的开头返回指定数量的连续元素
+        //TakeWhile   只要满足条件，就返回元素
+        #endregion
+
+        /// <summary>
+        /// Linq-Skip 的使用Demo
+        /// 跳过序列中指定数量元素，然后返回剩余序列
+        /// </summary>
+        public void Linq_Skip_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList = new List<string>() { "One", "Two", "Three", "Four", "Five" };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var newList = strList.Skip(2);
+
+            foreach (var str in newList)
+                Console.WriteLine(str);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-SkipWhile 的使用Demo
+        /// 只要满足条件，就跳过序列中的元素，然后返回剩余元素
+        /// </summary>
+        public void Linq_SkipWhile_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList = new List<string>() {
+                                            "One",
+                                            "Two",
+                                            "Three",
+                                            "Four",
+                                            "Five",
+                                            "Six"  };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var resultList = strList.SkipWhile(s => s.Length < 4);
+
+            foreach (string str in resultList)
+                Console.WriteLine(str);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-Take 的使用Demo
+        /// 从序列的开头返回指定数量的连续元素
+        /// </summary>
+        public void Linq_Take_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList = new List<string>() {
+                                            "One",
+                                            "Two",
+                                            "Three",
+                                            "Four",
+                                            "Five",
+                                            "Six"  };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            var newList = strList.Take(2);
+
+            foreach (var str in newList)
+                Console.WriteLine(str);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-TakeWhile 的使用Demo
+        /// 从起始位置开始，满足条件，就返回元素，只要不满足，返回当前满足的集合。
+        /// </summary>
+        public void Linq_TakeWhile_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList = new List<string>() {
+                                            "Three",
+                                            "HundredFour",
+                                            "Four",
+                                            "Five"
+            };
+
+            #endregion
+
+            #region Linq 方法语法
+
+
+            var result = strList.TakeWhile(s => s.Length > 4);
+
+            foreach (string str in result)
+                Console.WriteLine(str);
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+
+            #endregion
+        }
+        #endregion
 
         #region TemplateDemo
         /// <summary>
