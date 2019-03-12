@@ -195,3 +195,7 @@ git reset --hard origin/master (这里master要修改为对应的分支名)
 【Git 查看当前配置 用户名，邮箱】
 git config user.name  --查看用户名
 git config user.email  --查看箱地址
+【Git 查看日志】
+git log  --查看当前分支的 提交记录
+git log --graph -all   --在Brash界面中 查看所有的记录
+gitk --all  --在Git的GUI（可视化界面）中显示所有的记录
