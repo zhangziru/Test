@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件基础</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+
+    <!-- 【基本示例】 -->
+    <div id="components-demo">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+    <script>
+        // 定义一个名为 button-counter 的新组件
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        })
+        //组件 就是在Vue实例的可控区域内使用的
+        //组件 就是当作 “自定义元素” 来使用（用户控件）
+        /**********************************************注意************************************/
+        //【注意】每个组件都会各自独立维护它的 count。因为你【每用一次组件】，就会有一个它的【新实例被创建】。
+        //[使用组件] data 并不是直接提供一个对象,取而代之的是，一个组件的 data 选项必须是一个函数。
+        //因为每个实例需要返回一份独立的对象拷贝进行维护。
+        /**********************************************注意************************************/
+        new Vue({ el: '#components-demo' })
+    </script>
+</body>
+
+</html>

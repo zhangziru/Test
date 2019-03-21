@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue语法学习笔记</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <!--Visual Studio Code 常用快捷键-->
+    <!--原文链接：https://www.cnblogs.com/bindong/p/6045957.html-->
+    <a href="https://www.cnblogs.com/bindong/p/6045957.html" target="_blank">VSCode常用快捷键</a>
+    <hr style="border:1px ridge" />
+    <a href="http://www.cnblogs.com/summit7ca/p/6944215.html" target="_blank">VsCode中使用Emmet神器快速编写HTML代码</a>
+    <hr style="border:1px ridge" />
+    <a href="https://docs.emmet.io/">Emmet - Web开发人员必备的工具包</a>
+    <hr style="border:1px ridge" />
+    <a href="https://cn.vuejs.org/v2/guide/" target="_blank">Vue 教程</a><br/>
+    <a href="https://cn.vuejs.org/v2/api/#%E9%80%89%E9%A1%B9-%E6%95%B0%E6%8D%AE" target="_blank">Vue API</a>
+    <!--文本插值-->
+    <div id="app">
+        {{ message }}
+    </div>
+    <hr style="border:1px ridge" />
+
+    <!--Vue 数据 变量 绑定(v-bind:) 标签属性-->
+    <div id="app-2">
+        <span v-bind:title="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span><br /><br />
+        <!--简写方式：用 英文冒号':' 代替 'v-bind:'-->
+        <span :title="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！(语法简写方式)
+        </span>
+    </div>
+    <hr style="border:1px ridge" />
+
+    <!--Vue 【流程控制语句-if】 使用，语法:'v-if'-->
+    <div id="app-3">
+        <p v-if="seen">现在你看到我了</p>
+    </div>
+    <hr style="border:1px ridge" />
+
+    <!--Vue 【流程控制语句-for】 使用，语法:'v-for'-->
+    <div id="app-4">
+        <ol>
+            <!--在 重复项 上定义 'v-for' 属性，属性值 为【后端foreach in的语法】-->
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+    <hr style="border:1px ridge" />
+
+    <!--Vue 【事件绑定】 使用，语法：'v-on:' 事件（属性），事件值 为 Vue对象methods成员中 子方法成员名称-->
+    <div id="app-5">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">逆转消息</button>
+    </div>
+    <hr style="border:1px ridge" />
+
+    <!--Vue 【模型绑定】 使用，用户界面的输入 和Vue的Model 绑定。Vue默认 界面的显示与Model进行绑定。（实现的效果：用户输入内容->更改Vue中的Model对象中的值->Vue中的Model值被改变(被Model值监听器监听到)->重新渲染页面中绑定Model中的值）-->
+    <!--（不是模型的定义）,该字段必须在【Vue data成员里面定义】-->
+    <div id="app-6">
+        <p>{{ message }}</p>
+        <input v-model="message" type="text">
+    </div>
+    <hr style="border:1px ridge" />
+
+    <!--Vue 【自定义组件】 的应用，语法见 js,搜索 组件名：‘todo-item’ ,【组件必须依附于一个VM对象的实例】即：组件必须在Vue对象实例控制的区域-->
+    <div id="app-7">
+        <!--【没有参数传入】-->
+        <ol>
+            <!-- 创建一个 todo-item 组件的实例 -->
+            <todo-item></todo-item>
+        </ol>
+        <br>
+        <!--自定义组件，将 父作用域的数据 传入 子组件-->
+        <!--【参数传入】-->
+        <ol>
+            <!--
+                  现在我们为每个 todo-item-param 提供 todo 属性
+                  todo 属性的值是变量，即其内容可以是动态的。
+
+                  我们也需要为每个组件提供一个“key”，稍后再
+                  作详细解释。
+                -->
+            <todo-item-param v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id">
+                </ttodo-item-param>
+        </ol>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                message1: "let's go!" + new Date().toLocaleDateString()
+            }
+        })
+        var app2 = new Vue({
+            el: '#app-2',
+            data: {
+                message: '页面加载于 ' + new Date().toLocaleString()
+            }
+        })
+        var app3 = new Vue({
+            el: '#app-3',
+            data: {
+                seen: true
+            }
+        })
+        var app4 = new Vue({
+            el: '#app-4',
+            data: {
+                todos: [
+                    { text: '学习 JavaScript' },
+                    { text: '学习 Vue' },
+                    { text: '整个牛项目' }
+                ]
+            }
+        })
+        //js中for的常规用法
+        /*for (var i = 0; i < 5; i++) {
+            console.log(i);
+        } */
+        var arr = [1, 2, 3, 4, 5];
+        //js中for用法的简写方式
+        for (var item in arr) {
+            console.log(arr[item]);
+        }
+        var app5 = new Vue({
+            el: '#app-5',
+            data: {
+                message: 'Hello Vue.js!'
+            },
+            methods: {
+                reverseMessage: function () {
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+        var app6 = new Vue({
+            el: '#app-6',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+
+        // 定义名为 todo-item 的新组件
+        Vue.component('todo-item', {
+            template: '<li>这是个待办项</li>'
+        })
+
+        //自定义组件，将 父作用域的数据 传入 子组件 
+
+        //接受传参的 todo-item 新组件（以 属性 形式 接受参数传递）
+        Vue.component('todo-item-param', {
+            // todo-item 组件现在接受一个
+            // "prop"，类似于一个自定义特性。
+            // 这个 prop 名为 todo。
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        })
+
+        var app7 = new Vue({
+            el: '#app-7',
+            data: {
+                groceryList: [
+                    { id: 0, text: '蔬菜' },
+                    { id: 1, text: '奶酪' },
+                    { id: 2, text: '随便其它什么人吃的东西' }
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html>

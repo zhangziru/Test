@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>下拉框的数据加载和绑定</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+</head>
+
+<body>
+    <div id="app">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>MATRIX序号</th>
+                    <th>零件编号</th>
+                    <th>零件描述</th>
+                    <th>商品类别</th>
+                    <th>计量单位</th>
+                    <th>货币</th>
+                    <th>目标价</th>
+                    <th>模具费（一次性）</th>
+                    <th>模具价（分摊）</th>
+                    <th>Costing备注</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="part in list" v-bind:key="part.ID">
+                    <td> {{part.PartNumber}} </td>
+                    <td> {{part.ProgNumber}} </td>
+                    <td> {{part.PartDesc}} </td>
+                    <td> {{part.PartFamily}} </td>
+                    <td> {{part.Unit}} </td>
+                    <td>                      
+                        <select v-model="part.Currency">
+                            <option v-for="currency in arrCurrency" v-bind:value="currency">
+                                {{ currency }}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" v-model="part.PartPrice">
+                    </td>
+                    <td>
+                        <input type="text" v-model="part.ToolingLumpsumCost">
+                    </td>
+                    <td>
+                        <input type="text" v-model="part.ToolingAmortCost">
+                    </td>
+                    <td>
+                        <input type="text" v-model="part.Comment">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var M = function () {
+            return {
+                arrCurrency: ['RMB', 'USD', 'EUR', 'GBP', 'JPY', 'KRW', 'THB'],
+                list: [
+                    {ID:1, PartNumber: 1, ProgNumber: 'N0000001', PartDesc: '零件描述', PartFamily: '面套', Unit: '平米', Currency: 'RMB', PartPrice: '0.00', ToolingLumpsumCost: '0.00', ToolingAmortCost: '0.00', Comment: '0.00' },
+                    {ID:2, PartNumber: 2, ProgNumber: 'N0000002', PartDesc: '零件描述', PartFamily: '面套', Unit: '平米', Currency: 'GBP', PartPrice: '0.00', ToolingLumpsumCost: '0.00', ToolingAmortCost: '0.00', Comment: '0.00' },
+                    {ID:3, PartNumber: 3, ProgNumber: 'N0000003', PartDesc: '零件描述', PartFamily: '面套', Unit: '平米', Currency: 'JPY', PartPrice: '0.00', ToolingLumpsumCost: '0.00', ToolingAmortCost: '0.00', Comment: '0.00' }
+                ]
+            }
+        }
+        var vm = new Vue({
+            el: '#app',
+            data: M()
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue不带参数-列表指令（v-for）</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+
+    <div id="demo">
+        <!-- 【用 v-for 把一个数组对应为一组元素】 -->
+
+        <!-- [语法]v-for 指令需要使用 item in items 形式的特殊语法，items 是源数据数组并且 item 是数组元素迭代的别名。 -->
+        <!-- 在 v-for 块中，在块这个区域内通过Mustache语法，拥有对父作用域数据属性的完全访问权限。v-for 还支持一个可选的第二个参数为当前项的索引。 -->
+        <ul>
+            <li v-for="item in items">
+                {{ title }} ---------- {{ item.message }}
+            </li>
+        </ul>
+
+        <!-- v-for 还支持一个可选的第二个参数为当前项的索引。 -->
+        <ul>
+            <li v-for="(item, index) in items">
+                {{ parentMessage }} - {{ index }} - {{ item.message }}
+            </li>
+        </ul>
+
+        <!-- v-for 语法：item of items  可以替代  item in items -->
+        <ul>
+            <li v-for="item of items">
+                {{ title }} ---------- {{ item.message }}
+            </li>
+        </ul>
+
+
+
+        <!-- 【用 v-for 把一个对象对应为一组元素】 -->
+        <ul>
+            <li v-for="value in object">
+                {{ value }}
+            </li>
+        </ul>
+        <!-- 提供第二个的参数为键名： -->
+        <div v-for="(value, key) in object">
+            {{ key }}: {{ value }}
+        </div>
+        <!-- 第三个参数为索引： -->
+        <div v-for="(value, key, index) in object">
+            {{ index }}. {{ key }}: {{ value }}
+        </div>
+
+
+        <!-- 【注意，给v-for重复元素添加一个key属性】为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 key 属性。
+        【解释，为什么要给v-for重复元素添加一个key属性】v-for 正在更新已渲染过的元素列表时，它默认用“就地复用”策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素，并且确保它在特定索引下显示已被渲染过的每个元素。 -->
+        <!-- 【建议】尽可能在使用 v-for 时提供 key -->
+
+        <!-- Vue中继承自js数组的方法。后续称为变异的方法 ，会改变被这些方法调用的原始数组。非变异 方法不会改变原始数组，但总是返回一个新数组。-->
+
+        <!-- 变异的方法  push():数组末尾追加元素
+                        pop()：数组删除末尾元素，并返回该元素
+                        shift()：数组删除起始元素，并返回该元素
+                        unshift()：数组起始追加元素
+                        splice()：参数1,数组操作的位置。参数2，删除元素的个数（为0时，等价插入操作）。参数3，插入元素项（不传时，参数2不为0，可表示删除操作）
+                        sort()：跟JS中的排序效果一样
+                        reverse() 跟JS中的排序效果一样
+        -->
+        <!-- 非变异的方法：filter(), concat() 和 slice() -->
+                <!-- 当使用非变异方法时，可以用新数组替换旧数组： -->
+       <!--  例子：
+                vm.items = vm.items.filter(function (item) {
+                    return item.message.match(/Foo/)
+                }) 
+        -->
+     <!--【注意事项，Vue的操作限制】由于 JavaScript 的限制，Vue 不能检测以下变动的数组：        
+            当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+            当你修改数组的长度时，例如：vm.items.length = newLength -->
+     <!-- 【Vue数组操作有大坑】【高能】在Vue中，不能直接通过数组索引进行值的更新。数组的长度不能通过length的方法进行直接更改 -->
+    <pre>
+     【解决方案】
+     1、Vue中的数组，无法通过索引更改值，来监听数组的更新。
+        1）// Vue.set
+        Vue.set(vm.arr, indexOfItem, newValue)
+        2）// Array.prototype.splice
+        vm.arr.splice(indexOfItem, 1, newValue)
+     2、Vue中修改数组的长度，无法监听到数组的变动 
+        vm.arr.splice(newLength)
+     3、Vue中的对象，后续添加的键值，无法得到VM的响应处理。
+         Vue.set(vm.object, 'age', 27);//添加一个键/值的做法
+         //赋予多个新属性,使用Object.assign() 或 _.extend()
+         vm.object = Object.assign({}, vm.object, {
+            age: 27,
+            favoriteColor: 'Vue Green'
+          })
+    </pre>
+    <ul>
+        <li v-for="item in arr">{{ item }}</li>
+    </ul>
+    </div>
+    <script>
+        //数字数组排序需要调用的函数
+        function sortNumber(a, b) {
+            return a - b
+        }
+        var arr = new Array(6)
+        arr[0] = "10"
+        arr[1] = "5"
+        arr[2] = "40"
+        arr[3] = "25"
+        arr[4] = "1000"
+        arr[5] = "1"
+
+        //M的定义
+        var obj = {
+            title: "戊戌变法",
+            parentMessage: '百日维新',
+            items: [
+                { message: 'Foo' },
+                { message: 'Bar' }
+            ],
+            object: {
+                firstName: 'John',
+                lastName: 'Doe',
+                age: 30
+            },
+            arr: arr
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#demo',
+            data: obj,
+            computed: {
+            }
+        })       
+    </script>
+</body>
+
+</html>

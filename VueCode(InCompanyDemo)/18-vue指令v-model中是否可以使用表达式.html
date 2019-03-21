@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue指令v-model中是否可以使用表达式</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <div id="demo">
+        <input type="checkbox" v-model="statusC"></input>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+
+            data: {
+                dataForm: { name: '张三', isEdit: false },
+                checked: true,
+                status: 9
+            },
+            computed: {
+                statusC: {
+                    // getter（获取器）
+                    get: function () {
+                        if (this.status == 9) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    },
+                    // setter（设定器）
+                    set: function (newValue) {
+                        console.log(newValue);
+                        if (newValue) {
+                            this.status = 9;
+                            console.log(this.status);
+                        }
+                        else {
+                            this.status = 1;
+                            console.log(this.status);
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

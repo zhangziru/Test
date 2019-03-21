@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue数据格式化（侦听器和计算属性）</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <div id="demo">{{ fullName }}</div>
+    <script>
+        //M的定义
+        var obj = {
+            firstName: 'Foo',
+            lastName: 'Bar',
+            fullName: 'Foo Bar'//【被格式化的数据】
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#demo',
+            data: obj,
+            watch: {//【侦听器】侦听  M  中数据的变化，变化将会执行相应的回调函数
+                firstName: function (val) {
+                    this.fullName = val + ' ' + this.lastName
+                },
+                lastName: function (val) {
+                    this.fullName = this.firstName + ' ' + val
+                }
+            },
+            computed:{//【计算属性】这种写法，比【侦听器】要好的很多
+                //只有一个方法时，默认为getter(获取器)
+                fullName:function(){
+                    return  this.lastName + ' ' + this.firstName;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

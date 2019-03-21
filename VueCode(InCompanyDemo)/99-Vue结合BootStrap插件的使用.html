@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BootStrap插件的使用</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+    <!-- 引入BootStrap的样式 -->
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    <!-- 选择扩展功能（ctrl+shit+x），搜索bootstrap 3 snippets 或者bootstrap 4 snippets（根据自己引入的版本来），安装后，关闭应用，重新加载 -->
+</head>
+
+<body>
+
+    <div id="demo">
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Time</th>
+                    <th>Opetation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.time }}</td>
+                    <td>删除</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            list:[
+                {id:1,name:'李斯',time:new Date()},
+                {id:1,name:'李斯',time:new Date()},
+                {id:1,name:'李斯',time:new Date()}
+            ]
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#demo',
+            data: obj,
+            computed: {
+            }
+        })       
+    </script>
+</body>
+
+</html>

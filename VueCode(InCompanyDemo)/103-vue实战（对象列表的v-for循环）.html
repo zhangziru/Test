@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>103-vue实战</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    <style>
+        .font-bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="demo">
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr v-for="title in listTitle">
+                    <td v-for="item in list.datalist" colspan="2">
+                        {{ item[title] }}
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <template v-for="n in (list.maxrow+1)">
+                    <tr>
+                        <template v-for="item in list.datalist">
+                            <td v-if="n==1">零件信息</td>
+                            <td v-else>
+                                <span v-html="PartFormatDisplay(item.PartList[n-2])"></span>
+                            </td>
+                            <td v-if="n==1">合计价格</td>
+                            <td v-else>
+                                <span v-html="PartPriceSummary(item.PartList[n-2])"></span>
+                            </td>
+                        </template>
+                    </tr>
+                </template>
+
+            </tbody>
+        </table>
+
+
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            list: {
+                "maxrow": 9,
+                "datalist": [{ "EndItem": "N00025743", "ProgName": "C1UC", "ProgStatus": "TBL", "EndItemDesc": "ASM BACKFRAME 60 LH C1UC", "PartList": [{ "EndItem": "N00025743", "PDPartID": "N00025735", "PartDesc": "Head Rest Brkt  ", "PartPrice": 3.15, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025743", "PDPartID": "N00025745", "PartDesc": "BACK PANEL 60 C1UC", "PartPrice": 20.82, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025743", "PDPartID": "N00025746", "PartDesc": "BRKT BACKPANEL 60", "PartPrice": 1.55, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025743", "PDPartID": "N00025756", "PartDesc": "REINFORCMENT BRACKET BELT EXIT", "PartPrice": 2.67, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025743", "PDPartID": "N00025758", "PartDesc": "BELT EXIT BRACKET 60", "PartPrice": 4.54, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025743", "PDPartID": "N00025761", "PartDesc": "RETRACTOR BRKT 60", "PartPrice": 2.05, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }], "Count": 6 }, { "EndItem": "N00025773", "ProgName": "C1UC", "ProgStatus": "TBL", "EndItemDesc": "ASM CUSHION FRAME 60 LH C1UC", "PartList": [{ "EndItem": "N00025773", "PDPartID": "N00025778", "PartDesc": "CUSHION PAN 60", "PartPrice": 9.76, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025773", "PDPartID": "N00025781", "PartDesc": "CUSHION SIDE MEMBER IB 60", "PartPrice": 6.72, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025773", "PDPartID": "N00025783", "PartDesc": "BANANA LINK 60", "PartPrice": 9.49, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025773", "PDPartID": "N00025788", "PartDesc": "CUSHION SIDE MEMBER OB 60", "PartPrice": 6.72, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025773", "PDPartID": "N00025793", "PartDesc": "FRONT LINK", "PartPrice": 2.08, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025773", "PDPartID": "N00025799", "PartDesc": "FRT PIVOT BRK 60 IB", "PartPrice": 2.62, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025773", "PDPartID": "N00025801", "PartDesc": "SPRING BRACKET", "PartPrice": 0.92, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025773", "PDPartID": "N00025801", "PartDesc": "SPRING BRACKET", "PartPrice": 0.92, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }, { "EndItem": "N00025773", "PDPartID": "N00025804", "PartDesc": "60 FRONT PIVOT BKT", "PartPrice": 2.62, "Qty": 1, "Order": 0, "Prog_Row": 66, "Ver_Row": 6, "BPL_Part": "SH", "PartFamily_Row": "26" }], "Count": 9 }]
+            },
+            listTitle: ['EndItem', 'ProgName', 'ProgStatus', 'EndItemDesc']//右边标头
+
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#demo',
+            data: obj,
+            // 在 `methods` 对象中定义方法
+            methods: {
+                PartFormatDisplay(part) {
+                    //获取零件信息
+                    if (part) {
+                        return `${part.PDPartID}&nbsp;(${part.BPL_Part})&nbsp;<span style=\"color:red;display:inline;\">${part.Qty}</span>&nbsp;*&nbsp;<span style=\"color:red;display:inline;\">${part.PartPrice}</span><br/><span class=\"singleline\">${part.PartDesc}</span>`;
+                    }
+                    else {
+                        return "";
+                    }
+                },
+                PartPriceSummary(part) {
+                    //获取零件的汇总价格
+                    if (part) {
+                        return part.Qty * part.PartPrice;
+                    }
+                    else {
+                        return "";
+                    }
+                }
+            }
+        })       
+    </script>
+</body>
+
+</html>

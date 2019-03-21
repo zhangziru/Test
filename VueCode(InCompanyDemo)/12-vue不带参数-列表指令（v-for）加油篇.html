@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue不带参数-列表指令（v-for）加油篇</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+
+    <div id="demo">
+        <ul>
+            <!-- 不改变M元数据 格式化方式，通过计算属性返回一个匿名数组 -->
+            <!-- v-for中使用"计算属性"不好使，就用“方法”来操作 -->
+            <li v-for="n in evenNumbers">{{ n }}</li>
+        </ul>
+
+        <!-- 【一段取值范围的 v-for】 -->
+        <div>
+            <span v-for="n in 10" >{{ n }} </span>
+        </div>
+
+        <!-- 【v-for with v-if】 (官网这里写的案例，有点错误)-->
+        <!-- v-for和v-if处于同一节点，v-for 的优先级比 v-if 更高，这意味着 v-if 将分别重复运行于每个 v-for 循环中。 -->
+        <ul>
+            <li v-for="todo in todos" v-if="!todo.isComplete">
+                {{ todo.name }}
+            </li>
+        </ul>
+
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            numbers: [1, 2, 3, 4, 5, '6'],
+            todos:[
+                {isComplete:true,name:'赵高'},
+                {isComplete:false,name:'荀子'},
+                {isComplete:false,name:'嬴政'}
+            ]
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#demo',
+            data: obj,
+            computed: {
+                evenNumbers: function () {
+                    return this.numbers.filter(function (number) {
+                        return number % 2 === 0
+                    })
+                }
+            }
+        })       
+    </script>
+</body>
+
+</html>

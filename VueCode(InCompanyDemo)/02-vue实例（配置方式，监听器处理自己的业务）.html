@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue实例</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ foo }}</p>
+        <!-- 这里的 `foo` 不会更新！ -->
+        <button v-on:click="foo = 'baz'">Change it</button>
+    </div>
+    <script>
+        //【Vue实例对象 配置方法一】
+        //M的定义
+        var obj = {
+            foo: 'bar'
+        }
+        //VM 响应系统【无法再追踪M变化】。我们可以通过其它的方式来改变Model中的值，手动实现数据的变化
+        //Object.freeze(obj)
+        //Vue 实例除了 数据属性，Vue 实例还暴露了一些有用的实例属性与方法。【Vue 实例系统属性（框架中自带的） 都有前缀 $】，以便与用户定义的属性区分开来。
+        var vm = new Vue({
+            el: '#app',
+            data: obj
+        })
+
+        //Vue对象加载完毕以后，对应的数据和对象与网页中的是 恒等的。
+        //vm.$data === obj // => true
+        //vm.$el === document.getElementById('app') // => true
+
+        //【更改M 监听器】 值改变 对应的处理方式【重点】
+        // $watch 是一个实例方法
+        vm.$watch('foo', function (newValue, oldValue) {
+            // 这个回调将在 `vm.a` 改变后调用
+            console.log("新值:" + newValue + "旧值：" + oldValue)
+        })
+
+        //【生命周期"钩子"】：就是Vue：创建（created）->安装(mounted)->更新(updated)->销毁(destroyed)，这个过程来中对应的回调函数。
+        //生命周期"钩子"：就是创建过程中的回调函数
+        //“生命周期钩子”中的‘this’关键字，指代的就是Vue的实例。【重点】
+        //不要在选项属性或回调上使用箭头函数，因为【箭头函数是和父级上下文绑定在一起的】，this 不会是如你所预期的 Vue 实例
+    </script>
+</body>
+
+</html>

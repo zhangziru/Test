@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件基础</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <div id="demo">
+        <input v-model="dataForm.name" placeholder="配置项" v-bind:disabled="dataForm.isEdit"></input>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+            data: {
+                dataForm: {name:'张三',isEdit:false}
+            }
+        })
+    </script>
+</body>
+
+</html>

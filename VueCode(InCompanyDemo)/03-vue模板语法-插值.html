@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue模板语法-插值</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!--【文本】 Mustache语法 -->
+        <span>Message: {{ msg }}</span><br />
+        <!-- 只能执行一次性地插值，当数据改变时，插值处的内容不会更新 -->
+        <span v-once>Message: {{ msg }}</span><br />
+
+
+        <!-- 【原始 HTML】双大括号会将数据解释为普通文本，而非 HTML 代码。为了输出真正的 HTML，你需要使用 v-html 指令： -->
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+
+
+        <!-- 【特性】Mustache 语法不能作用在 HTML 特性上，遇到这种情况应该使用 v-bind 指令： -->
+        <div v-bind:id="dynamicId"></div>
+
+
+        <!-- 【使用 JavaScript 表达式】对于所有的数据绑定，在模板中，我们一直都只绑定简单的属性键值.Vue.js 都提供了完全的 JavaScript 表达式支持。 -->
+        <!-- 这些表达式会在所属 Vue 实例的数据作用域下作为 JavaScript 被解析。有个限制就是，每个绑定都只能包含单个表达式。 -->
+        {{ number + 1 }}<br/>
+
+        {{ ok ? 'YES' : 'NO' }}<br/>
+
+        {{ message.split('').reverse().join('') }}<br/>
+
+        <div v-bind:id="'list-' + id"></div>
+        <h3 id="myh3" ref="{{1+2}}">哈哈，天气降温了！</h3>
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            foo: 'bar',
+            msg: '百变则是新',
+            rawHtml: '<h1>作者：Cyrus</h1>',
+            dynamicId: 'wudi',
+            number:24,
+            ok:true,
+            message:'今天将会是美好的一天，祝您生活愉快！',
+            id:'xiaoxuesheng'
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#app',
+            data: obj
+        })
+    </script>
+</body>
+
+</html>

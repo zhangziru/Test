@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue侦听器详解</title>
+    <script src="./lib/jquery-1.11.0.js"></script>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <!-- 【本页面请与IIS上运行】jsonp解决跨域问题参考链接：https://blog.csdn.net/wangyang1354/article/details/51446684 -->
+
+    <!-- 【侦听器】计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。 -->
+    <!-- watch（侦听器） 选项提供了一个更通用的方法，来响应数据的变化。 -->
+    <!-- 【重点，很实用】当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。 -->
+    <div id="watch-example">
+        <p>
+            测试远程加载数据（首次加载+查询数据的加载）<br />
+            <input v-model="question">
+        </p>
+        <p>{{ answer }}</p>
+    </div>
+    <script>
+        var watchExampleVM = new Vue({
+            el: '#watch-example',
+            data: {
+                question: '',
+                answer: '正在连接服务器...'
+            },
+            watch: {
+                // 如果 `question` 发生改变，这个函数就会运行
+                question: function (newQuestion, oldQuestion) {
+                    this.answer = '请求中...'
+                    setTimeout(() => {
+                        this.getAnswer();
+                    }, 1000);
+                }
+            },
+            created: function () {
+                //在VM创建的时候，调用异步加载方法，进行请求
+                setTimeout(() => {
+                    this.getAnswer();
+                }, 1000);
+            },
+            methods: {
+                getAnswer: function () {
+
+                    var vm = this;//因为在ajax请求中，this关键的意义不是VM对象了
+                    $.get('http://localhost:9097/lib/vue-testRequestData.json',
+                        function (response) {
+                            if (response.result == -1) {
+                                vm.answer = "服务起异常";
+                            }
+                            else {
+                                vm.answer = "恭喜您，请求成功！";
+                            }
+                        },
+                        'json')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue数据格式化（计算属性和方法）</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        <!-- 【属性格式化-计算属性】 -->
+        <p>Original message: "{{ message }}"</p>
+        <p>Computed reversed message: "{{ reversedMessage }}"</p>
+        <!-- 【属性格式化-方法格式化】 -->
+        <p>Reversed message: "{{ reversedMessageMethod() }}"</p>
+        <!-- 【属性的格式化显示：计算属性 VS 方法】计算属性是基于依赖进行缓存的，如果数据没有更改将不会变；方法则不会进行缓存，数据都是实时的。如果有的数据需要遍历很多才可以获取到，用计算属性对性能的提升有效果 -->
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            message: 'Hello'
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#example',
+            data: obj,
+            computed: {
+                //【属性的格式化显示】 计算属性的 
+                //只有一个方法时，默认为getter(获取器)
+                reversedMessage: function () {
+                    // `this` 指向 vm 实例
+                    return this.message.split('').reverse().join('')
+                }
+            },
+            methods: {
+                reversedMessageMethod: function () {
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

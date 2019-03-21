@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>101-vue实战</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    <style>
+        .font-bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="demo">
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr v-for="title in rightTitle">
+                    <th v-for="item in listRight">
+                        {{ item[title] }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(value,key,index) in list">
+                    <td v-for="itemright in listRight" :style="value==boldValue?boldStyle:''">
+                        {{itemright.data.hasOwnProperty(key)?itemright.data[key]:''}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            boldValue: 'Grand total cost',
+            boldStyle: 'font-weight:bold',
+            list: {
+                "26": "Stamping", "27": "Tube", "28": "Wire", "29": "Spring", "30": "Fastener", "31": "Welding", "32": "Assy", "33": "Slide", "34": "Recliner", "35": "Transmission", "36": "Latch", "37": "Motor", "38": "Mechanism-Others", "39": "Suspension", "40": "Plastics", "41": "Cable", "42": "Harness", "43": "Surface Treatment", "44": "Misc", "45": "Direct Buy", "133": "Fine Blanking", "134": "Rod", "135": "Shaft", "136": "Carpet", "137": "Heat Treatment", "138": "Machining", "139": "Powder Metallurgy", "140": "Roll Forming", "NewLine1": "WhiteLine", "MaterialCost": "Scrap cost for Material", "SupplierCost": "Amort. Cost for supplier", "FixtureCost": "Amort. Cost for fixture", "PD2Cost": "Amort. Cost for PD2", "LaunchCost": "Launch cost", "QuickSaving": "Quick saving", "Sg_A": "SG&A", "GrandTotalCost": "Grand total cost",
+                "NewLine2": "WhiteLine", "Logistic": "Logistic", "SellPrice": "Sell price"
+            },
+            listRight: [
+                {
+                    "PROG_Name": "C1UC",
+                    "PROG_Status": "TBL",
+                    "PartID": "N00025743(SH)",
+                    "Description": "ASM BACKFRAME 60 LH C1UC",
+                    "data": {
+                        "27": 45.34,
+                        "31": 4.08,
+                        "30": 9.39,
+                        "26": 34.78,
+                        "32": 0.0,
+                        "28": 0.45,
+                        "40": 3.31,
+                        "135": 7.14,
+                        "29": 7.8,
+                        "MaterialCost": 123.0,
+                        "SupplierCost": 12.0,
+                        "FixtureCost": 32.0,
+                        "PD2Cost": 321.0,
+                        "LaunchCost": 32.0,
+                        "QuickSaving": 32.0,
+                        "Sg_A": 32.0,
+                        "GrandTotalCost": 696.29,
+                        "Logistic": 3.0,
+                        "SellPrice": 213.0
+                    }
+                },
+                {
+                    "PROG_Name": "C1UC",
+                    "PROG_Status": "TBL",
+                    "PartID": "N00025773(SH)",
+                    "Description": "ASM CUSHION FRAME 60 LH C1UC",
+                    "data": {
+                        "32": 3.42,
+                        "39": 16.54,
+                        "43": 2.72,
+                        "26": 41.85,
+                        "27": 12.49,
+                        "44": 1.92,
+                        "30": 7.2,
+                        "31": 2.06,
+                        "134": 2.22,
+                        "MaterialCost": 5.0,
+                        "SupplierCost": 5.0,
+                        "FixtureCost": 5.0,
+                        "PD2Cost": 5.0,
+                        "LaunchCost": 5.0,
+                        "QuickSaving": 5.0,
+                        "Sg_A": 5.0,
+                        "GrandTotalCost": 125.42,
+                        "Logistic": 5.0,
+                        "SellPrice": 5.0
+                    }
+                }
+            ],
+            rightTitle: ['PROG_Name', 'PROG_Status', 'PartID', 'Description']//右边标头
+
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#demo',
+            data: obj,
+            // 在 `methods` 对象中定义方法
+            methods: {
+                IsLink(key) {
+                    var reg = new RegExp("^[0-9]+$");
+                    return reg.test(key)
+                }
+            }
+        })       
+    </script>
+</body>
+
+</html>

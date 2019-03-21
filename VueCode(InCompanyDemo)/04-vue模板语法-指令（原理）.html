@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue模板语法-指令</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!--【指令】 指令 (Directives) 是带有 v- 前缀的特殊特性。-->
+
+        <!-- 指令特性的值：预期是单个 JavaScript 表达式 (v-for 是例外情况)。 -->
+        <!--  指令的职责：当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。 -->
+
+        <!--  [v-if 指令]   根据 表达式的值 的真假 来插入/移除 元素 -->
+        <p v-if="seen">现在你看到我了</p>
+
+
+
+        <!-- 【带参数的指令】能够接收一个“参数”的指令，在指令名称之后以冒号表示。 例如，v-bind 指令可以用于响应式地更新 HTML 特性：-->
+
+        <!-- [v-bind 指令]  在这里 href 是参数，告知 v-bind 指令将该元素的 href 特性与表达式 url 的值绑定。 -->
+        <a v-bind:href="url" target="_blank">程序员的家</a><br />
+
+        <!-- [ v-on 指令]它用于监听 DOM 事件 -->
+        <a v-on:click="doSomething">我是有生命的，不信，你动一下！</a><br />
+
+
+
+        <!-- 【带参数+修饰符的指令】修饰符 (Modifiers) 是以半角句号 "." 指明的特殊后缀。用于指出一个指令应该以特殊方式绑定。 -->
+        <a v-on:click.prevent="skip" v-bind:href="url">我是带跳转的超链接（但我被阻塞了）</a><br />
+
+
+
+        <!-- 【指令缩写】v-bind 缩写 -->
+
+        <!-- 完整语法 -->
+        <a v-bind:href="url" target="_blank">程序员的家</a><br />
+
+        <!-- 缩写 -->
+        <a :href="url" target="_blank">程序员的家</a><br />
+
+
+
+        <!-- 【指令缩写】v-on 缩写 -->
+        <!-- 完整语法 -->
+        <a v-on:click="doSomething">动我试试</a><br />
+
+        <!-- 缩写 -->
+        <a @click="doSomething">动我试试</a><br />
+        
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            seen: true,
+            url: 'http://www.baidu.com',
+            msg: '哇呕，你敢动我！'
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#app',
+            data: obj,
+            methods: {
+                doSomething: function () {
+                    alert(this.msg);
+                },
+                skip: function () {
+                    alert("默认的链接跳转，被阻塞了");
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue不带参数条件指令</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+    <style>
+        .active {
+            color: darkgray;
+            font-size: 1.25em;
+        }
+
+        .text-danger {
+            color: darkred;
+            font-style: italic;
+            text-decoration: underline;
+        }
+
+        .activeClass {
+            color: darkblue;
+            font-style: oblique;
+            font-weight: bold;
+        }
+
+        .errorClass {
+            color: brown;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 【vue不带参数指令】v-if,v-else,v-else-if,v-show -->
+    <div id="demo">
+        <!-- 【vue不带参数指令】 -->
+
+        <!-- [v-if] -->
+        <h1 v-if="ok">王炸</h1>
+
+        <!-- [v-if,v-else 结合使用] -->
+        <!-- 【注意】v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，否则它将不会被识别。   -->
+        <h1 v-if="no">王炸</h1>
+        <h1 v-else>4个2</h1>
+
+        <!-- [v-if,v-else,v-else-if 结合使用] -->
+        <!-- 【注意】类似于 v-else，v-else-if 也必须紧跟在带 v-if 或者 v-else-if 的元素之后。 -->
+        <h1 v-if="condition=='bombgod'">王炸</h1>
+        <h1 v-else-if="condition=='bomb'">4个2</h1>
+        <h1 v-else>不炸，我飞机加翅膀，飞了！</h1>
+
+
+        <!-- 【属性key的作用】Vue 会尽可能高效地渲染元素，通常会 复用已有元素 而不是从头开始渲染。 -->
+
+        <!-- [没用key] 复用已有元素，包括元素上边的样式，数据都会引用过来-->
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username">
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address">
+        </template>
+        <br />
+        <!-- [使用key] 表示元素是独立的，不要复用已有的它们。只需添加一个具有唯一值的 key 属性即可-->
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username" key="username-input">
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address" key="email-input">
+        </template>
+
+
+
+        <!-- v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display。 -->
+        <h1 v-show="ok">Hello!</h1>
+
+
+
+        <!-- 【v-if vs v-show的区别】：
+        v-if：Dom元素是被销毁和重建（前提是里面的元素，都已经添加了key 属性。否则，每个元素不独立，Vue为了快速渲染页面，复用条件渲染代码块中的控件）
+        v-show：Dom元素始终被渲染，保留再DOM中。简单地切换元素的 CSS 属性 display。只是在页面上不占位置而已。
+        总结：一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。 -->
+
+
+
+        <!--  【v-if 与 v-for 一起使用】 -->
+        <!--【注意】当 v-if 与 v-for 一起使用时，v-for 具有比 v-if 更高的优先级 -->
+        <div v-for="item in list">
+            <span v-show="item.show">ID:{{ item.id }}---------Name:{{ item.name }}-----------时间：{{ item.time }}</span>
+        </div>
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            ok: true,
+            no: false,
+            condition: 'bomb',
+            loginType: 'username',
+            list: [
+                { id: 1, name: '李斯', time: new Date() ,show:false},
+                { id: 2, name: '赵高', time: new Date() ,show:false},
+                { id: 3, name: '嬴政', time: new Date() ,show:true}
+            ]
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#demo',
+            data: obj,
+            computed: {
+            }
+        })       
+    </script>
+</body>
+
+</html>

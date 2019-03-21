@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue带参数Class的v-bind指令</title>
+    <script src="./lib/vue-v2.5.17.js"></script>
+    <style>
+        .active {
+            color: darkgray;
+            font-size: 1.25em;
+        }
+
+        .text-danger {
+            color: darkred;
+            font-style: italic;
+            text-decoration: underline;
+        }
+
+        .activeClass {
+            color: darkblue;
+            font-style: oblique;
+            font-weight: bold;
+        }
+
+        .errorClass {
+            color: brown;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 【vue中Class 与 Style 绑定】Class 与 Style 因为它们都是属性 ，所以我们可以用 v-bind（带参数的指令） 处理它们-->
+    <!-- 带参数的指令  的值是一个表达式（除了字符串，可以是vue数据（data）成员，还可以是对象或者数组）-->
+    <!-- 【style与Class的绑定】绑定方式雷同。唯一不同的是，类样式的样式定义在css文件中，style绑定的样式，写在Vue对象里。其实这样感觉写样式直接写到js中好一点，少了一次辗转。但是页面调试时候不好找 -->
+
+    <div id="demo">
+        <!-- 【对象语法】 -->
+        <!-- 内嵌对象-->
+        <div v-bind:class="{ active: isActive }">
+            古有百日维新，今有百变则是新，欢迎您的到来！今天将会是一个美好的日子！
+        </div>
+        <!-- 数据属性对象-->
+        <div v-bind:class="classObjct">
+            古有百日维新，今有百变则是新，欢迎您的到来！今天将会是一个美好的日子！
+        </div>
+        <!-- 计算属性对象-->
+        <div v-bind:class="computeObjct">
+            古有百日维新，今有百变则是新，欢迎您的到来！今天将会是一个美好的日子！
+        </div>
+
+
+
+        <!-- 【数组语法】 -->
+        <!-- 内嵌 类样式 字符串-->
+        <div v-bind:class="['activeClass', 'errorClass']">
+            我是Cyrus，Hello World！
+        </div>
+        <!-- 内嵌 类样式 每一个数组元素可以是一个表达式-->
+        <div v-bind:class="[activeClass, errorClass]">
+            我是Cyrus，Hello World！
+        </div>
+        <div v-bind:class="[isEnable ? errorClass : activeClass, 'text-danger']">
+            我是Cyrus，Hello World！(样式为了测试)
+        </div>
+
+        <!-- 【自定义组件时，类样式的绑定  不会影响 内部的类样式】当在一个自定义组件上使用 class 属性时，这些类将被添加到该组件的根元素上面。这个元素上已经存在的类不会被覆盖。 -->
+    </div>
+    <script>
+        //M的定义
+        var obj = {
+            isActive: true,
+            isEnable: false,
+            error: { type: 'fatal' },
+            classObjct: {
+                active: true,
+                "text-danger": true//【注意】如何对象的键中有连字符“-”，则必须有引号 括起来
+            },
+            activeClass: 'activeClass',
+            errorClass: 'errorClass'
+        }
+        //VM 响应系统       
+        var vm = new Vue({
+            el: '#demo',
+            data: obj,
+            computed: {
+                //仅有一个，默认为： getter（获取器）
+                computeObjct() {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                },
+            }
+        })       
+    </script>
+</body>
+
+</html>
