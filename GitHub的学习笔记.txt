@@ -182,16 +182,21 @@ git stash branch [branchname] ：从暂存中创建分支
 git update-index --assume-unchanged [file-path] ：忽略本地文件更改
 git update-index --no-assume-unchanged [file-path] ：[取消]忽略本地文件更改
 【Git 命令 撤销】
-git checkout[file]  ：恢复“暂存区”的指定文件到“工作区”
+git checkout[file]  ：撤销“工作区”的指定文件到的更改
+git checkout -- file     :可以丢弃工作区的修改，即：撤销更改（功能同上述一样）
 git checkout[commit] [file]  ：恢复某个commit的指定文件（本地仓库未推送的文件）到“暂存区”和“工作区”
-git checkout .	:恢复"暂存区"的所有文件到"工作区"
+git checkout .	:撤销"工作区"的所有文件的修改（不要轻易的执行）
 git reset --soft HEAD^  :恢复“本地仓库”的最新提交到“暂存区”
 git reset --mixed HEAD^  :恢复“本地仓库”的最新提交到“工作区”
-git checkout -- file     :可以丢弃工作区的修改，即：撤销更改
 【Git 命令 查看未推送的记录】
 git cherry -v	:查看本地仓库未推送的记录
 【Git 本地，拉取服务器上的代码异常，使用服务器上的分支，强制覆盖本地】
 git reset --hard origin/master (这里master要修改为对应的分支名)
+git reset --hard HEAD^（版本回退，HEAD指的是当前版本，HEAD^是上一版本，HEAD^^是上上版本，如果是n次前的版本，应当是HEAD~n）
+注意：版本回退需要使用“git push -f”提交更改。
+适用场景： 如果想恢复到之前某个提交的版本，且那个版本之后提交的版本我们都不要了，就可以用这种方法。
+git revert -n 版本号  ：反做
+适用场景： 如果我们想恢复之前的某一版本（该版本不是merge类型），但是又想保留该目标版本后面的版本，记录下这整个版本变动流程，就可以用这种方法。（原文链接：https://blog.csdn.net/yxlshk/article/details/79944535）
 【Git 查看当前配置 用户名，邮箱】
 git config user.name  --查看用户名
 git config user.email  --查看箱地址
