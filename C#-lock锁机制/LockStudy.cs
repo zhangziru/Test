@@ -32,7 +32,7 @@ namespace CSharp测试项目20181203
     public class LockStudy
     {
         private bool deadlocked = true;
-
+        private object locker = new object();
         #region 默认构造函数
         public LockStudy()
         {
@@ -66,6 +66,9 @@ namespace CSharp测试项目20181203
             #region 结果说明
             //结果的说明：在t1线程（子线程1）中，LockMe调用了lock(this), 也就是TestMain函数中的c1对象，这时候在主线程中调用lock(c1)时，必须要等待t1（子线程1）中的lock块执行完毕之后才能访问c1对象，即所有c1对象相关的操作都无法完成，于是我们看到连主线程中c1.DoNotLockMe()都没有执行。 
             #endregion
+            #region 代码更改后，结果说明
+            //代码更改后，结果的说明：这次我们使用一个私有成员作为锁定变量(locker)，在LockMe中仅仅锁定这个私有locker，而不是整个对象。这时候重新运行程序，可以看到虽然t1出现了死锁，DoNotLockMe()仍然可以由主线程访问；LockMe()依然不能访问，原因是其中锁定的locker还没有被t1释放。 
+            #endregion
         }
         #endregion
 
@@ -75,12 +78,13 @@ namespace CSharp测试项目20181203
         /// </summary>
         /// <param name="o"></param>
         public void LockMe(object o)
-        {
-            Console.Write(Thread.CurrentThread.Name + "=>");
-            lock (this)
+        {           
+            lock (locker)
             {
                 while (deadlocked)
                 {
+                    Console.Write(Thread.CurrentThread.Name + "=>");
+
                     deadlocked = (bool)o;
                     Console.WriteLine("Foo: I am locked :(");
                     Thread.Sleep(500);
@@ -95,7 +99,7 @@ namespace CSharp测试项目20181203
         /// </summary>
         public void DoNotLockMe()
         {
-            Console.WriteLine("进入{0}", Thread.CurrentThread.Name);
+            Console.Write(Thread.CurrentThread.Name + "=>");
             Console.WriteLine("I am not locked :)");
         }  
         #endregion
