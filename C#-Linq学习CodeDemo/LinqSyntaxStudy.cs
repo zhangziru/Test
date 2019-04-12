@@ -63,10 +63,19 @@ namespace CSharp测试项目20181203
             //Linq_Intersect_Demo();//Linq_Intersect方法的Demo 交集
             //Linq_Union_Demo();//Linq_Union方法的Demo 并集(同时去除重复的数据)
 
+            //查询操作 Skip、SkipWhile、Take、TakeWhile
             //Linq_Skip_Demo();//Linq_Skip方法的Demo
             //Linq_SkipWhile_Demo();//Linq_SkipWhile方法的Demo
             //Linq_Take_Demo();//Linq_Take方法的Demo
-            Linq_TakeWhile_Demo();//Linq_TakeWhile方法的Demo
+            //Linq_TakeWhile_Demo();//Linq_TakeWhile方法的Demo
+
+            // 查询操作 集合类型转换，常用的一些方法 AsEnumerable、AsQueryable、Cast、ToArray、ToList、ToDictionary
+            //Linq_AsEnumerable_Demo();//Linq_AsEnumerable方法的Demo
+            //Linq_AsQueryable_Demo();//Linq_AsQueryable方法的Demo
+            //Linq_Cast_Demo();//Linq_Cast方法的Demo[非泛型转为泛型]
+            //Linq_ToArray_Demo();//Linq_ToArray方法的Demo[转数组]
+            //Linq_ToList_Demo();//Linq_ToList方法的Demo[转List集合]
+            //Linq_ToDictionary_Demo();//Linq_ToDictionary方法的Demo           
         }
         #endregion
 
@@ -1675,6 +1684,229 @@ namespace CSharp测试项目20181203
         }
         #endregion
 
+        #region 查询操作 集合类型转换，常用的一些方法
+
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6608118.html
+        //AsEnumerable 将输入序列作为IEnumerable <T>返回
+        //AsQueryable     将IEnumerable转换为IQueryable，以模拟远程查询提供程序
+        //Cast    将非泛型集合转换为泛型集合（IEnumerable to IEnumerable <T>）
+        //OfType 根据指定的类型过滤集合
+        //ToArray     将集合转换为数组
+        //ToDictionary 根据键选择器功能将元素放入字典中
+        //ToList  将集合转换为List
+        //ToLookup 将元素分组为Lookup <TKey，TElement>
+        #endregion
+        void ReportTypeProperties<T>(T obj)
+        {
+            Console.WriteLine("Compile-time type（编译类型）: {0}", typeof(T).Name);
+            Console.WriteLine("Actual type（真实类型）: {0}", obj.GetType().Name);
+        }
+
+        #region AsEnumerable       
+        /// <summary>
+        /// Linq-AsEnumerable 使用Demo
+        /// 将输入序列作为IEnumerable&lt;T&gt;返回
+        /// </summary>
+        public void Linq_AsEnumerable_Demo()
+        {
+            #region 测试数据
+
+            Student[] studentArray = {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 25 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 31 } ,
+            };
+
+            #endregion
+
+            #region Linq 方法语法
+
+            ReportTypeProperties(studentArray);
+            ReportTypeProperties(studentArray.AsEnumerable());
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+        #endregion
+
+        #region AsQueryable
+        /// <summary>
+        /// Linq-AsQueryable 使用Demo
+        /// 将IEnumerable转换为IQueryable，以模拟远程查询提供程序
+        /// </summary>
+        public void Linq_AsQueryable_Demo()
+        {
+            #region 测试数据
+
+            Student[] studentArray = {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 25 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 31 } ,
+            };
+
+            #endregion
+
+            #region Linq 方法语法
+            ReportTypeProperties(studentArray);
+            ReportTypeProperties(studentArray.AsQueryable());
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+        #endregion
+
+        #region IQueryable和IEnumerable的区别
+        //C# IQueryable和IEnumerable的区别
+        //转载原文的文章：https://www.cnblogs.com/xbzhu/p/6944353.html
+        //原文：https://blog.csdn.net/q646926099/article/details/52297897 
+        //1、IQueryable的延迟加载，执行ToList方法，才会去解析表达式，然后执行取得结果
+        #endregion
+
+        #region Cast
+        ///<summary>
+        /// Linq-Cast 使用Demo
+        /// <para>将非泛型集合转换为泛型集合（IEnumerable to IEnumerable &lt;T&gt;）</para>
+        ///</summary>
+        public void Linq_Cast_Demo()
+        {
+            #region 测试数据
+
+            Student[] studentArray = {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 25 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 31 } ,
+            };
+
+            #endregion
+
+            #region Linq 方法语法
+            ReportTypeProperties(studentArray);
+            ReportTypeProperties(studentArray.Cast<Student>());
+
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+        #endregion
+
+        #region ToArray
+        /// <summary>
+        /// Linq-ToArray 使用Demo
+        /// 将集合转换为数组
+        /// </summary>
+        public void Linq_ToArray_Demo()
+        {
+            #region 测试数据
+
+            IList<string> strList = new List<string>() {
+                                            "One",
+                                            "Two",
+                                            "Three",
+                                            "Four",
+                                            "Three"
+                                            };
+
+            #endregion
+
+            #region Linq 方法语法
+            ReportTypeProperties(strList);
+            ReportTypeProperties(strList.ToArray());
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+        #endregion
+
+        #region ToList
+        /// <summary>
+        /// Linq-ToList 使用Demo
+        /// 将集合转换为List
+        /// </summary>
+        public void Linq_ToList_Demo()
+        {
+            #region 测试数据
+
+            string[] strArr = new string[] {
+                                            "One",
+                                            "Two",
+                                            "Three",
+                                            "Four",
+                                            "Three"
+                                            };
+
+            #endregion
+
+            #region Linq 方法语法
+            ReportTypeProperties(strArr);
+            ReportTypeProperties(strArr.ToList());
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+        #endregion
+
+        #region ToDictionary
+        /// <summary>
+        /// Linq-ToDictionary 使用Demo
+        /// 根据键选择器功能将元素放入字典中（注意：转换时元素类型在前，键值类型在后）
+        /// </summary>
+        public void Linq_ToDictionary_Demo()
+        {
+            #region 测试数据
+
+            IList<Student> studentList = new List<Student>() {
+                    new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                    new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                    new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+                    new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                    new Student() { StudentID = 5, StudentName = "Ron" , Age = 21 }
+                };
+
+            #endregion
+
+            #region Linq 方法语法
+            IDictionary<int, Student> studentDict =
+                                studentList.ToDictionary<Student, int>(s => s.StudentID);
+            //【思想】将列表转为字典类型，为列表中的元素选出一个键，当前元素作为该键的值。
+            //【注意】列表转为字典类型，泛型方法的第一个类型参数为数据源的类型，第二个参数为键值的类型。泛型方法的形参为 委托（选择元素的键值函数，即：键值选择器）
+            foreach (var key in studentDict.Keys)
+                Console.WriteLine("Key: {0}, Value: {1}",
+                                            key, (studentDict[key] as Student).StudentName);
+            #endregion
+
+            #region Linq 查询语法
+
+            //没有对应的查询语法
+            #endregion
+        }
+        #endregion
+
+        #endregion
+
         #region TemplateDemo
         /// <summary>
         /// Linq 语法测试模板
@@ -1693,7 +1925,7 @@ namespace CSharp测试项目20181203
 
             #region Linq 查询语法
 
-
+            //没有对应的查询语法
             #endregion
         }
         #endregion
