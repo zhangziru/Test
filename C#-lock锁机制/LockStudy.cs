@@ -101,7 +101,37 @@ namespace CSharp测试项目20181203
         {
             Console.Write(Thread.CurrentThread.Name + "=>");
             Console.WriteLine("I am not locked :)");
-        }  
+        }
+        #endregion
+
+        #region 递归锁的一个验证
+        /// <summary>
+        /// 递归锁的一个验证（面试题，自认为非常检验水平）
+        /// <para>如果形参变为object，这个看传入的参数是否是静态对象，才能确定是否为死锁（灵活性极高）</para>
+        /// </summary>
+        /// <param name="i"></param>
+        public void RecursionLock(int i)
+        {
+            Console.WriteLine("进入{0}", Thread.CurrentThread.ManagedThreadId);
+            lock (this)
+            {
+                if (i > 10)
+                {
+                    i--;
+                    RecursionLock(i);
+                }
+            }
+        }
+        //根据线程安全的相关知识，分析以下代码，当调用test方法时i>10时是否会引起死锁? 并简要说明理由。
+        //答：不会发生死锁，（但有一点int是按值传递的，所以每次改变的都只是一个副本，因此不会出现死锁。但如果把int换做一个object，那么死锁会发生）
+        #region 分析
+        //就算我换成了object类型，递归调用的时候，这个资源仍然处于同一个线程中，是可以使用的。
+        //怎么会死锁呢？如果传进来的对象是共享对象（静态资源）会死锁。如果是非共享对象（非静态资源）则不会死锁。
+        //因为同一个线程中递归调用，进行了多次加锁。
+        //只有等到第一次的加锁资源被释放，后面的代码才能够使用资源。
+        //因此当前线程的递归调用就进入了死锁的状态。
+        //死锁：同一个线程中，多个锁同时使用同一个资源。【一般发生在递归调用里，普通的代码都是从上往下执行的，是同步执行的。一般不会发生这样的情况。】 
+        #endregion 
         #endregion
     }
 }
