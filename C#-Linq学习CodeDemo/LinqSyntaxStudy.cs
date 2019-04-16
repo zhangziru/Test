@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,7 +76,10 @@ namespace CSharp测试项目20181203
             //Linq_Cast_Demo();//Linq_Cast方法的Demo[非泛型转为泛型]
             //Linq_ToArray_Demo();//Linq_ToArray方法的Demo[转数组]
             //Linq_ToList_Demo();//Linq_ToList方法的Demo[转List集合]
-            //Linq_ToDictionary_Demo();//Linq_ToDictionary方法的Demo           
+            //Linq_ToDictionary_Demo();//Linq_ToDictionary方法的Demo
+
+            //查询操作 Expression Tree（表达式树）
+            Linq_ExpressionTree_Demo();
         }
         #endregion
 
@@ -1905,6 +1909,52 @@ namespace CSharp测试项目20181203
         }
         #endregion
 
+        #endregion
+
+        #region 查询操作 Expression Tree（表达式树）
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6616659.html
+        //表达式树就像是树形的数据结构，表达式树中的每一个节点都是表达式，
+        //表达式树可以表示一个数学公式如：x<y。x、<、y都是一个表达式，并构成树形的数据结构
+        //表达式树使lambda表达式的结构变得透明清楚
+        //【注意】
+        //1、Func委托是一行可执行代码。如果你debug代码，你会发现Func委托是一个不透明的代码
+        //2、Expression<T>将编译成表达式树的数据结构
+        #endregion
+
+        /// <summary>
+        /// Linq 将Lamba表达式（不透明）转为 表示式树（透明化）
+        /// </summary>
+        public void Linq_ExpressionTree_Demo()
+        {
+            #region 测试数据
+            List<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Abram" , Age = 21 }
+            };
+            IQueryable<Student> studentQuery = studentList.AsQueryable();
+            #endregion
+            Func<Student, bool> isAdult = s => s.Age >= 18;//将该Lambda表达式转为表达式树结构【使代码透明化】            
+
+            //1.先创建参数节点
+            ParameterExpression pe = Expression.Parameter(typeof(Student), "s");
+            //2.再创建属性节点
+            MemberExpression me = Expression.Property(pe, "Age");
+            //3.再创建常量表达式节点
+            ConstantExpression constant = Expression.Constant(18, typeof(int));
+            //4.再创建比较节点
+            BinaryExpression body = Expression.GreaterThanOrEqual(me, constant);
+            //5.创建表达式树
+            var isAdultExprTree = Expression.Lambda<Func<Student, bool>>(body, new[] { pe });
+            //【结果】
+            //1、使用Lambda表达式（借助IEnumerable）
+            var resultList =  studentList.Where(isAdult);
+            //2、使用表达式树来过滤(借助于IQueryable)
+            var resultQueryable = studentQuery.Where(isAdultExprTree);
+        }
         #endregion
 
         #region TemplateDemo
