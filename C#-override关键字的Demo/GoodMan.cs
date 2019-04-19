@@ -9,13 +9,26 @@ namespace CSharp测试项目20181203
     public abstract class GoodMan : Person
     {
         #region 方法重写
+        #region new 关键的验证
         /// <summary>
         /// new关键字的使用，隐藏基类中的虚方法
         /// </summary>
-        public new void SayHi()
+        public new void SayHi() 
+        #endregion
         {
             Console.WriteLine("Hello I'm GoodMan!");
         }
+
+        #region sealed 关键字的验证
+        /// <summary>
+        /// sealed 的使用，后面的派生类，将无法继承 基类的虚方法（到此为止了）
+        /// </summary>
+        public override sealed void SayToGoodMan()
+        {
+            Console.WriteLine("GoodMan 独特的一面，后代不可替代！");
+        } 
+        #endregion
+
         /// <summary>
         /// 重写父类的基方法（可被子类override[重写]）
         /// </summary>
@@ -38,6 +51,7 @@ namespace CSharp测试项目20181203
         /// </summary>
         public abstract void FuturityThings();
         #endregion
+
 
         #region 构造函数
         public GoodMan()
