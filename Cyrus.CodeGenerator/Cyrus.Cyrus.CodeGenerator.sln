@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyrus.CodeGenerator.BLL", "Cyrus.CodeGenerator.BLL\Cyrus.CodeGenerator.BLL.csproj", "{2C7B50C1-CF06-4EA7-8CD5-43CDE3A5433A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyrus.CodeGenerator.DAL", "Cyrus.CodeGenerator.DAL\Cyrus.CodeGenerator.DAL.csproj", "{F09913CC-D6BC-458B-97F3-2D054E0A2AC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyrus.CodeGenerator.Model", "Cyrus.CodeGenerator.Model\Cyrus.CodeGenerator.Model.csproj", "{D686447E-B440-4D66-91DC-CE3CBEA956D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyrus.CodeGenerator.UI", "Cyrus.CodeGenerator.UI\Cyrus.CodeGenerator.UI.csproj", "{09CCE580-BBD2-45F5-8C09-D96F8DAF510D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyrus.CodeGenerator.Utils", "Cyrus.CodeGenerator.Utils\Cyrus.CodeGenerator.Utils.csproj", "{0FCDDBEB-FEC9-474E-80C1-6A1F03A0770A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C7B50C1-CF06-4EA7-8CD5-43CDE3A5433A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7B50C1-CF06-4EA7-8CD5-43CDE3A5433A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7B50C1-CF06-4EA7-8CD5-43CDE3A5433A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7B50C1-CF06-4EA7-8CD5-43CDE3A5433A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F09913CC-D6BC-458B-97F3-2D054E0A2AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F09913CC-D6BC-458B-97F3-2D054E0A2AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F09913CC-D6BC-458B-97F3-2D054E0A2AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F09913CC-D6BC-458B-97F3-2D054E0A2AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D686447E-B440-4D66-91DC-CE3CBEA956D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D686447E-B440-4D66-91DC-CE3CBEA956D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D686447E-B440-4D66-91DC-CE3CBEA956D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D686447E-B440-4D66-91DC-CE3CBEA956D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09CCE580-BBD2-45F5-8C09-D96F8DAF510D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09CCE580-BBD2-45F5-8C09-D96F8DAF510D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09CCE580-BBD2-45F5-8C09-D96F8DAF510D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09CCE580-BBD2-45F5-8C09-D96F8DAF510D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FCDDBEB-FEC9-474E-80C1-6A1F03A0770A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FCDDBEB-FEC9-474E-80C1-6A1F03A0770A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FCDDBEB-FEC9-474E-80C1-6A1F03A0770A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FCDDBEB-FEC9-474E-80C1-6A1F03A0770A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
