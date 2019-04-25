@@ -1957,6 +1957,56 @@ namespace CSharp测试项目20181203
         }
         #endregion
 
+        #region  查询操作 Deferred Execution of LINQ Query 延迟执行
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6616733.html
+        //1、延迟执行有个最重要的好处：它总是给你最新的数据
+        //2、你可以使用yield关键字实现延迟加载【重点】       
+        #endregion
+
+        /// <summary>
+        /// Linq yield关键字的使用（延迟执行），参考下面的本文的“yield关键的使用（延迟加载）”区块代码
+        /// </summary>
+        public void Linq_yield_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+            new Student() { StudentID = 1, StudentName = "John", age = 13 } ,
+            new Student() { StudentID = 2, StudentName = "Steve",  age = 15 } ,
+            new Student() { StudentID = 3, StudentName = "Bill",  age = 18 } ,
+            new Student() { StudentID = 4, StudentName = "Ram" , age = 12 } ,
+            new Student() { StudentID = 5, StudentName = "Ron" , age = 21 }
+        };
+            #endregion
+
+            #region Linq 方法语法
+
+            var teenAgerStudents = from s in studentList.GetTeenAgerStudents()
+                                   select s;
+
+            //当你用foreach循环遍历时，GetTeenAgerStudents（）方法才会被调用
+            foreach (Student teenStudent in teenAgerStudents)
+                Console.WriteLine("Student Name: {0}", teenStudent.StudentName);
+
+            //LINQ查询的立即执行
+            //立即执行和延迟执行相反，它迫使LINQ查询立即执行并返回结果，方法：通过ToList()方法实现。
+
+            IList<Student> teenAgerStudents1 = studentList.Where(s => s.Age > 12 && s.Age < 20).ToList();
+            #endregion
+
+            #region Linq 查询语法
+
+            //LINQ查询的立即执行
+            //立即执行和延迟执行相反，它迫使LINQ查询立即执行并返回结果，方法：通过ToList()方法实现。          
+            IList<Student> teenAgerStudents2 = (from s in studentList
+                                               where s.Age > 12 && s.Age < 20
+                                               select s).ToList();
+
+
+            #endregion
+        }
+        #endregion
+
         #region TemplateDemo
         /// <summary>
         /// Linq 语法测试模板
@@ -2107,5 +2157,23 @@ public class Student_01Comparer : IEqualityComparer<Student>
 }
 #endregion
 
+#region yield关键的使用（延迟加载）
+
+public static class EnumerableExtensionMethods
+{
+    public static IEnumerable<Student> GetTeenAgerStudents(this IEnumerable<Student> source)
+    {
+
+        foreach (Student std in source)
+        {
+            Console.WriteLine("Accessing student {0}", std.StudentName);
+
+            if (std.age > 12 && std.age < 20)
+                yield return std;
+        }
+    }
+}
+
+#endregion
 #endregion
 
