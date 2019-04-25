@@ -21,7 +21,9 @@ namespace CSharp测试项目20181203
 
         #region sealed 关键字的验证
         /// <summary>
-        /// sealed 的使用，后面的派生类，将无法继承 基类的虚方法（到此为止了）
+        /// sealed 的使用，后面的派生类，将无法继续重写 基类的虚方法（到此为止了）
+        /// <para>该方法，派生类可以继承来使用，但是无重写的权限。</para>
+        /// <para>重写紧记一点：被重写以后，当前对象调用该方法都是重写后的方法。【重点，一定是当前对象，不管它存到了哪里，尤其注意“里氏替换原则”】</para>
         /// </summary>
         public override sealed void SayToGoodMan()
         {
