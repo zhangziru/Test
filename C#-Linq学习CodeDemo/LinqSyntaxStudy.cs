@@ -79,7 +79,14 @@ namespace CSharp测试项目20181203
             //Linq_ToDictionary_Demo();//Linq_ToDictionary方法的Demo
 
             //查询操作 Expression Tree（表达式树）
-            Linq_ExpressionTree_Demo();
+            //Linq_ExpressionTree_Demo();
+
+            //yield关键字的使用案例
+            //Linq_yield_Demo();
+
+            //查询操作 let、into
+            Linq_let_Demo();//Linq_let方法的Demo
+            Linq_into_Demo();//Linq_into方法的Demo
         }
         #endregion
 
@@ -1971,11 +1978,11 @@ namespace CSharp测试项目20181203
         {
             #region 测试数据
             IList<Student> studentList = new List<Student>() {
-            new Student() { StudentID = 1, StudentName = "John", age = 13 } ,
-            new Student() { StudentID = 2, StudentName = "Steve",  age = 15 } ,
-            new Student() { StudentID = 3, StudentName = "Bill",  age = 18 } ,
-            new Student() { StudentID = 4, StudentName = "Ram" , age = 12 } ,
-            new Student() { StudentID = 5, StudentName = "Ron" , age = 21 }
+            new Student() { StudentID = 1, StudentName = "John", Age = 13 } ,
+            new Student() { StudentID = 2, StudentName = "Steve",  Age = 15 } ,
+            new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+            new Student() { StudentID = 4, StudentName = "Ram" , Age = 12 } ,
+            new Student() { StudentID = 5, StudentName = "Ron" , Age = 21 }
         };
             #endregion
 
@@ -2003,6 +2010,81 @@ namespace CSharp测试项目20181203
                                                select s).ToList();
 
 
+            #endregion
+        }
+        #endregion
+
+        #region 查询操作 let、into关键字
+        #region 说明
+        //参考链接 https://www.cnblogs.com/lanpingwang/p/6616770.html           
+        #endregion
+
+        /// <summary>
+        /// Linq-let 的使用Demo
+        /// <para>使用let关键字重新引进一个变量，可以在查询中的任何地方使用，让代码可读性更高</para>
+        /// </summary>
+        public void Linq_let_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 21 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+            //没有对应的方法语法
+            #endregion
+
+            #region Linq 查询语法
+
+            var lowercaseStudentNames_00 = from s in studentList
+                                           where s.StudentName.ToLower().StartsWith("r")
+                                           select s.StudentName.ToLower();
+
+            //使用let关键字
+            var lowercaseStudentNames = from s in studentList
+                                        let lowercaseStudentName = s.StudentName.ToLower()
+                                        where lowercaseStudentName.StartsWith("r")
+                                        select lowercaseStudentName;
+
+            foreach (var name in lowercaseStudentNames)
+                Console.WriteLine(name);
+            #endregion
+        }
+
+        /// <summary>
+        /// Linq-into 的使用Demo
+        /// <para>into关键字，可以使你在一个select语句之后继续一个查询</para>
+        /// </summary>
+        public void Linq_into_Demo()
+        {
+            #region 测试数据
+            IList<Student> studentList = new List<Student>() {
+                new Student() { StudentID = 1, StudentName = "John", Age = 18 } ,
+                new Student() { StudentID = 2, StudentName = "Steve",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20 } ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 21 }
+            };
+            #endregion
+
+            #region Linq 方法语法
+            //没有对应的方法语法
+
+            #endregion
+
+            #region Linq 查询语法
+            //使用into关键字
+            var teenAgerStudents = from s in studentList
+                                   where s.Age > 12 && s.Age < 20
+                                   select s
+                                   into teenStudents
+                                   where teenStudents.StudentName.StartsWith("B")
+                                   select teenStudents;
             #endregion
         }
         #endregion
@@ -2168,7 +2250,7 @@ public static class EnumerableExtensionMethods
         {
             Console.WriteLine("Accessing student {0}", std.StudentName);
 
-            if (std.age > 12 && std.age < 20)
+            if (std.Age > 12 && std.Age < 20)
                 yield return std;
         }
     }
