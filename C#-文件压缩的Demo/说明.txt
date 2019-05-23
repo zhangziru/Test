@@ -1,0 +1,3 @@
+1、文件（GZipDemo.cs）,使用System.IO系统类库中的GZipStream对象，实现对文件的压缩 和 解压缩。
+2、文件（FileCompression.cs），使用第三方类库 SharpZipLib类库，实现对文件 和 文件夹 的压缩和解压缩。相对来说的比较的全面。
+3、文件（net45.rar），提供了一个SharpZipLib类库，供迷茫的你使用。
