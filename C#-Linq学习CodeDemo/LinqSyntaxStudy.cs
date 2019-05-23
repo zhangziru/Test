@@ -379,6 +379,7 @@ namespace CSharp测试项目20181203
         /// <summary>
         ///  Linq中ToLookup方法 [分组]使用案例
         ///  ToLookup与GroupBy相同;唯一的区别是GroupBy的执行被延迟，而ToLookup立即执行。
+		///  每组代表ILookup<TKey, TSource>对象
         /// </summary>
         public void Linq_ToLookup_Demo()
         {
