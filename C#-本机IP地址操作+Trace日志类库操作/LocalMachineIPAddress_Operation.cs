@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace CSharp测试项目20181203
 {
+    //
     //参考原文链接：https://www.cnblogs.com/lijianda/archive/2017/03/23/6604651.html
     //Dns类：提供简单的域名解析
 
@@ -30,6 +31,9 @@ namespace CSharp测试项目20181203
     //</system.diagnostics> 
     #endregion
 
+    #region Trace 记录日志的代码的配置
+    //Trace.Listeners.Add(new TextWriterTraceListener("TraceLog.log"));//配置日志的文件名
+    #endregion
     /// <summary>
     /// 本机IP地址操作
     /// </summary>
@@ -37,6 +41,7 @@ namespace CSharp测试项目20181203
     {
         public LocalMachineIPAddress_Operation()
         {
+            Trace.Listeners.Add(new TextWriterTraceListener("TraceLog.log"));//配置日志的文件名
             GetCurrentUseIPv4Address();
         }
 
@@ -178,5 +183,6 @@ namespace CSharp测试项目20181203
                 return ex.Message;
             }
         }
+
     }
 }
