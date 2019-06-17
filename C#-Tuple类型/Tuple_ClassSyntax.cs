@@ -19,10 +19,32 @@ namespace CSharp测试项目20181203
     {
         public Tuple_ClassSyntax()
         {
-            this.SimpleDemo();
+
+            this.SimpleDemo();//7个元素，为边界，7个以下用法相同
+            this.ComplexDemo();//7个以上元素用法相同
         }
 
-        public void SimpleDemo()
+        /// <summary>
+        /// 方法的返回值 刚好7个元素的元组。
+        /// </summary>
+        /// <returns></returns>
+        public Tuple<int, int, int, int, int, int, int> SimpleDemo()
+        {
+            var primes = Tuple.Create(2, 3, 5, 7, 11, 13, 17);
+            Console.WriteLine("Prime numbers less than 18: " +
+                              "{0}, {1}, {2}, {3}, {4}, {5}, {6}, and {7}",
+                              primes.Item1, primes.Item2, primes.Item3,
+                              primes.Item4, primes.Item5, primes.Item6,
+                              primes.Item7);
+            return primes;
+        }
+
+        /// <summary>
+        /// 方法的返回值 超过7个元素的元组。
+        /// <para>使用 Tuple（元素元组）的嵌套</para>
+        /// </summary>
+        /// <returns>,primes.Rest是超过7个元素的其余元素集合，取其中的值跟 7个以下的方式相同，通过 Item+索引 来取</returns>
+        public Tuple<int, int, int, int, int, int, int, Tuple<int>> ComplexDemo()
         {
             var primes = Tuple.Create(2, 3, 5, 7, 11, 13, 17, 19);
             Console.WriteLine("Prime numbers less than 20: " +
@@ -30,6 +52,7 @@ namespace CSharp测试项目20181203
                               primes.Item1, primes.Item2, primes.Item3,
                               primes.Item4, primes.Item5, primes.Item6,
                               primes.Item7, primes.Rest.Item1);
+            return primes;
         }
     }
 }
