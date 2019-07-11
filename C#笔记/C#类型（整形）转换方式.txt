@@ -1,0 +1,9 @@
+﻿C# 类型转换方式（以整形为例，特殊说明使用强类型的使用）
+参考的原文链接：https://www.cnblogs.com/yi-ye/p/5610823.html
+1.(int)变量名[强制类型转换]，说明： 该转换方式主要用于数字类型之间的转换，从int类型向long,float,double,decimal 类型转换可以使用隐式转换，但从long型到int 就需要使用显示转换，引用类型（字符串数字）使用该类型的转换方式否则产生编译错误。【注意：值类型与引用类型 区别】
+2、int.Parse（string 变量名），说明：该方式是将数字内容的字符串转换为int类型，如果字符串的内容为Null ，则抛出ArgumentNullException异常；如果字符串内容不是数字，则抛出FormatException异常。【注意：非数字的字符串 和 null值变量】
+3、int.TryParse(string s, out int result)，说明：该方式也是将数字内容的字符串转换为int类型，但是该方式有比int.Parse 优越的地方，就是它不会出现异常，最后一个参数result是输出值，如果转换成功则输出相应的值，转换失败则输出0。【正常操作】【整形的转换，返回转换状态+输出转换的结果值（成功为对应的值，失败为0）】
+4、Convert.ToInt32，说明：该方式不仅可以将字符串类型转换为int，还可以将其他的类型转换为int。【类型转换通用，仍有缺陷】
+	1）变量若为object或string类型，当其值为Nul时，会传回0，不会造成程序错误。
+	2）但是若此string类型的值为string.Empty,转换成int时，程序仍会出错。【注意，新点（缺陷）】
+
