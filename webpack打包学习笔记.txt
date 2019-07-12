@@ -1,0 +1,213 @@
+﻿npm 创建项目（先安装Node，教程自己搜一搜）
+1、 npm init 创建 package.json
+2、 package.json文件：项目描述文件
+3、 安装webpack（本地安装）：npm install webpack webpack-cli -D
+	1）安装完Node之后，将C:\Program Files\nodejs\node_cache该目录的权限放开，否则webpack安装不上。
+4、在根目录下，创建一个 webpack.config.js 文件，所有的配置项都会在这个文件中进行配置。
+5、在根目录下，创建一个 src 目录。
+	1）在 src 目录下，创建一个index.js文件 和 index.html文件。
+	2）在index.html文件中写入一个div标签，代码如下：
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta http-equiv="X-UA-Compatible" content="ie=edge">
+			<title>webpack配置学习</title>
+		</head>
+		<body>
+			<div id="root"></div>
+		</body>
+		</html>
+	3）在 webpack.config.js 文件中，webpack配置目录，代码如下：
+		const path = require('path')
+		module.exports = {
+			mode: 'development',
+			entry: './src/index.js', //入口文件
+			output: {
+				//出口
+				path: path.resolve(__dirname, 'dist'), //打包生成的目录
+				filename: 'index.js'  //生成目录的文件名字,单个js文件使用  
+			} 
+		}
+	4）配置多文件打包,如果是两个js文件，webpack配置如下：
+		entry: {
+			main: './src/index.js', //入口文件
+			sub: './src/index.js'
+		},
+		（1）这时候需要在output中的filename中配置
+			filename: '[name].js' //打包生成目录多个js文件的时候
+6、webpack配置图片
+	1）在我的src目录中准备一张图片。
+	2）在index.js中写入，代码如下：
+		import avatar from './item.png'
+		var img = new Image()
+		img.src = avatar
+		var root = document.getElementById('root')
+		root.append(img)
+	3）在webpack.config.js中，配置webpack模块化(module),首先先安装,选择使用yarn的方式安装
+		（1）yarn的方式安装，命令：yarn add  url-loader --save-dev
+		（2）配置webpack模块化(module)，代码如下：
+				module: {
+				rules: [
+						{
+							test: /\.(png|jpg|gif)$/,
+							use: {
+								loader: 'url-loader',
+								options: {
+									name: '[name]_[hash].[ext]', //图片名字加上hash值
+									outputPath: 'images/', //打包之后图片存放的一个目录里面
+									limit: 10240
+										//limit图片大小设置，如果超过10240字节，打包会生成目录和图片，如果没有超过设置的大小，会默认打包压缩在js中的base64
+								}
+							}
+						}
+					]
+				},
+		（3）在package.json文件配置，每次执行 npm run dev就会打包，会在你的根目录生成dist目录【重点，关键点】，代码如下：
+			"scripts": {
+				"dev": "webpack"
+			},
+			
+-------------------------------------------------
+-----------------打包命令：npm run dev-----------
+-------------------------------------------------
+
+
+7、webapck对css(scss)预处理器处理的配置
+	1）首先需要安装下面这些插件，即：需要先安装处理不同样式的加载器。
+		（1）安装css插件（加载器）命令：yarn add  css-loader --save-dev
+		（2）安装sass插件（加载器）命令：yarn add node-sass --save-dev
+		（3）安装sass插件（加载器）命令：yarn add sass-loader --save-dev
+		（4）安装scss插件（加载器）命令：yarn add scss-loader --save-dev
+		（5）安装style插件（加载器）命令：yarn add style-loader --save-dev
+	2）在 webpack.config.js 文件中，webpack配置代码如下：
+		module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                // 【重点，关键点】css-loader处理css文件 style-loader把css-loader处理好的文件挂载到header标签上，sass-loader对scss预处理器配置,postcss-loader处理css前缀
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+　　　　　　　　　　　　　　　	modules: true, //模块化打包，
+　　　　　　　　　　　　　　　  importLoaders: 2 //每次加载都会执行sass-loader和postcss-loader  
+　　　　　　　　　　　　　　} 
+　　　　　　　　　　　　}, 
+　　　　　　　　　　　　'sass-loader', 
+　　　　　　　　　　　　'postcss-loader'  浏览器前缀
+　　　　　　　　　　] 
+　　　　　　　　} 
+　　　　　　] 
+　　　　},
+		（1）说明：如果想对css进行模块化处理，需要webpack配置代码如下：
+			options: {
+			　modules: true, //模块化打包，
+			　importLoaders: 2 //每次加载都会执行sass-loader和postcss-loader  
+			} 
+		（2）在src目录中创建一个scss文件，写入一些简单的css（样式，用的是scss语法），代码如下：
+			body {
+				.avatar {
+					width: 50%;
+					border: 1px solid red;
+					transform: translate(100px, 100px);
+				}
+			}
+		（3）在index.js文件中写入，即：引入样式文件，命令import 变量名 from 目标对象的路径【重点，关键点】，代码如下：
+			import avatar from './item.png'
+			import createdAvatar from './createdAvatar.js'  //引入js文件
+			import style from './index.scss'
+			var img = new Image()
+			img.src = avatar
+			img.classList.add(style.avatar)
+			var root = document.getElementById('root')
+			root.append(img)
+			createdAvatar() //使用
+		（4）再创建一个createdAvatar.js文件，然后在index.js文件中引入。createdAvatar.js文件的内容如下：
+			import avatar from './item.png'
+ 
+			function createdAvatar() {
+				var img = new Image()
+				img.src = avatar;
+				img.classList.add('avatar')
+				var root = document.getElementById('root');
+				root.append(img)
+			}
+			 
+			export default createdAvatar;
+		（5）我们使用了Css3，但是浏览器没有自动给我们加上前缀，需要我们手动配置一下，命令如下：
+			yarn add postcss-loader --save-dev
+		（6）在根目录创建一个postcss.config.js文件，再使用下述命令：
+			yarn add autoprefixer --save-dev
+		（7）在 postcss.config.js 文件，写入如下代码配置：
+			module.exports = {
+				plugins: [
+					require('autoprefixer')
+				]
+			}
+			// 用与处理css在不同浏览器自动加上前缀问题
+		（8）然后在你的css配置中使用 postcss-loader，运行打包，再次在浏览器可以看到，对于一些css3浏览器自动加上前缀
+8、webpack对字体进行处理对字体
+	1）先去 iconfont 下载一些字体，放入自己的src目录里面。
+	2）iconfont字体图标的使用方法，链接：https://www.cnblogs.com/hjvsdr/p/6639649.html
+	3）需要在index.js文件引入并使用，代码如下：
+		import './iconfont.scss'
+
+		var root = document.getElementById('root')
+		root.innerHTML = "<div class='iconfont iconchangjingguanli'></div>"
+	4）首先安装一个插件（加载器），命令：yarn add file-loader --save-dev
+	5）在 webpack.config.js 文件中，webpack配置代码如下：
+		module: {
+			rules: [{
+					test: /\.(eot|ttf|svg)$/,
+					use: {
+						loader: 'file-loader'
+					}
+				}
+			]
+		},
+9、webpack配置打包文件处理，生成html文件
+	1）需求：每次打包之后，dist目录都会给我们生成一个html文件
+		（1）需要安装一个插件，命令：yarn  add html-webpack-plugin --save-dev
+		（2）在 webapck.config.js 文件中引入一个常量，如下所示：
+			const HtmlWebpackPlugin = require('html-webpack-plugin')
+		（3）在 webapck.config.js 文件中增加一个配置，配置代码如下：
+			plugins: [
+				new HtmlWebpackPlugin({
+					template: 'src/index.html'
+				})
+			],
+	2）需求：每次打包需要重新更新一下dist目录，删除里面的文件，重新生成一个新的。
+		（1）需要安装另一个插件，命令：yarn  add  clean-webpack-plugin --save-dev
+		（2）在 webapck.config.js 文件中引入一个常量，如下所示：
+			const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+		（3）在 webapck.config.js 文件中增加一个配置，配置代码如下（里面已经包含了上个需求的代码配置，注意：不要重复 复制）：
+			plugins: [
+				// HtmlWebpackPlugin打包之后自动生成html文件，
+				new HtmlWebpackPlugin({
+					template: 'src/index.html'
+				}),
+				// CleanWebpackPlugin打包之前先自动清除dist目录里面所有的文件，
+				new CleanWebpackPlugin()
+			],
+	3）需求：在代码打包之后检测，检测问题，定位到哪一行
+		（1）需要进行 SourceMap配置。
+		（2）在 webapck.config.js 文件中增加一个配置，配置代码如下：
+				module.exports = {
+					devtool: 'cheap-inline-source-map',
+				}
+		（3）配置选项如下：
+				//source-map 打包之后会生成map文件，性能比较慢，用于检测代码打包之后错误信息提示
+
+				//eval 打包最快，不会生成.map文件，
+
+				//inline-source-map 打包不会生成.map文件，在打包的js文件生成base64
+
+				//如果是在development 开发环境  使用cheak-module-eval-source-map,不会生成.map文件，但是集成在打包之后main.js中eval中
+
+				//cheap-inline-source-map 打包不会生成.map文件，在打包的js文件生成base64
+
+10、温馨提示：webpack配置插件特别多，需要慢慢的来，理解常用的场景配置就可以了。剩下的需要单独查阅资料就可以了解其中配置以及原理
+11、原文链接：https://mp.weixin.qq.com/s/V9vL1rsuwA6-zPlXU3ucUg
