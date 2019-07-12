@@ -1,0 +1,12 @@
+﻿新建网站（不是Web应用程序[注意]）-ASP.NET文件夹功能
+Bin文件夹，文件类型：.dll，注释：包含应用程序所需的任何预生成的程序集
+App_Browsers，文件类型：.browser，注释：包含应用程序特有的浏览器定义文件，ASP.NET用它来识别各浏览器及确定它们的功能
+App_Code，文件类型：.cs、.vb、.xsd、自定义的文件类型，注释：包含作为应用程序的一部分编译的类的源文件。当页面被请求时，ASP.NET编译该文件夹中的代码。该文件夹中的代码在应用程序中自动地被引用
+App_Data，文件类型：.mdb、.mdf、.xml，注释：包含Microsoft Office Access和SQL Express文件以及XML文件或其他数据存储
+App_GlobalResources，文件类型：.resx，注释：包含在本地化应用程序中以编程方式使用的资源文件
+App_LocalResources，文件类型：.resx，注释：包含页面范围的资源文件
+App_Themes，文件类型：.skin、.CSS、.xsl、附属文件，注释：包含一组定义ASP.NET页面和控件外观的文件
+App_WebReferences，文件类型：.wsdl，注释：包含用以生成代理类的WSDL文件，以及与在应用程序中使用Web服务有关的其他文件
+原文链接：https://blog.csdn.net/zhang_hui_cs/article/details/7900575
+
+本篇内容仅供了解，因为现在很少有人使用 新建网站 来部署一个站点。
