@@ -138,6 +138,7 @@ linux命令：
 【GIT 命令 获取】
 【GIT 命令 拉取】
 git pull 将服务器版本库内容同步到本地版本库
+git pull orgin master  显式的拉取特定分支的代码（默认的情况下使用git pull 会拉取当前所在分支的代码。如果说修改过配置的话，会拉取全部分支的代码。）
 【GIT 命令 暂存】
 git add file1  ：添加单个文件
 git add .  ：将工作区中的所有“更改”和“新增”的都添加到“暂存区”
@@ -160,6 +161,7 @@ git remote -v
 【GIT 命令 提交】
 git commit -m "备注" ：将“暂存区”的修改提交到“本地仓库”
 【GIT 命令 推送】
+git push  ：默认将当前所处的分支代码提交推送到远程服务器。
 git push origin master ：命令将本地版本库内容推送到服务器 指定分支 版本库 
 【GIT 命令 同步】
 【GIT 命令 查看分支】
@@ -206,3 +208,6 @@ git log  --查看当前分支的 提交记录
 git log --graph -all   --在Brash界面中 查看所有的记录
 gitk --all  --在Git的GUI（可视化界面）中显示所有的记录
 git log --author=“author”：查看某个 作者 的所有日志，作者 与查看日志时候的Author保持一致（包含邮箱）
+git log --merges:查看当前分支，合并记录的所有日志
+git log --merges --first-parent:查看当前分支，合并记录中第一个父级的所有日志
+git log --first-parent:查看当前分支的所有第一个父级的所有日志。（这样可以过滤掉合并到当前分支的从属子级日志）
