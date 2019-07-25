@@ -1,0 +1,36 @@
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <title></title>
+   <style type="text/css">
+
+   </style>
+   <script type="text/javascript" src="jquery-1.11.0.js"></script>
+</head>
+
+<body>
+   <!-- Iframe中的父页面 与 子页面 之间 无法调用对方页面中的JS函数，解决方案：放在IIS环境下就可以了。原因如下： -->
+   <!-- 如果试图在没有Web服务的情况下直接从浏览器访问框架，则出于安全原因不允许访问(可以访问系统文件)。
+      我已经通过安装xampp来解决我的问题，并将我的所有文件都移到htdocs中，一切都如愿以偿。 -->
+   <!-- 参考的原文链接：https://cloud.tencent.com/developer/ask/136811 -->
+   <input type="button" value="测试" id="ok" />
+   <div>
+      <iframe id="GGG" src="sonPage.html"></iframe>
+   </div>
+</body>
+<script type="text/javascript">
+   $(function () {
+      $("#ok").click(function () {
+         var domFrame = document.getElementById("GGG");
+         domFrame.contentWindow.SubMethod();
+      });
+   })
+   function ParentMethod() {
+      alert("我是父页面");
+   }
+</script>
+
+</html>
