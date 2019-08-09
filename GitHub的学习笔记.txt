@@ -211,3 +211,5 @@ git log --author=“author”：查看某个 作者 的所有日志，作者 与
 git log --merges:查看当前分支，合并记录的所有日志
 git log --merges --first-parent:查看当前分支，合并记录中第一个父级的所有日志
 git log --first-parent:查看当前分支的所有第一个父级的所有日志。（这样可以过滤掉合并到当前分支的从属子级日志）
+【Git 关闭本地：安全验证】
+git config --global http.sslVerify false  --连接git是报错unable to access ‘https://****’: SSL certificate problem: Invalid  因为有些服务器是https，是自签名的
