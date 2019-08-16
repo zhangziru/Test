@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flex布局（容器属性）的案例</title>
+    <style type="text/css">
+        .box {
+            width: 800px;
+            height: 150px;
+            background-color: orange;
+            display: flex;
+        }
+
+        .item {
+            width: 100px;
+            height: 30px;
+            background-color: aqua;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>参考的连接:<span>http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html</span></div>
+
+    <fieldset>
+        <legend>普通模</legend>
+        <div class="box">
+            <div class="item">1 </div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br />
+
+    <fieldset>
+        <legend>1、容器属性（flex-direction），默认值为row，即：起点在左端。</legend>
+        <div class="box" style="flex-direction:row-reverse">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend>2、容器属性（flex-wrap），默认值为nowrap，即：不换行。【前提】容器的空间要小一点</legend>
+        <div class="box" style="flex-wrap:wrap;width:400px;">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend>3、容器复合属性（flex-flow），flex-direction属性和flex-wrap属性的简写形式</legend>
+        <div class="box" style="flex-flow:row-reverse wrap;width:400px;">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend>4、容器属性（justify-content）,默认值为flex-start，即项目沿主轴左对齐。</legend>
+        <div class="box" style="justify-content:flex-end;">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br>
+
+    <fiedlset>
+        <legend>5、容器属性（align-items）,默认值为stretch,即：项目未设置高度，将占满整个容器的高度。再换句话说就是，垂直对齐没有了意义。</legend>
+        <div class="box" style="align-items:flex-end;">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fiedlset>
+    <br>
+
+    <fieldset>
+        <legend>
+            6、项目属性（align-content），定义内容在交叉轴上的对齐方式。如果主轴只有一条的话，该属性不起作用。【前提】关键是看容器的空间是否够大，项目是否被允许换行。只有允许换行了，设置内容的交叉轴的对齐方式才有意义
+        </legend>
+        <h4>仅仅缩写容器的空间，实现换行</h4>
+        <div class="box" style="width:400px;flex-wrap:wrap;">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+        <br>
+
+        <h4>现在有多根主轴线，所以使用 容器属性（align-items）来设置，交叉轴上（即，垂直方向）的对齐方式，就显得不尽人意</h4>
+        <div class="box" style="width:400px;flex-wrap:wrap;align-items: center">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+        <br>
+
+        <h4>应用 容器属性（align-content）来，设置多根主轴，在交叉轴（垂直）方向的对齐方式</h4>
+        <div class="box" style="width:400px;flex-wrap:wrap;align-content: center">
+                <div class="item">1</div>
+                <div class="item">2</div>
+                <div class="item">3</div>
+                <div class="item">4</div>
+                <div class="item">5</div>
+            </div>
+    </fieldset>
+</body>
+
+</html>

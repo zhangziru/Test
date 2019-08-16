@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flex布局（项目属性）的案例</title>
+    <style type="text/css">
+        .box {
+            width: 800px;
+            height: 150px;
+            background-color: orange;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box1 {
+            width: 200px;
+            height: 150px;
+            background-color: orange;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item {
+            width: 100px;
+            height: 30px;
+            background-color: aqua;
+            margin-left: 2px;
+        }
+
+        .highLight {
+            background-color: blueviolet;
+        }
+    </style>
+</head>
+
+<body>
+    <div>参考的连接:<span>http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html</span></div>
+
+    <fieldset>
+        <legend>普通模</legend>
+        <div class="box">
+            <div class="item">1 </div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br />
+
+    <fieldset>
+        <legend>1、项目属性(order)的应用,默认值为0。数值越小，排列越靠前。</legend>
+        <div class="box">
+            <div class="item" style="order: 1;">1 </div>
+            <div class="item" style="order: 2;">2</div>
+            <div class="item highLight" style="order: 10;">3</div>
+            <div class="item" style="order: 4;">4</div>
+            <div class="item" style="order: 5;">5</div>
+        </div>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend>2、项目属性(flex-grow)的应用,默认值为0。容器存在剩余空间放大。</legend>
+        <div class="box">
+            <div class="item" style="order: 1;">1 </div>
+            <div class="item" style="order: 2;">2</div>
+            <div class="item highLight" style="order: 3;flex-grow:1">3</div>
+            <div class="item" style="order: 4;">4</div>
+            <div class="item" style="order: 5;">5</div>
+        </div>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend> 3、项目属性(flex-shrink)的应用，默认值为1，如果空间不足，项目都将缩小。属性为0，空间不足时不缩小 </legend>
+        <div class="box1">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item highLight" style="flex-shrink:0">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br />
+
+    <fieldset>
+        <legend>4、项目属性(flex-basis)的应用。默认值为auto。该属性就是width的替代品，谁设置了值，以谁为准；都设置了以flex-basis设置的宽度为准</legend>
+        <div class="box">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item highLight" style="flex-basis: 200px;">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br />
+
+    <fieldset>
+        <legend>5、flex复合属性,flex:1;的含义。flex:1 等价于 flex-grow:1;flex-shrink:1;flex-basis:1px;</legend>
+        <div>
+            flex:1 描述：<br>
+            <ul style="list-style-type:decimal;">
+                <li>空间充足，这种方式，其他项目没有分配剩余空间，它将分配所有空间。</li>
+                <li>空间不足，这种方式，缩小比例都是1，即等比缩写。其它的项目默认值也是1。所以没什么影响。</li>
+                <li>最关键的是第三个属性（flex-basis）。显式指定了 项目的宽度。【重点，核心点】</li>
+            </ul>
+        </div>
+        <fieldset>
+            <legend>flex复合属性Demo</legend>
+            <div class="box1">
+                <div class="item">1</div>
+                <div class="item">2</div>
+                <div class="item highLight" style="flex: 1">3</div>
+                <div class="item">4</div>
+                <div class="item">5</div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>flex复合属性单独设置Demo</legend>
+            <div class="box1">
+                <div class="item">1</div>
+                <div class="item">2</div>
+                <div class="item highLight" style="flex-grow:1;flex-shrink:1;flex-basis:1px;">3</div>
+                <div class="item">4</div>
+                <div class="item">5</div>
+            </div>
+        </fieldset>
+    </fieldset>
+    <br />
+
+    <fieldset>
+        <legend>6、项目属性(align-items)的应用。允许单个项目有与其他项目不一样的对齐方式</legend>
+        <div class="box">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item highLight" style="align-self:flex-end">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </fieldset>
+    <br>
+</body>
+
+</html>
