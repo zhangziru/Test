@@ -205,7 +205,7 @@ namespace CSharp测试项目20181203
                         string MaterialCode = GetStringFromNode(GetCellNodeOfTableByPosition(table, i, 1));
                         if (string.IsNullOrEmpty(MaterialCode))
                         {
-                            continue;
+                            break;
                         }
                         MMS_MMT_ITEM mmsItem = new MMS_MMT_ITEM();
                         mmsItem.SORT = GetStringFromNode(GetCellNodeOfTableByPosition(table, i, colIndex++));
