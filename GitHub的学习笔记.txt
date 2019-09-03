@@ -211,5 +211,9 @@ git log --author=“author”：查看某个 作者 的所有日志，作者 与
 git log --merges:查看当前分支，合并记录的所有日志
 git log --merges --first-parent:查看当前分支，合并记录中第一个父级的所有日志
 git log --first-parent:查看当前分支的所有第一个父级的所有日志。（这样可以过滤掉合并到当前分支的从属子级日志）
+git log ：显示提交历史时，有两种排序方式： --date-order（日期排序） 和 --topo-order（拓扑结构排序） 。默认的排序方式为 --topo-order 。
+	1）--topo-order 选项导致同一个分支上的提交在历史记录中显示尽量保持连续，在查看提交历史的时候，比较方便。 
+	2）--date-order 选项导致有多个分支同显示的时候，提交按照时间戳顺序显示，最新的提交显示在最上面，在多个分支上同时进行开发的时候，比较方便。
+	3）参考的链接：https://blog.csdn.net/icbm/article/details/71194179
 【Git 关闭本地：安全验证】
 git config --global http.sslVerify false  --连接git是报错unable to access ‘https://****’: SSL certificate problem: Invalid  因为有些服务器是https，是自签名的
