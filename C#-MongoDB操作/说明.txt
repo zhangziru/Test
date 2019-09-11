@@ -1,0 +1,22 @@
+
+=========================================================
+
+MongoDB的驱动下载，即：SDK，链接：http://mongodb.github.io/mongo-csharp-driver/
+只需要引入：MongoDB.dll、MongoDB.Bson.dll、MongoDB.Driver.dll
+
+=========================================================
+IMongoDBOperation.cs，是操作的定义，主要用里面的操作注释。
+MongoDBHelper.cs，是核心文件，数据库的连接，操作的实现都在这个文件中。
+firstCol.cs,是MongoDB中某个数据库中 集合的键 所映射的对象。【注意数据类型，数据类型不匹配是不行的】
+MongoDB_Demo.cs，是调用MongoDB基本操作的一个案例。
+=========================================================
+
+webconfig配置
+
+ <add key="MongoDb_Server" value="ip" />
+ <add key="MongoDB_User" value="user" /><!-- MongoDB服务没有开启身份验证，这个键无需添加 -->
+ <add key="MongoDB_Pass" value="pass" /><!-- MongoDB服务没有开启身份验证，这个键无需添加 -->
+ <add key="MongoDb_DatabaseName" value="DatabaseName" />
+
+=========================================================
+我也提供3个dll。给小白准备。
