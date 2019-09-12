@@ -12,6 +12,7 @@ namespace CSharp测试项目20181203
     #region
     //Word的写入操作，参考的链接：https://www.cnblogs.com/wuhuacong/archive/2012/08/30/2662961.html
     //Word的读取操作，参考的链接：https://www.cnblogs.com/z-huifei/p/6594336.html
+    //Word的替换文本操作，参考的链接：https://blog.csdn.net/wulex/article/details/81702812
     #endregion
 
     public class WordDocumentOperation
@@ -20,7 +21,9 @@ namespace CSharp测试项目20181203
         {
             //WriteToWordDemo("WordFielDemo1.docx", "NewWordFielDemo1.docx");//向Word文档中写入内容
             //GainContentFormWordFile("物资装箱清单-047合同.8.22.docx");
-            GainContentFormWordFileRealDemo("物资装箱清单-047合同.8.22.docx");
+            //GainContentFormWordFileRealDemo("物资装箱清单-模板.docx");
+            //替换文档中的内容
+            UpdateWordDemo("物资装箱清单-047合同.8.22.docx", "New物资装箱清单-047合同.8.22.docx");
         }
         /// <summary>
         /// 在Word中 根据模板来创建二维表格
@@ -92,6 +95,35 @@ namespace CSharp测试项目20181203
             }
         }
 
+
+        /// <summary>
+        /// 更改Word中 根据模板内容
+        /// </summary>
+        /// <param name="templateFile">模板路径</param>
+        /// <param name="saveDocFile">生成的文件保存路径</param>
+        public void UpdateWordDemo(string templateFile, string saveDocFile)
+        {
+            try
+            {
+                Aspose.Words.Document doc = new Aspose.Words.Document(templateFile);
+                doc.Range.Replace("A0000-PO-100", "1232443", true, true);
+
+                doc.Save(saveDocFile, SaveFormat.Docx);
+
+                #region 打开文档的操作
+                //if (MessageUtil.ShowYesNoAndTips("保存成功，是否打开文件？") == System.Windows.Forms.DialogResult.Yes)
+                //{
+                //    System.Diagnostics.Process.Start(saveDocFile);
+                //} 
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+
+
         /// <summary>
         /// Word文档中 段落的提取
         /// </summary>
@@ -109,10 +141,6 @@ namespace CSharp测试项目20181203
 
         public void GainContentFormWordFile(string fileName)
         {
-            Model1 model1 = new Model1();
-            List<Model2> listModel2 = new List<Model2>();
-            Model3 model3 = new Model3();
-
             Document doc = new Document(fileName);
 
             var temp = doc.Sections[0];
