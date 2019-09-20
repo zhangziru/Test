@@ -1,0 +1,6 @@
+百度地图的学习笔记
+1、百度地图开发Javascript API的地址：http://lbsyun.baidu.com/index.php?title=jspopular3.0 。
+2、如何获取秘钥，链接地址：http://lbsyun.baidu.com/index.php?title=jspopular3.0/guide/getkey  。
+3、百度地图使用的第一个案例（Hello World）：http://lbsyun.baidu.com/index.php?title=jspopular3.0/guide/helloworld
+4、如何申请百度账号和ak（百度地图的秘钥），链接：http://lbsyun.baidu.com/apiconsole/key。
+5、API的离线版，pdf的下载，地址：http://lbsyun.baidu.com/index.php?title=jspopular/js-download。

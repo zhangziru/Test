@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度地图</title>
+    <script src="./lib/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=Qi9DQUrisUtaWPkdfrvR4ISF"></script>
+</head>
+
+<body>
+    <!-- 百度地图开始 -->
+    <div class="ditu_baidu">
+        <div id="allmap"></div>
+    </div>
+    <!-- 百度地图结束 -->
+</body>
+<script type="text/javascript">
+    // 百度地图API功能
+    //1、调整地图容器的大小。
+    $("#allmap").height(window.innerHeight - (80));
+    //2、在指定的容器上，创建地图实例。
+    var map = new BMap.Map("allmap");
+    //3、设置地图的样式。
+    map.setMapStyle({
+        styleJson: [
+            {
+                "featureType": "poi",
+                "elementType": "all",
+                "stylers": {
+                    "color": "#ffffff",
+                    "visibility": "off"
+                }
+            },
+            {
+                "featureType": "road",
+                "elementType": "all",
+                "stylers": {
+                    "color": "#ffffff",
+                    "visibility": "on"
+                }
+            },
+            {
+                "featureType": "districtlabel",
+                "elementType": "all",
+                "stylers": {}
+            },
+            {
+                "featureType": "boundary",
+                "elementType": "all",
+                "stylers": {}
+            },
+            {
+                "featureType": "administrative",
+                "elementType": "all",
+                "stylers": {}
+            }
+        ]
+    });
+    //4、设置：地图中心点坐标 + 地图级别
+    map.centerAndZoom(new BMap.Point(105, 38), 5);
+    map.enableScrollWheelZoom(true);//5、设置是否启用：在地图中使用鼠标滚轮控制缩放。
+    // 6、创建地址解析器实例，即：地址解析，提供将地址信息转换为坐标点信息的服务。 
+    var myGeo = new BMap.Geocoder();
+
+    setTimeout(function () {
+        InitMap({ lat: 39.90, lng: 116.40 }, '测试', '违规');//lng:经度（longitude）；lat:纬度（latitude）。
+        /*     for (var i = 0; i < datas.length; i++) {
+                var point = {
+                    lat: datas[i].Lat,
+                    lng: datas[i].Lng
+                }
+                InitMap(point, datas[i].ReportId, datas[i].ReportPhotoId);
+            } */
+    }, 2000);
+    function InitMap(point, statusImageUrl) {
+        var myCompOverlay = new ComplexCustomOverlay(point, statusImageUrl);//创建一个复杂物
+        //7、可以使用 map.addOverlay 方法向地图添加覆盖物，使用 map.removeOverlay 方法移除覆盖物
+        map.addOverlay(myCompOverlay);
+
+        addClickHandler(reportPhotoId, myCompOverlay);
+    }
+
+    // 复杂的自定义覆盖物
+    function ComplexCustomOverlay(point, url) {
+        this._centerPoint = point;//中心点坐标
+        this._imageUrl = url;//覆盖物背景图地址
+        this._width = 66;//容器的宽度
+        this._height = 46;//容器的高度
+    }
+    //继承覆盖物的基类
+    ComplexCustomOverlay.prototype = new BMap.Overlay();
+    //基类的抽象方法（initialize）：覆盖物的设计
+    ComplexCustomOverlay.prototype.initialize = function (map) {
+        // 保存map对象实例
+        this._map = map;
+        // 创建div元素，作为自定义覆盖物的容器
+        var div = this._div = document.createElement("div");
+        div.style.position = "absolute";
+        // 可以根据参数设置元素外观 
+        div.style.height = this._height + "px";
+        div.style.width = this._width + "px";
+        div.style.background = "url(" + this._imageUrl + ") no-repeat";
+        // 将div添加到覆盖物容器中   
+        map.getPanes().labelPane.appendChild(div);//通过 map.getPanes 方法可以得到这些容器元素
+        // 保存div实例    
+        this._div = div;
+        return div;
+    }
+    //基类的抽象方法（draw）：绘制覆盖物。
+    ComplexCustomOverlay.prototype.draw = function () {
+        // 根据地理坐标转换为像素坐标，并设置给容器
+        var position = this._map.pointToOverlayPixel(this._centerPoint);
+        this._div.style.left = position.x - 10 + "px";//66 33 
+        this._div.style.top = position.y - 30 + "px";   //46     23
+    }
+
+    function addClickHandler(reportPhotoId, marker) {
+        marker._div.addEventListener("click", function (e) {
+            alert("再动我下，试试！");
+        });
+    }
+
+</script>
+
+</html>

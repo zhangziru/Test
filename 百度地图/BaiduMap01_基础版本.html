@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度地图</title>
+    <script src="./lib/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=Qi9DQUrisUtaWPkdfrvR4ISF"></script>
+    <!-- 样式一定要加，否则地图容器，没有高度，显示不出来 -->
+    <style type="text/css">    
+         html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+        } 
+        #container {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 百度地图开始 -->
+    <div id="container"></div>
+    <!-- 百度地图结束 -->
+</body>
+<script type="text/javascript">
+    //注意：一定要设置 百度地图容器的高度，否则，显示不出来效果。【重点】
+
+    var map = new BMap.Map("container"); // 创建地图实例 
+    var point = new BMap.Point(116.404, 39.915); // 创建点坐标 
+    map.centerAndZoom(point, 15); // 初始化地图，设置中心点坐标和地图级别 
+
+</script>
+
+</html>
