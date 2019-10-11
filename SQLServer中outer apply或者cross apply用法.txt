@@ -1,4 +1,5 @@
 SQLServer中outer apply或者cross apply用法
+官方的文档说明：https://docs.microsoft.com/zh-cn/sql/t-sql/queries/from-transact-sql?redirectedfrom=MSDN&view=sql-server-2017&viewFallbackFrom=sql-server-previousversions#using-apply
 1、参考的原文链接：https://www.cnblogs.com/itjeff/p/5632755.html（主要），里面的内容开始说的有点不对，例子非常的实用。
 2、参考的原文链接：https://www.cnblogs.com/4littleProgrammer/p/4747355.html（次要）
 3、表结构：
