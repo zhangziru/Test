@@ -1,0 +1,87 @@
+SQLServer中outer apply或者cross apply用法
+1、参考的原文链接：https://www.cnblogs.com/itjeff/p/5632755.html（主要），里面的内容开始说的有点不对，例子非常的实用。
+2、参考的原文链接：https://www.cnblogs.com/4littleProgrammer/p/4747355.html（次要）
+3、表结构：
+	1）产品表：
+	CREATE TABLE [dbo].[Products](
+		[Id] [int] NOT NULL,
+		[SupplierId] [int] NULL,
+		[ProductName] [nvarchar](50) NULL,
+		[UnitPrice] [decimal](18, 2) NULL,
+		[CreateDateTime] [datetime] NULL,
+	 CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	2）供应商表：
+	CREATE TABLE [dbo].[Supplier](
+		[id] [int] NOT NULL,
+		[Name] [nvarchar](50) NULL,
+		[CompanyName] [varchar](50) NULL,
+		[CreateDateTime] [datetime] NULL,
+	 CONSTRAINT [PK_Supplier] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	3）数据：
+	INSERT [dbo].[Products] ([Id], [SupplierId], [ProductName], [UnitPrice], [CreateDateTime]) VALUES (1, 1, N'VT', CAST(29.00 AS Decimal(18, 2)), CAST(N'2011-08-14T00:00:00.000' AS DateTime))
+	GO
+	INSERT [dbo].[Products] ([Id], [SupplierId], [ProductName], [UnitPrice], [CreateDateTime]) VALUES (2, 1, N'鞋', CAST(19.00 AS Decimal(18, 2)), CAST(N'2011-08-14T00:00:00.000' AS DateTime))
+	GO
+	INSERT [dbo].[Products] ([Id], [SupplierId], [ProductName], [UnitPrice], [CreateDateTime]) VALUES (3, 1, N'手机', CAST(899.00 AS Decimal(18, 2)), CAST(N'2011-08-14T00:00:00.000' AS DateTime))
+	GO
+	INSERT [dbo].[Supplier] ([id], [Name], [CompanyName], [CreateDateTime]) VALUES (1, N'kim', N'vancl', CAST(N'2011-08-14T00:00:00.000' AS DateTime))
+	GO
+	INSERT [dbo].[Supplier] ([id], [Name], [CompanyName], [CreateDateTime]) VALUES (2, N'jessica', N'reed', CAST(N'2011-08-14T00:00:00.000' AS DateTime))
+4、测试Sql
+	1）自定义表值函数（split），字符串分割
+		Create Function [dbo].[Split](@Sql varchar(8000),@Splits varchar(10))  
+		returns @temp Table (a varchar(100))  
+		As  
+		Begin  
+		Declare @i Int  
+		Set @Sql = RTrim(LTrim(@Sql))  
+		Set @i = CharIndex(@Splits,@Sql)  
+		While @i >= 1  
+		Begin  
+		Insert @temp Values(Left(@Sql,@i-1))  
+		Set @Sql = SubString(@Sql,@i+1,Len(@Sql)-@i)  
+		Set @i = CharIndex(@Splits,@Sql)  
+		End 
+
+		If @Sql <> ''  
+		Insert @temp Values (@Sql)  
+		Return  
+		End 
+	2）自定义表值函数（dbo.fn_top_products），功能：该函数根据供货商ID返回单价最高的两个商品	
+		IF OBJECT_ID('dbo.fn_top_products') IS NOT NULL  
+		DROP FUNCTION dbo.fn_top_products;  
+		GO 
+
+		--根据供货商ID获得单价最高的两件商品
+
+		CREATE FUNCTION dbo.fn_top_products  
+		(@supid AS INT)  
+		RETURNS TABLE  
+		AS  
+		RETURN  
+		SELECT TOP(2)Id AS ProductId,ProductName,UnitPrice  
+		FROM dbo.Products  
+		WHERE SupplierId = @supid  
+		ORDER BY UnitPrice DESC  
+		GO 
+	3）测试语句1（OUTER APPLY）：
+		SELECT S.id AS SupplierId,S.CompanyName,UnitPrice FROM dbo.Supplier AS S  
+		OUTER APPLY dbo.fn_top_products(S.id) AS P 
+	4）测试语句2（CROSS APPLY）：		
+		SELECT S.id AS SupplierId,S.CompanyName,UnitPrice FROM dbo.Supplier AS S  
+		CROSS APPLY dbo.fn_top_products(S.id) AS P 
+	5）结果证明：
+	OUTER APPLY和CROSS APPLY的区别。
+		再次说一下APPLY的执行过程，它先逻辑计算左表表达式（以上的Supplier表），然后把右表达式（以上的自定义表值函数Split）的结果应用到左表 表达式的所对应的行记录上。实际是把外部查询的列引用作为参数传递给表值函数。
+	6）APPLY有两种形式，一个是OUTER APPLY，一个是CROSS APPLY。区别在于：
+		（1）OUTER APPLY，结果集中 包含 使右表表达式为空 的左表表达式中的行。
+		（2）CROSS APPLY，结果集中 不包含 使右表表达式为空 的左表表达式中的行。
+		（3）从这点上有点类似有 join（连接查询）操作中的  left join 和 join 了。
