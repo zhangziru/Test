@@ -221,3 +221,16 @@ git log ：显示提交历史时，有两种排序方式： --date-order（日�
 	3）参考的链接：https://blog.csdn.net/icbm/article/details/71194179
 【Git 关闭本地：安全验证】
 git config --global http.sslVerify false  --连接git是报错unable to access ‘https://****’: SSL certificate problem: Invalid  因为有些服务器是https，是自签名的
+【Git 标签】标签是一个让人容易记住的有意义的名字，它跟某个commit（提交记录）绑在一起。
+注意：标签总是和某个commit挂钩。如果这个commit既出现在master分支，又出现在dev分支，那么在这两个分支上都可以看到这个标签。
+
+git tag <name> ：创建一个新标签。[注意]默认标签是打在最新提交的commit上的。
+git tag <name> <commit id> ：在指定的版本上打标签。
+git tag -a <name> -m '说明信息' [commit id] ：创建带说明的信息的标签。用-a指定标签名，-m指定说明文字。
+git tag ：查看当前分支的所有标签。
+git show <tagname> ：查看标签信息，以及标签对应的提交更改信息。
+git push origin <tagname> ：推送某个标签到远程指定分支。
+git push orgin --tags ：将本地全部尚未推送的标签，推送到远程。
+git tag -d <tagname> ：从本地删除标签。
+git push <branchName> :refs/tags/<tagname> ：删除远程分支中的标签。前提：先删除本地分支中的标签，再做当前的操作。
+参考的链接：https://www.cnblogs.com/AmyHu/p/10827026.html
