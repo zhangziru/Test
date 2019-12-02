@@ -1,0 +1,13 @@
+npm安装教程：https://www.cnblogs.com/goldlong/p/8027997.html
+环境变量配置，window10（各个系统的操作都差不多）：https://www.cnblogs.com/cnwutianhao/p/5487758.html
+
+
+在浏览器上安装 Vue Devtools工具
+(这里提供的源码，需要npm编译)
+相关的链接：http://www.cnblogs.com/feiyu159/p/8666865.html
+
+编译好的 Vue Devtools工具 插件：打开谷歌浏览器->扩展应用程序->选择开发者模式->直接(在本地)将插件添加或者直接把解压的目录拖到插件管理中
+
+编译好的 Vue Devtools工具 
+链接：https://pan.baidu.com/s/1nZZvMItisoXwmomLwJCmWQ 
+提取码：gba1 
