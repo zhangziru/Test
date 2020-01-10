@@ -1,0 +1,36 @@
+Alter procedure [dbo].[AddFieldDescription] (@table varchar(20),@column varchar(50),@description nvarchar(200))
+as
+begin
+--为字段添加注释
+--参数说明参考链接：https://blog.csdn.net/tianyacao8025/article/details/7091577
+--添加注释参考链接：https://www.cnblogs.com/xingyadian/p/10030793.html
+--level0_object_type,用户或用户定义类型,即：Schema,架构的名称。数据类型为 varchar(128)，其默认值为 NULL。有效的输入是 USER、TYPE 和 NULL。
+--level0_object_name,0 级对象类型的名称。 数据类型为 sysname，其默认值为 NULL。
+
+--level1_object_type,1 级对象的类型。数据类型为 varchar(128)，其默认值为 NULL。有效的输入是 TABLE、VIEW、PROCEDURE、FUNCTION、DEFAULT、RULE 和 NULL。
+--level1_object_name,1 级对象类型的名称。数据类型为 sysname，其默认值为 NULL。
+
+--level2_object_type,2 级对象的类型。数据类型为 varchar(128)，其默认值为 NULL。有效的输入是 COLUMN、PARAMETER、INDEX、CONSTRAINT、TRIGGER 和 NULL。
+--level2_object_name,2 级对象类型的名称。数据类型为 sysname,其默认值为 NULL。
+
+--Eg. execute sp_addextendedproperty 'MS_Description','字段备注信息','user','dbo','table','字段所属的表名','column','添加注释的字段名';
+execute sp_addextendedproperty 'MS_Description',@description,'type','dbo','table',@table,'column',@column;
+print '字段说明，添加成功!'
+
+--以下操作单独创建一个存储过程来使用
+
+--修改字段注释
+--execute sp_updateextendedproperty 'MS_Description',@description,'user','dbo','table',@table,'column',@column;
+ 
+--删除字段注释
+--execute sp_dropextendedproperty 'MS_Description','user','dbo','table',@table,'column',@column;
+ 
+-- 添加表注释
+--execute sp_addextendedproperty 'MS_Description',@description,'user','dbo','table',@table,null,null;
+ 
+-- 修改表注释
+--execute sp_updateextendedproperty 'MS_Description',@description,'user','dbo','table',@table,null,null;
+ 
+-- 删除表注释
+--execute sp_dropextendedproperty 'MS_Description','user','dbo','table',@table,null,null;
+end
