@@ -1,0 +1,282 @@
+JQuery Gantt
+开源地址：https://github.com/robicch/jQueryGantt
+本文的参考链接：https://roberto.twproject.com/2012/08/24/jquery-gantt-editor/
+1、概念介绍。
+	1）甘特图编辑器由三个主要的子部件/编辑器组成：左侧（网格编辑器）、右侧（甘特图编辑器）和弹出菜单（详细任务编辑器）。
+	2）弹出式编辑器也用于资源和分配。
+	3）甘特图的目的：生成一个代表完整项目状态的json文件。
+		（1）该json文件可以发送到服务器进行存储。
+		（2）甘特图编辑器，在编辑期间，没有与服务器进行交互。【重点，关键点，核心】
+	4）分布式版本，使用本地存储来保存项目状态。【暂时，不考虑】
+2、如何使用？
+	1）源码地址：https://codeload.github.com/robicch/jQueryGantt/legacy.zip/master
+		（1）gantt.html：源代码中包含一些注释，因此应易于阅读
+			[1]在代码中，定义了一个用于访问编辑器的全局变量，称为“ ge”。
+			[2]在您的浏览器中，尝试对gantt进行更改，然后从您的js调试器中执行:
+				ge.saveProject();//此方法以json对象的形式返回项目。
+		（2）在演示页面(gantt.html)中，我们使用本地存储来保存项目（如果本地存储不可用，则使用文本区域）
+		（3）在实际环境中，您可能需要将数据发送到服务器。我留下了一段注释代码，用于与服务器进行ajax通信。
+			[1]为了加载项目，您显然必须提供与服务器上保存的格式相同的json对象：
+				ge.loadProject( <em>[yourJsonProject] </em>)
+			[2]可以同时使用相同的json对象：加载或保存，结果是客户端到服务器或服务器到客户端。
+		（4）甘特图中 对应项目的数据结构。这里把一个甘特图，就解读为一个项目。
+			[1]项目json对象结构：
+				{
+					tasks:[…]
+					resources: […]
+					roles: […]
+					… more
+				}
+			[2]任务(tasks)，资源(resources)和角色(roles)都是数组。
+				a、任务(tasks)：包含甘特图中的任务列表，这是要管理的最相关的数据。
+					a.1、任务数组中的任务元素，格式：
+						{
+							"id":"tmp_fk1345562123031",
+							"name":"approval",
+							"code":"APP",
+							"level":2,
+							"status":"STATUS_SUSPENDED",
+							"start":1348696800000,
+							"duration":10,
+							"end":1349906399999,
+							"startIsMilestone":false,
+							"endIsMilestone":false,
+							"assigs":[…],
+							"depends":"7:3,8",
+							"description":"Approval of testing",
+							"progress":20
+						}
+					a.2、数组中任务的顺序与编辑器相同。数组的索引用作相关性的参考。数组的索引用作相关性的参考。
+					a.3、任务数组元素的 参数说明：
+						id：用于与服务器同步数据。如果ID由服务器提供，它将保持不变。在客户端创建的任务将获取一个以“ tmp_”开头的临时ID
+						level：这是甘特图结构中任务的深度（缩进）。根（root）任务位于级别0（零），其子级位于级别1（一），依此类推。
+							注意：级别必须与项目结构保持一致，如果数组中没有上述级别n的任务，则您不能具有级别n + 1的任务。【重点】
+						start, end：以毫秒为单位。“开始”设置为一天的第一毫秒，“结束”设置为一天的最后毫秒。
+						duration：始终在工作日内。如果日历上有节假日（请参见下面的节假日配置），则将结束日期考虑在内。
+							注意：实际上，结束日期总是使用“开始”和“持续时间”来重新计算，并且为了方便起见而提供。【重点】
+						startIsMilestone, endIsMilestone：布尔值。一旦设置为true，任务的开始/结束就不会意外移动。
+							注意：您总是可以直接在任务上更改日期，而不能通过对 子任务 或 父级任务 执行更改。
+						depends：字符串。逗号分隔，包含此任务所依赖的任务的索引。支持多种依赖关系。
+							注意1：仅支持从头到尾的依赖类型（可以通过引入中介兄弟任务或子代来解决其他类型）。
+							注意2：可以使用“：”以天为单位指定“滞后”。例如：7：3,8表示任务将在任务7完成且任务8完成后3天开始。【重点】
+						status：这是代表任务状态的字符串。允许的状态为：STATUS_ACTIVE（激活、活跃），STATUS_DONE（完成），STATUS_FAILED（失败），STATUS_SUSPENDED（暂停），STATUS_UNDEFINED（未定义、不明确）。
+							注意：如前所述，任务状态允许您像使用某种工作流程一样使用您的项目：
+								例如：如果“任务b”取决于“任务a”，则“任务b”将保留在“ STATUS_SUSPENDED”中，直到“任务a”从“ STATUS_ACTIVE”到“ STATUS_DONE”。有关完整的状态转换规则，请参见下文。
+						progress：指定进度的数字：0％（无）、 50％（中途），依此类推。
+							注意：对于Twproject，在某些情况下123％是有意义的进度值，因此没有任何限制。【注意】
+						assigs：分配数组。每个作业具有以下结构：
+							{
+								"resourceId":"tmp_1",
+								"id":"tmp_1345560373990",
+								"roleId":"tmp_1",
+								"effort":36000000
+							}
+							
+							分配数组，用于承载服务器端数据。 参数的说明：
+								resourceId：是资源的唯一ID。指“资源”数组
+								id：是此分配的唯一标识符
+								roleId：是此分配的唯一标识符。指“角色”数组
+								effort：以毫秒为单位预计的努力
+				b、资源(resources)包含的元素的格式如下：
+					{
+						"id":"tmp_1",
+						"name":"Resource 1"
+					}
+				c、角色(roles)包含的元素的格式如下：
+					{
+						"id":"tmp_1",
+						"name":"Project Manager"
+					}
+			[3]您必须记住，该编辑器是管理持久性，警报以及与服务器端其他系统交互的内容的客户端部分。【重点，额外的属性说明】
+				deletedTaskIds:[…]
+				selectedRow: 7
+				canWrite: true
+				canWriteOnParent: true
+				minEditableDate:1349906300000
+				maxEditableDate:3499063999999
+				
+				参数的介绍：
+					DeletedTaskIds：是一个数组，其中包含客户端删除的任务的ID。
+						注意：仅将具有“真实” ID的任务，通知给服务器（因此，不会以“ tmp_”开头的任务）被通知，本地生成的任务将被静默删除。
+					selectedRow：当前正在编辑的行
+					canWrite：是一个布尔值，表示您是否有权在此项目上编写/更改/创建/删除任务。对于基本用法，请将其设置为true。
+					canWriteOnParent：这有点晦涩。如果您仅编辑复杂项目的一小部分，则使用它。
+						例如，您是子任务的PM，但不是顶级项目的PM：也许您在日期上进行的某些更改可能会影响顶级项目的进度。将此布尔值设置为false，您将停止传播到顶级项目。对于基本用法，请将其设置为true。
+					minEditableDate，maxEditableDate：是无法在父对象上书写的情况下使用的边界
+			[4]任务(tasks)数组中，任务元素的属性（状态,status)转换规则（又名项目工作流程）
+				a、任务状态是甘特图中的关键功能。
+				b、状态的转换规则：
+					任何状态 -> STATUS_DONE（完成）：可以激活依赖的任务（包括挂起和未定义的任务）。所有后代也将设置为完成。
+						注意1：STATUS_FAILED（失败）-> STATUS_DONE（完成）：如果不是手动强制设置，则不执行任何操作。
+					STATUS_UNDEFINED（未定义、不明确）-> STATUS_ACTIVE（激活、活跃）：如果所有子代没有依赖关系，则它们变为活动状态。
+					STATUS_SUSPENDED（暂停）-> STATUS_ACTIVE（激活、活跃）：将所有没有禁止依赖关系的子代及其后代设置为活动状态。
+					STATUS_DONE（完成）-> STATUS_ACTIVE（激活、活跃）：必须将所有具有依赖的任务设置为暂停。
+						注意2：STATUS_FAILED（失败）-> STATUS_ACTIVE（激活、活跃）：无任何反应：必须手动重置子状态。
+					任何状态 -> STATUS_SUSPENDED：所有活动子代及其活动后代都将被暂停。当没有失败或强制操作
+					任何状态 -> STATUS_UNDEFINED：所有活动子代及其活动后代都将被暂停。当没有失败或强制操作。
+						注意3：任何状态 -> STATUS_FAILED：子代和依赖项设置为失败。
+	2）基本的最小实现，在应用程序中使用甘特编辑器所需的条件：
+		（1）包含javascript依赖项
+			<script src="/jquery/1.7/jquery.min.js"></script>
+			<script src="/jquery-ui.min.js"></script>
+			 
+			<script src="libs/jquery.livequery.min.js"></script>
+			<script src="libs/jquery.timers.js"></script>
+			<script src="libs/platform.js"></script>
+			<script src="libs/date.js"></script>
+			<script src="libs/i18nJs.js"></script>
+			<script src="libs/dateField/jquery.dateField.js"></script>
+			<script src="libs/JST/jquery.JST.js"></script>
+			 
+			<script src="ganttUtilities.js"></script>
+			<script src="ganttTask.js"></script>
+			<script src="ganttDrawer.js"></script>
+			<script src="ganttGridEditor.js"></script>
+			<script src="ganttMaster.js"></script>
+		（2）注意：下载的源码中，JQueryUI的引用用的远程服务器上的库。可能不太好使。请相应的库到本地，再引用使用。
+		（3）包含Css依赖项
+			<link rel=stylesheet href="platform.css" type="text/css">
+			<link rel=stylesheet href="libs/dateField/jquery.dateField.css" type="text/css">
+			<link rel=stylesheet href="gantt.css" type="text/css">
+		（4）需要在<body>标签中放置一个div，来放置编辑器，例如：
+			<div id="workSpace" style="padding:0px; overflow-y:auto; overflow-x:hidden; border:1px solid #e5e5e5; position:relative; margin:0 5px; width:1024px; height:800px;"></div>
+		（5）在脚本中，创建Gant编辑器并将其绑定到div，例如：
+			var ge = new GanttMaster();
+			ge.init($("#workSpace"));
+3、上述配置完毕，您的编辑器即可使用。
+4、核心对象
+	1）编辑器分为三个部分：
+		（1）管理编辑器左侧部分的GridEditor对象。数据编辑在这里管理。
+		（2）该Ganttalendar（Calendar,日程安排）管理与甘特图，日历规模，任务日期运动编辑器的右侧部分（对不起，丑陋的名字！）对象
+		（3）该GantMaster对象，负责双方的协调，事务管理，事件管理和持久性。我们的代码应仅与此对象“对话”。【重点，核心，关键】
+	2）这些对象分别位于gridEditor.js，gantDrawer.js和gantMaster.js文件中。【重点，核心，关键点】
+	3）所管理的实体为：Task，Link，Resource，Role，Assignment，并在ganttTask.js文件中定义。【重点】
+5、Events（事件）
+	1）甘特编辑器初始化，eg
+		var ge = new GanttMaster();
+		ge.init($("＃workSpace"));
+	2）在当前的例子中，是id值为"workSpace"的div元素。一旦甘特编辑器初始化，它在DOM对象上就绑定了一些事件。绑定的事件如下：
+		（1）refreshTasks.gantt：重新绘制所有任务
+		（2）refreshTask.gantt：接受任务作为参数。重画传递的任务：
+		（3）deleteCurrentTask.gantt：删除当前选中的任务
+		（4）addAboveCurrentTask.gantt：在当前任务上方添加任务。插入的任务将是当前任务的兄弟
+		（5）addBelowCurrentTask.gantt：在当前任务下方添加任务。插入的任务将是当前任务的子任务
+		（6）indentCurrentTask.gantt：当前任务将成为上述任务的子任务
+		（7）outdentCurrentTask.gantt：当前任务将成为上述任务的兄弟
+		（8）moveUpCurrentTask.gantt：当前任务（及其子任务）将上移
+		（9）moveDownCurrentTask.gantt：当前任务（及其子任务）将向下移动
+		（10）zoomPlus.gantt：限制甘特方的时间范围（更多详细信息）
+		（11）zoomMinus.gantt：扩大甘特面的时间范围（细节较少）
+		（12）undo.gantt：撤消上次执行的操作
+		（13）redo.gantt：重做上一个动作
+	3）触发事件的基本用法如下所示：
+		$('#workSpace').trigger('zoomMinus.gantt');
+	4）当您在项目树中执行操作时，该操作可能会沿着树传播。
+		（1）必须遵守许多约束条件。例如里程碑，状态，依赖关系，边界等。每种约束都可能使其无法完成操作，因此我们决定通过“事务”包装树操作；在违反约束的情况下，我们回滚所有已经完成的更改。
+		（2）事件是事务安全的，因此您不必担心它们。
+6、Methods（方法）
+	1）与我们应用开发人员相关的GanttMaster对象，公开了一些有用的方法。
+		（1）注意：与事件不同，公开的方法是“低级”的，因此您有责任正确地管理事务。除非另有说明，否则不管理事务。
+	2）init (jQueryDomObject)，初始化方法。
+		（1）说明：创建甘特图编辑器，初始化项目数组，绑定事件。
+		（2）形参（jQueryDomObject）：是DOM对象的jQuery代理，通常是您要在其中创建甘特编辑器的<div>
+		（3）返回：无
+	3）createTask (id, name, code, level, start, duration)，创建任务方法。
+		（1）说明：创建一个Task对象。创建的任务没有添加到项目中，只是创建了。
+		（2）形参介绍：
+			[1]id: task id(任务id )
+			[2]name: task name(任务名称)
+			[3]code: task code(任务代码)
+			[4]level: task indentation level. Root task is 0 (zero)。(任务缩进级别。根任务为0（零）)
+			[5]start: the task start date in millisecond。以毫秒计，任务的开始日期
+			[6]duration: task duration in days。以天为单位，任务持续时间
+		（3）返回：创建的任务
+	4）createResource (id, name)，创建资源的方法。
+		（1）说明：创建一个Resource对象。创建的资源不会添加到资源列表中，而只是创建
+		（2）形参介绍：
+			[1]id: resource id（资源ID ）
+			[2]name: resource name（资源名称）
+		（3）返回：创建的资源
+	5）addTask (task, row)，将任务添加到甘特图项目中指定的行。
+		（1）说明：将任务添加到项目中的指定行
+		（2）形参介绍：
+			[1]task: a Task object。（任务对象）
+			[2]row: row where to add the object, zero based。（添加对象的行，从零开始）
+		（3）返回：添加的任务
+	6）loadProject(project)，加载甘特图项目。
+		（1）说明：在编辑器上加载项目。此方法是事务安全的。
+		（2）形参介绍：
+			[1]project：json格式的项目。即：甘特图数据格式的json对象。
+		（3）返回：无
+	7）saveProject()，保存甘特图项目。
+		（1）说明：gets the project in json format 。获取json格式的项目。
+		（2）返回：json对象
+	8）loadTasks(tasks,row)，加载甘特图任务。
+		（1）说明：在当前项目的指定行向添加任务
+		（2）形参介绍：
+			[1]tasks: an array of Task object。（Task对象的数组）
+			[2]row: row where to start adding tasks, zero based。（从哪行开始添加任务，以0为基础）
+		（3）返回：无
+	9）getTask(taskId)，获取任务
+		（1）说明：通过Id检索一个任务。
+		（2）形参介绍：
+			[1]tasksId: the id of the task you want。（你想要任务的Id）
+		（3）返回：一个Task对象
+	10）getResource(resourceId)，获取资源
+		（1）说明：按ID检索资源
+		（2）形参介绍：
+			[1]resourceId：您想要的资源的ID
+		（3）返回：一个资源对象
+	11）changeTaskDates (task, start, end)
+		（1）说明：更改项目中任务的计划
+		（2）形参介绍：
+			[1]task: task you want to change（您要更改的任务）
+			[2]start: the task start date in millisecond（任务开始日期（以毫秒为单位））
+			[3]end: task end in milliseconds（任务结束（以毫秒为单位））
+		（3）返回：如果执行了更改，则返回true；如果所需的更改无效，则返回false。错误代码在当前事务中设置。
+	12）moveTask (task,newStart)
+		（1）说明：将任务移至新的开始日期
+		（2）形参介绍：
+			[1]task: task you want to move（您要移动的任务）
+			[2]newStart: the task start date in millisecond（任务开始日期（以毫秒为单位））			
+		（3）返回：如果执行了更改，则返回true；如果所需的更改无效，则返回false。错误代码在当前事务中设置。
+	13）updateLinks(task)
+		（1）说明：更新“ task.depends”属性中定义的项目链结构
+		（2）形参介绍：
+			[1]task: task you want to change（您要更改的任务）
+				
+		（3）返回：如果执行了更改，则返回true；如果所需的更改无效，则返回false。错误代码在当前事务中设置。
+	14）taskIsChanged ()
+		（1）说明：通知GanttMaster任务已更改，并排队要求重绘Gantt图的两边。重绘是异步执行的，并且仅在50毫秒后执行一次
+		（2）返回：无
+	15）redraw()
+		（1）说明：重绘Gantt图的双边（编辑区和Gantt网格区）。重绘立即执行。
+		（2）返回：无
+	16）reset()
+		（1）说明：开始一个新项目并清空Gannt图的双边（编辑区和Gantt网格区）
+		（2）返回：无
+	17）showTaskEditor(taskId)
+		（1）说明：在弹出窗口中显示完整的任务编辑器
+		（2）形参介绍：
+			[1]taskId: 您要编辑的任务的ID
+				
+		（3）返回：无
+	18）undo()
+		（1）说明：撤消上一次执行的操作。操作次数没有限制（限制仅仅是浏览器的内存）
+		（2）返回：无
+	19）redo()
+		（1）说明：重做上一次撤消的操作
+		（2）返回：无
+	20）beginTransaction()
+		（1）说明：将项目的当前状态保存在内存中。事务不能嵌套。
+		（2）返回：无
+	21）endTransaction()
+		（1）说明：通过激活执行的更改来关闭当前事务。如果在事务上设置了错误，它将回滚到以前的状态
+		（2）返回：如果提交成功，返回true；如果执行了回滚，返回false。
+	22）setErrorOnTransaction(errorMessage, task))
+		（1）说明：设置与当前事务中的Task对象相关的错误消息。如果未启动任何事务，则该消息将显示在控制台上。
+		（2）形参介绍：
+			[1]errorMessage: 包含错误消息的字符串
+			[2]task：产生错误的Task对象
+		（3）返回：无
+7、Customization（自定义），我们可以自己设置 甘特图的样式。暂时忽略。
