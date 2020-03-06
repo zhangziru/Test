@@ -158,6 +158,8 @@ git remote add orgin 仓库地址   ：为本地仓库指定远程地址。
 仓库地址无需加 引号。eg： git remote  add orgin https://github.com/zhangziru/Test.git
 【Git 命令 查看 远程仓库地址】
 git remote -v
+git remote remove origin  ：移除远程仓库地址。
+git remote add origin <新的仓库地址>  ：添加新的远程仓库地址
 【GIT 命令 提交】
 git commit -m "备注" ：将“暂存区”的修改提交到“本地仓库”
 【GIT 命令 推送】
