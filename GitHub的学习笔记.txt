@@ -176,6 +176,7 @@ git branch <分支名称> ：branch命令不会将我们带入分支，只是基
 git checkout <分支名称>：切换到指定分支[常用命令]
 git checkout –b <分支名称>：直接创建分支并切换到该分支
 git branch -d <BranchName>：删除本地分支 
+git push origin --delete <BranchName>： 删除远程分支
 git branch --set-upstream-to=origin/<branch> ：追踪指定分支的信息
 【GIT 命令 贮藏或储藏】
 git stash ：保存当前分支的修改，不提交到本地仓库[常用命令]（切换分支时，由于当前分支有修改。不用放弃当前分支的修改，贮藏当前分支的修改。然后可以切换分支。）
