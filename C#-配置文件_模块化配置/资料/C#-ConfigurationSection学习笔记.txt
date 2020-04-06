@@ -1,0 +1,356 @@
+C#配置文件 ConfigSections基类的详解
+参考的原文链接：https://www.cnblogs.com/lxshwyan/p/10828305.html
+1、需求：
+	1）项目中经常在配置文件中写一些固定的信息，目的：发布的时候，只需要修改一下配置文件就可以，不需要每次都修改程序。
+		（1）比如：项目名称、数据库连接字符串、IP和端口之类 的。
+		（2）对于小项目或者服务程序，配置信息可以通过系统自带的appSettings进行配置，但大项目或者配置信息太多，如果都用appSettings来配置就感觉比较杂乱。
+		（3）运维人员在修改配置的时候不好修改，而且如果想找某一模块相关或者某一节点配置容易出错。
+		（4）这时如果能分类管理，例如跟数据库相关的写到一个节点里，跟某个业务独立相关的可以也能单独写一个节点上 等等；
+	2）即：在configuration节点内部中，使用自定义的节点来配置我们需要信息。不适用系统自带的appSettings来配置系统信息。
+2、解决方案：
+	1）使用.net weg.config中，自带的configuration\configSections\section节点来定义配置节点，来实现配置信息的分块管理。
+		（1）该节点的属性（name）:定义configuration节点内部中的业务独立相关的节点标签。
+		（2）该节点的属性（type）：定义节点对应的实体类的完全限定名 + 逗号（","） + 程序集的名称
+3、具体实现：
+	1）在configuration\configSections节点实现自定义节点配置，主要有：单节点配置、多节点配置、自定义节点配置。
+	2）单节点配置：
+		（1）新建一个类（CustomerSingleConfig）继承ConfigurationSection。
+		（2）新增属性（PlatChName，平台中文名称）、属性（PlatEnName，平台英文名称）及调用方法 （GetConfig(),获取配置信息），重载的调用方法（ GetConfig(string sectionName)，获取配置信息）。
+		（3）代码如下：
+			/// <summary>
+			/// 单级自定义配置节点
+			/// </summary>
+		    public class CustomerSingleConfig:ConfigurationSection
+			{      
+				/// <summary>
+				/// 获取配置信息
+				/// </summary>
+				/// <returns></returns>
+				public static CustomerSingleConfig GetConfig()
+				{
+					return GetConfig("CustomerSingleConfig");
+				}
+				/// <summary>
+				/// 获取配置信息
+				/// </summary>
+				/// <param name="sectionName"></param>
+				/// <returns></returns>
+				public static CustomerSingleConfig GetConfig(string sectionName)
+				{
+					CustomerSingleConfig section = (CustomerSingleConfig)ConfigurationManager.GetSection(sectionName);
+					if (section == null)
+						throw new ConfigurationErrorsException("Section " + sectionName + " is not found.");
+					return section;
+				}
+				   
+				/// <summary>
+				/// 平台中文名称
+				/// </summary>
+			   [ConfigurationProperty("PlatChName",DefaultValue = "", IsRequired = true, IsKey = false)]
+				public string PlatChName 
+				{
+					get { return (string)this["PlatChName"]; }
+					set { this["PlatChName"]=value; }
+				}  
+
+				/// <summary>
+				/// 平台英文名称
+				/// </summary>
+			   [ConfigurationProperty("PlatEnName",DefaultValue = "", IsRequired = true, IsKey = false)]
+				public string PlatEnName
+				{
+					get { return (string)this["PlatEnName"]; }
+					set { this["PlatEnName"] = value; }
+				}
+
+			}
+		（4）在.config配置文件中，configuration\configSections节点下，添加一个section节点的配置。
+			[1]代码如下：
+			<!--单级配置节点测试-->
+			<section name="CustomerSingleConfig" type="ConfigDemo.CustomerSingleConfig,ConfigDemo"/>
+		（5）接下来基本的配置准备工作已完成，我们通过配置好的节点来定义业务相关的信息。
+			[1]在*.config文件中，configuration节点下直接使用我们定义的节点来配置。
+			[2]示例配置的代码：
+				<CustomerSingleConfig PlatChName="监控平台系统" PlatEnName="Monitoring platform system"></CustomerSingleConfig>
+			[3]完整的配置(*.config)代码：
+			<configuration>
+				 <configSections>
+					<!--单级配置节点 定义测试-->
+					<section name="CustomerSingleConfig" type="ConfigDemo.CustomerSingleConfig,ConfigDemo"/>
+				 </configSections>
+				 <!--单级配置节点 配置测试-->
+				 <CustomerSingleConfig PlatChName="监控平台系统" PlatEnName="Monitoring platform system"></CustomerSingleConfig>
+			</configuration>
+		（6）调用并获取配置信息，即配置信息该如何使用？【应用，最终的目的，重点】
+			[1]代码：
+				static void Main(string[] args)
+				{
+					Console.WriteLine("---------------------单级配置节点测试-----------------");
+					Console.WriteLine("PlatChName:" + CustomerSingleConfig.GetConfig().PlatChName);
+					Console.WriteLine("PlatEnName:" + CustomerSingleConfig.GetConfig().PlatEnName);
+				}
+			[2]通过我们在该节点定义时，为该节点配置的实例类来操作我们动态配置的信息。【重点，核心，关键点】
+	3）单节点配置，扩展：分离配置信息，单独使用一个*.config配置文件，来保存配置的业务信息。
+		（1）在上述的过程中第（5）步骤【这里有变化】。
+			[1]自定义节点的定义不变，自定义节点 的信息的配置方式改变为通过属性（configSource）来指定配信息存储的配置文件路径。【重点，难点，关键点，核心】
+				注意：
+				a、configSource指定的路径必须使用 反斜杠（"\"）,使用 斜杠（“/”）会报错。【核心】
+			[2]代码如下：
+				<CustomerSingleConfig configSource="CfgFiles\CustomerSingleConfig.config" />
+			[3]新建一个配置文件（CustomerSingleConfig.config），同时，更改该文件的属性（复制到输出目录）为“始终复制”或者“如果较新则复制”。否则程序在运行时找不到该文件。【重点，核心，关键点】
+			[4]配置文件（CustomerSingleConfig.config）的内容如下：
+				<?xml version="1.0" encoding="utf-8" ?>
+				<CustomerSingleConfig PlatChName="监控平台系统" PlatEnName="Monitoring platform system"></CustomerSingleConfig>
+	4）多级节点配置。
+		（1）先定义一个子节点类（CustomerElement），继承自类（ConfigurationElement）。
+			[1]子节点类，新增属性（Enabled，启用标识）、属性（ConnectionString，连接字符串）。
+			[2]代码如下：
+				public class CustomerElement:ConfigurationElement
+				{
+					private const string EnablePropertyName = "enabled";
+
+					private const string ConnectionStringPropery = "connectionString";
+
+					[ConfigurationProperty(EnablePropertyName, IsRequired = true)]
+					public bool Enabled
+					{
+						get { return (bool)base[EnablePropertyName]; }
+						set { base[EnablePropertyName] = value; }
+					}
+
+					[ConfigurationProperty(ConnectionStringPropery, IsRequired = true)]
+					public string ConnectionString
+					{
+						get { return (string)base[ConnectionStringPropery]; }
+						set { base[ConnectionStringPropery] = value; }
+					}
+				}
+		（2）再定一个配置节点类（CustomerMultiConfig），继承自类（ConfigurationSection），和单个节点配置一样。
+			[1]新增属性（CustomerElementConfig，子节点元素配置）及调用方法 （GetConfig(),获取配置信息），重载的调用方法（ GetConfig(string sectionName)，获取配置信息）。
+			[2]代码如下：
+				/// <summary>
+				/// 多级配置文件自定义节点配置
+				/// </summary>
+			    public class CustomerMultiConfig:ConfigurationSection
+				{
+					private const string CustomerConfigPropertyName = "CustomerElement";
+					/// <summary>
+					/// 获取配置信息
+					/// </summary>
+					/// <returns></returns>
+					public static CustomerMultiConfig GetConfig()
+					{
+						return GetConfig("CustomerMultiConfig");
+					}
+					/// <summary>
+					/// 获取配置信息
+					/// </summary>
+					/// <param name="sectionName">xml节点名称</param>
+					/// <returns></returns>
+					public static CustomerMultiConfig GetConfig(string sectionName)
+					{
+						CustomerMultiConfig section = (CustomerMultiConfig)ConfigurationManager.GetSection(sectionName);
+						if (section == null)
+							throw new ConfigurationErrorsException("Section " + sectionName + " is not found.");
+						return section;
+					}
+					[ConfigurationProperty(CustomerConfigPropertyName)]
+					public CustomerElement CustomerElementConfig
+					{
+						get { return (CustomerElement)base[CustomerConfigPropertyName]; }
+						set { base[CustomerConfigPropertyName] = value; }
+					}
+				}
+		（3）在.config配置文件中，configuration\configSections节点下，添加一个section节点的配置。
+			[1]代码如下：
+				<!--多级配置节点测试-->
+				<section name="CustomerMultiConfig" type="ConfigDemo.CustomerMultiConfig,ConfigDemo"/>
+		（4）接下来基本的配置准备工作已完成，我们通过配置好的节点来定义业务相关的信息。
+			[1]在*.config文件中，configuration节点下直接使用我们定义的节点来配置。
+			[2]示例配置的代码：
+				<!--多级配置节点测试-->
+				<CustomerMultiConfig>
+					<CustomerElement connectionString="Data Source='.';Initial Catalog='UniDataNH';User ID='sa';Password='123456'" enabled="true"></CustomerElement>
+				</CustomerMultiConfig>
+			[3]完整的配置(*.config)代码：
+			<configuration>
+				 <configSections>
+					<!--多级配置节点 定义测试-->
+					<section name="CustomerMultiConfig" type="ConfigDemo.CustomerMultiConfig,ConfigDemo"/>
+				 </configSections>
+				 <!--多级配置节点 配置测试-->
+				 <CustomerMultiConfig>
+					<CustomerElement connectionString="Data Source='.';Initial Catalog='UniDataNH';User ID='sa';Password='123456'" enabled="true"></CustomerElement>
+				</CustomerMultiConfig>
+			</configuration>
+		（6）调用并获取配置信息，即配置信息该如何使用？【应用，最终的目的，重点】
+			[1]代码：
+				static void Main(string[] args)
+				{
+					Console.WriteLine("---------------------多级配置节点测试-----------------");
+					Console.WriteLine("enabled:" + CustomerMultiConfig.GetConfig().CustomerElementConfig.Enabled);
+					Console.WriteLine("connectionString:" + CustomerMultiConfig.GetConfig().CustomerElementConfig.ConnectionString);
+				}
+			[2]通过我们在该节点定义时，为该节点配置的实例类来操作我们动态配置的信息。【重点，核心，关键点】
+	5）多节点配置，扩展：分离配置信息，单独使用一个*.config配置文件，来保存配置的业务信息。
+		（1）操作方法雷同 第4）步。省略。
+	6）自定义节点配置，可以随意添加配置节点信息。
+		（1）具体的操作步骤类似，只展示涉及的实体类。
+		（2）配置节点类
+			[1]代码如下：
+				public class TestConfigInfo : ConfigurationSection
+				{
+					[ConfigurationProperty("trackers", IsDefaultCollection = false)]
+					public trackers Trackers { get { return (trackers)base["trackers"]; } }
+					/// <summary>
+					/// 获取配置信息
+					/// </summary>
+					/// <returns></returns>
+					public static TestConfigInfo GetConfig()
+					{
+						return GetConfig("TestConfigInfo");
+					}
+					/// <summary>
+					/// 获取配置信息
+					/// </summary>
+					/// <param name="sectionName">xml节点名称</param>
+					/// <returns></returns>
+					public static TestConfigInfo GetConfig(string sectionName)
+					{
+						TestConfigInfo section = (TestConfigInfo)ConfigurationManager.GetSection(sectionName);
+						if (section == null)
+							throw new ConfigurationErrorsException("Section " + sectionName + " is not found.");
+						return section;
+					}
+					[ConfigurationProperty("TestName", IsRequired = false)]
+					public string TestName
+					{
+						get { return (string)base["TestName"]; }
+						set { base["TestName"] = value; }
+					}
+					[ConfigurationProperty("TestID", IsRequired = false)]
+					public string TestID
+					{
+						get { return (string)base["TestID"]; }
+						set { base["TestID"] = value; }
+					}
+				}
+		（3）子节点元素集合类：
+			[1]代码如下：
+				public class trackers : ConfigurationElementCollection
+				{
+					[ConfigurationProperty("TrackerName", IsRequired = false)]
+					public string TrackerName
+					{
+						get { return (string)base["TrackerName"]; }
+						set { base["TrackerName"] = value; }
+					}
+					protected override ConfigurationElement CreateNewElement()
+					{
+						return new tracker();
+					}
+
+					protected override object GetElementKey(ConfigurationElement element)
+					{
+						return ((tracker)element).Host;
+					}
+				}
+			（4）子节点类：
+				[1]代码如下：
+					public class tracker : ConfigurationElement
+					{
+						#region 配置即设置，设定当中有不能识别的元素、属性时，使其不报错
+
+						protected override bool OnDeserializeUnrecognizedAttribute(string name, string value)
+						{
+							return base.OnDeserializeUnrecognizedAttribute(name, value);
+
+						}
+
+						protected override bool OnDeserializeUnrecognizedElement(string elementName, System.Xml.XmlReader reader)
+						{
+							return base.OnDeserializeUnrecognizedElement(elementName, reader);
+
+						}
+						#endregion
+
+						[ConfigurationProperty("Host", DefaultValue = "localhost", IsRequired = true)]
+						public string Host { get { return this["Host"].ToString(); } }
+
+						[ConfigurationProperty("Port", DefaultValue = "22122", IsRequired = true)]
+						public int Port { get { return (int)this["Port"]; } }
+
+					}
+		（5）在.config配置文件中，configuration\configSections节点下，添加一个section节点的配置。
+			[1]代码如下：
+				<!--自定义新增节点测试-->
+				<section name="TestConfigInfo" type="ConfigDemo.TestConfigInfo,ConfigDemo"/>
+		（6）接下来基本的配置准备工作已完成，我们通过配置好的节点来定义业务相关的信息。
+			[1]在*.config文件中，configuration节点下直接使用我们定义的节点来配置。
+			[2]示例配置的代码：
+				<!--自定义新增节点 配置测试-->
+				<TestConfigInfo TestName="lxsh" TestID="8893">
+					<trackers TrackerName="testName">
+						<add Host="60.195.251.71" Port="22122" />
+						<add Host="60.195.251.72" Port="22123" />
+						<add Host="60.195.251.73" Port="22124" />
+					</trackers>
+				</TestConfigInfo>
+			[3]完整的配置(*.config)代码：
+			<configuration>
+				 <configSections>
+					<!--自定义新增节点测试-->
+					<section name="TestConfigInfo" type="ConfigDemo.TestConfigInfo,ConfigDemo"/>
+				 </configSections>
+				 <!--自定义新增节点 配置测试-->
+				 <TestConfigInfo TestName="lxsh" TestID="8893">
+					<trackers TrackerName="testName">
+						<add Host="60.195.251.71" Port="22122" />
+						<add Host="60.195.251.72" Port="22123" />
+						<add Host="60.195.251.73" Port="22124" />
+					</trackers>
+				</TestConfigInfo>
+			</configuration>
+		（7）调用并获取配置信息，即配置信息该如何使用？【应用，最终的目的，重点】
+			[1]代码：
+				static void Main(string[] args)
+				{
+					Console.WriteLine("---------------------自定义新增节点测试-----------------");
+					Console.WriteLine("TestID:" + TestConfigInfo.GetConfig().TestID);
+					Console.WriteLine("TestName:" + TestConfigInfo.GetConfig().TestName);
+					foreach (tracker item in TestConfigInfo.GetConfig().Trackers)
+					{
+						Console.WriteLine("Host:" + item.Host + " Port:" + item.Port);
+					}
+				}
+			[2]通过我们在该节点定义时，为该节点配置的实例类来操作我们动态配置的信息。【重点，核心，关键点】
+	7）系统appSettings配置，单独建立配置文件来配置信息。
+		（1）系统默认是在节点configuration\appSettings下通过 节点add 来添加指定的键值。
+		（2）现在通过一个独立的文件来单独配置。
+			[1]*.config配置文件中的配置如下：
+				<configuration>
+					<!--系统appSettings配置，单独建立配置文件来配置信息。-->
+					<appSettings configSource="CfgFiles\system.config" />
+				</configuration>
+			[2]外部配置文件(system.config)的内容如下：
+				<?xml version="1.0" encoding="utf-8" ?>
+				<appSettings>
+					<!-- onsoleLog,TextFileLog,Log4netHelper,RabbitMQLog,SqlLog -->
+					<add key="LogType" value="ConsoleLog,TextFileLog"/>
+					<!-- levels: Off > Fatal > Error > Warn > Info > Debug  > On -->
+					<add key="logLevel" value="On"/>
+					<add key="connString" value="Data Source='192.168.137.111';Initial Catalog='Lxsh.Project.DB';User ID='sa';Password='123456'"/>
+					<add key="DbType" value="1"/>
+					<add key="queueType" value="Redis"/>
+					<add key="CacheType" value="RedisCache"/>
+					<add key="Redisconfig" value="localhost:6379"/>
+					<add key="RabbitMQConnect" value="host=192.168.137.111:5672;virtualHost=vhost_lxsh;username=lxsh;password=123456"/>
+				</appSettings>
+		（3）调用方式和没有分开之前是一样的【应用，最终的目的，重点】
+			[1]代码：
+				static void Main(string[] args)
+				{
+					Console.WriteLine("---------------------系统自带appSettings配置文件-----------------");
+					Console.WriteLine("logLevel:" + System.Configuration.ConfigurationManager.AppSettings["logLevel"]);
+					Console.WriteLine("LogType:" + System.Configuration.ConfigurationManager.AppSettings["LogType"]);
+				}
