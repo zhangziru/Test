@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="./lib/SWFObject.js"></script>
+    <script type="text/javascript">
+        //定义param属性(name)为flashvars的值，序列化为查询字符串的形式。
+        var flashvarsObj = {
+            "variable1": "value1",
+            "variable2": "value2",
+            "variable3": "value3",
+        };
+        //定义flash的参数的属性（name） 和 属性（value）
+        var parObj = {
+            "quality": "low",
+            "wmode": "transparent",
+            "salign": "t"
+        };
+        parObj.quality = "high";//质量：高
+        parObj.bgcolor = "#ffffff";//北京色
+        parObj.allowscriptaccess = "sameDomain";//允许脚本访问方式：同一域名
+        parObj.allowfullscreen = "true";//允许全屏
+        //定义attributesObj
+        var attObj = {};
+        attObj.id = "FlexSocket";
+        attObj.name = "FlexSocket";
+        attObj.align = "middle";
+        SWFObject.embedSWF("swf/FlexMain.swf", "FlexSocket", "0", "0", "11.2", "swf/playerProductInstall.swf", flashvarsObj, parObj, attObj);
+        var bb = SWFObject.getObjectById("FlexSocket");
+    </script>
+</head>
+
+<body>
+    <div id="FlexSocket">......</div>
+    <!-- SWFObject最后渲染的效果 -->
+    <!-- <object type="application/x-shockwave-flash" id="FlexSocket" name="FlexSocket" align="middle"
+        data="swf/FlexMain.swf" width="400" height="100%">
+        <param name="quality" value="low">
+        <param name="wmode" value="transparent">
+        <param name="salign" value="t">
+        <param name="flashvars" value="variable1=value1&amp;variable2=value2&amp;variable3=value3">
+    </object> -->
+</body>
+
+</html>

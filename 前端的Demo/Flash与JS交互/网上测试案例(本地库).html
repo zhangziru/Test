@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />		
+		<script type="text/javascript" src="./lib/jquery-1.11.0.js">
+		</script>
+		<script src="./lib/SWFObject.js">
+		</script>
+	</head>
+	<body> 
+		<div class="main">
+			<div class="inwrap">
+				<h1>JavaScript SWFObject Flash 增强插件
+				</h1>
+				<h2>getObjectById
+				</h2>
+				<div class="detail">
+					<p>获取加载 Flash 元素。
+					</p>
+				</div>
+				<div class="example">
+					<object id="myCom" name="myCom" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="300" height="120">
+						<param name="movie" value="swf/test8_com.swf" />
+						<!--[if !IE]>-->
+						<object name="myCom" type="application/x-shockwave-flash" data="swf/test8_com.swf" width="300" height="120">
+							<param name="swliveconnect" value="true" />
+							<!--<![endif]-->
+							<div>
+								<h1>替代内容
+								</h1>
+								<p>您的浏览器未安装 Flash Player
+								</p>
+								<p>
+									<a href="http://www.adobe.com/go/getflashplayer">
+										<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player">
+									</a>
+								</p>
+							</div>
+							<!--[if !IE]>-->
+						</object>
+						<!--<![endif]-->
+					</object>
+					<div class="form form_long">
+						<dl class="row">
+							<dt>
+								<label for="send">To Flash:
+								</label>
+							</dt>
+							<dd>
+								<input type="text" name="send" id="send" class="input" size="20" maxlength="20">
+							</dd>
+						</dl>
+						<dl class="row">
+							<dt>
+							</dt>
+							<dd>
+								<button id="but1" class="button green">External Interface
+								</button>
+								<button id="but2" class="button green">Set Variable
+								</button>
+							</dd>
+						</dl>
+					</div>
+					<div class="form form_long mt">
+						<dl class="row">
+							<dt>
+								<label for="receive1">External Interface:
+								</label>
+							</dt>
+							<dd>
+								<input type="text" id="receive1" name="receive1" class="input" size="20" disabled>
+							</dd>
+						</dl>
+						<dl class="row">
+							<dt>
+								<label for="receive2">fscommand:
+								</label>
+							</dt>
+							<dd>
+								<input type="text" id="receive2" name="receive2" class="input" size="20" disabled>
+							</dd>
+						</dl>
+						<dl class="row">
+							<dt>
+								<label for="receive3">getURL:
+								</label>
+							</dt>
+							<dd>
+								<input type="text" id="receive3" name="receive3" class="input" size="20" disabled>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			SWFObject.registerObject("myCom", "9.0.0", "swf/test8_com.swf");
+			function AStoJSviaExternalInterface(str) {
+				document.getElementById("receive1").value = str;
+			};
+			function myCom_DoFSCommand(command, args) {
+				document.getElementById("receive2").value = args;
+			};
+			function AStoJSviaGetURL(str) {
+				document.getElementById("receive3").value = str;
+			};
+			window.onload = function() {
+				document.getElementById("but1").onclick = function() {
+					var obj = SWFObject.getObjectById("myCom");
+					if (obj && typeof obj.JStoASviaExternalInterface != "undefined") {
+						obj.JStoASviaExternalInterface(document.getElementById("send").value);
+					}
+				};
+				document.getElementById("but2").onclick = function() {
+					var obj = SWFObject.getObjectById("myCom");
+					if (obj && typeof obj.SetVariable != "undefined") {
+						obj.SetVariable("JStoASviaSetVariable", document.getElementById("send").value);
+					}
+				};
+			};
+		</script>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+原文参考链接：https://www.cnblogs.com/zhgt/p/4398213.html
+源码地址：https://github.com/swfobject/swfobject
+实例地址+在线测试：https://www.cnblogs.com/niuboren/p/5867126.html
+1.IE中没有讨厌的虚框问题了。
+2.提供了完善的版本检测功能，如果版本不够则显示其他东西，比如图片或文字。
+3.易于使用，只要在页面头加载一个 .js 文件，然后 HTML 写一个容器，里面放普通的文本或图片（用于无法显示 Flash 时显示），最后用脚本来替换这个元素里面的内容为 Flash。
+4.使得插入Flash媒体资源尽量简捷、安全。而且它是非常符合搜索引擎优化的原则的。
+5.能够避免HTML、XHTML中出现object、embed等非标准标签，从而符合更加标准。
+
+6.只需要包含 swfobject.js这个js文件，然后在DOM中插入一些简单的JS代码，就能嵌入Flash媒体资源了。
+7.用法：
+    1)html部分：
+        <div id="swf1">......</div>
+    2）js部分:
+        swfobject.embedSWF("test.swf", "swf1", "300", "120", "9.0.0",);
+    3)源码解析：
+        （1）源码：
+            [1]2.0版本  embedSWF: function(swfUrlStr, replaceElemIdStr, widthStr, heightStr, swfVersionStr, xiSwfUrlStr, flashvarsObj, parObj, attObj)
+            [2]2.2版本   embedSWF: function(swfUrlStr, replaceElemIdStr, widthStr, heightStr, swfVersionStr, xiSwfUrlStr, flashvarsObj, parObj, attObj, callbackFn)
+        （2）参数介绍【重点】，参考链接：https://www.xuebuyuan.com/984323.html：
+            [1]swfUrlStr：String，必须的，flash地址，即：SWF文件路径 。
+            [2]replaceElemIdStr：String，必须的，与swf文件关联的Html中的DOM元素。Html中页面标签的Id字符串。
+            [3]widthStr：String，必须的，flash宽度 。
+            [4]heightStr：String，必须的，flash高度。
+            [5]swfVersionStr：String，必须的， FlashPlayer需要的版本号，它可以详细到 '主版本号.小版本号.细节'，例如："6.0.65"。一般地，我们只需传入主版本即可，例如："6"。
+
+            [6]xiSwfUrlStr：（String，可选的）指定express install SWF的URL并激活Adobe express install。即：一个flash文件，来安装指定的flash插件。
+            [7]flashvarsObj：（Object，可选的）用name:value对指定你的flashvars
+            [8]parObj：（Object，可选的）用name:value对指定你的嵌套object元素的params
+            [9]attObj：（Object，可选的）用name:value对指定object元素的属性
+            [10]callbackFn：（Function，可选的）flash加载完成的回调函数，2.2才支持。
+            [11]callbackFn参数：{success:true/false,id:"object id",ref:DOM Element}
+                a、success：Boolean值，用来判断SWF文件的嵌入是否成功。
+                b、id：String类型值，表示swfobject.registerObject使用的Html元素Id
+                c、ref： HTML object对象，表示应用的元素对象。
+        （3）【弃用】方法addParam("Param1", "Param2")：这里是给Flash添加内联参数，即：向parObj参数中添加值，可以实现诸如背景透明之类的效果。依照需求添加就可以了，参数和emded/object标签是一样的代码
+        （4）【弃用】方法addVariable("variable1", "value1")：这里是给Flash添加FlashVar，这是以FlashVar的方式给Flash的Root添加变量，对于Number型变量在Flash端需要 做类型转换。
+        （5）【弃用】方法write("content")：用一段特定内容取代Flash无法显示时的内容。可以事先在CSS里定义好样式，在文档里使用div标签写出来。这里 在调用过来。
+        （6）方法createCSS(selStr, declStr, mediaStr, newStyleBoolean)：使用 SWFObject 公开的内部方法创建样式表。
+            [1]selStr (string)[必须]：CSS 选择器
+            [2]declStr (string)[必须]：CSS 声明
+            [3]mediaStr (string)[可选]：媒体类型
+            [4]newStyleBoolean (boolean)[可选]：是否使用一个新的 style 标签来保存样式
+        （7）方法addDomLoadEvent(fn)：增加一个只要 DOM 加载完成，就执行的函数。对于不支持的浏览器，将会降级使用 addLoadEvent 方法
+        （8）方法addLoadEvent(fn)：在不覆盖 onload 事件的基础上，给 onload 增加一个函数
+        （9）方法createSWF(attObj, parObj, replaceElemIdStr)：使用 SWFObject 公开的内部方法来加载 Flash。
+            [1]attObj (object)：attributes 的参数。参考链接：https://www.w3school.com.cn/tags/tag_object.asp
+               注意：attObj 不要设置以下属性：
+                    a、classid:"D27CDB6E-AE6D-11cf-96B8-444553540000" （SWFObject 会自动添加）
+                    b、type:"application/x-shockwave-flash" （SWFObject 会自动添加）
+                    c、codebase:"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" （不推荐）
+            [2]parObj (object)：params 的参数。参考链接：
+            [3]replaceElemIdStr (string)：要加载 Flash 的元素 ID
+        （10）方法getFlashPlayerVersion()：获取 Flash 播放器的版本号，返回类型为 object，内容为：{major:n,minor:n,release:n}
+        （11）方法getObjectById(objectIdStr)：获取加载 Flash 元素
+            注意：该方法仅支持静态发布
+        （12）方法getQueryParamValue(paramStr)：获取 URL 中的参数，paramStr (string)：参数名称
+        （13）方法hasFlashPlayerVersion(versionStr)：判断 Flash 播放器是否达到要求版本号。返回 true 或 flash。
+            [1]versionStr (string)：所需 Flash 播放器的最低版本。通常为三个数字的组合，如："9.0.18"，其中可以省略次要版本号，如："9.0.0" 可以直接写为 "9"
+        （14）方法registerObject(objectIdStr, swfVersionStr, xiSwfUrlStr, callbackFn)：对使用标准的方法加载 Flash （也称为静态发布）。
+            参数：
+            [1]objectIdStr (string)[必须]：加载 Flash 元素（<object>）的 ID；
+            [2]swfVersionStr (string)[必须]：所需 Flash 播放器的最低版本。通常为三个数字的组合，如："9.0.18"，其中可以省略次要版本号，如："9.0.0" 可以直接写为 "9"
+            [3]xiSwfUrlStr (string)：用来提示升级 Flash 的引导文件。Flash 版本低于要求的最低版本时，会显示这个 Flash，压缩包里面的 expressInstall.swf 可以在 6.0.65 及更高的版本中播放，它的最小尺寸为 310x137px
+            [4]callbackFn (function)：Flash 加载成功后的回调函数
+        （15）方法removeSWF(objElemIdStr)：删除 HTML 中的 Flash
+            [1]objElemIdStr (string)：要加载 Flash 的元素 ID
+        （16）方法showExpressInstall(att, par, replaceElemIdStr, callbackFn)：显示用来提示升级 flash。
+            [1]att (object)：attributes 的参数。
+            [2]par (object)：params 的参数。
+            [3]replaceElemIdStr (string)：要加载 Flash 的元素 ID
+            [4]callbackFn (function)：Flash 加载成功后的回调函数
+        （17）方法switchOffAutoHideShow()：禁用 SWFObject 默认显示或隐藏。确保调用后，不受之前的其他 SWFObject 加载影响。
+        （18）方法embedSWF(swfUrlStr, replaceElemIdStr, widthStr, heightStr, swfVersionStr, xiSwfUrlStr, flashvarsObj, parObj, attObj, callbackFn)：见（1）和（2）的解释。
+8、API参考的链接：https://www.cnblogs.com/niuboren/p/5867126.html
