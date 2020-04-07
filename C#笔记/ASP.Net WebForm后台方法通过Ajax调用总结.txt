@@ -1,0 +1,80 @@
+ASP.NET通过ajax调用后台方法
+原文参考链接：https://blog.csdn.net/nangeali/article/details/78168018
+1、WebForm的前台页面代码如下：
+	<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="ajax.WebForm1" %>
+
+	<!DOCTYPE html>
+
+	<html xmlns="http://www.w3.org/1999/xhtml">
+	<head runat="server">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>测试</title>
+		<script src="Source/jquery.min.js"></script>
+	</head>
+	<body>
+		<form id="form1" runat="server">
+			<div>
+				<asp:Button ID="btn" runat="server" Text="click me" />
+				<asp:Label ID="lab" runat="server" Text="" />
+			</div>
+		</form>
+	</body>
+	</html>
+
+	<script type="text/javascript">
+		// 文档加载
+		$(document).ready(function () {
+			// 绑定事件
+			$("#btn").bind("click", send);
+		})
+
+		function send() {
+			$.ajax({
+				type: "post",
+				url: "WebForm1.aspx/send",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (data) {
+					alert("调用成功！");
+				},
+				error: function (err) {
+					alert("产生错误！");
+				}
+			});
+		}
+	</script>
+2、WebForm对应的后台代码：
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Web;
+	using System.Web.Services;
+	using System.Web.UI;
+	using System.Web.UI.WebControls;
+
+	namespace ajax
+	{
+		public partial class WebForm1 : System.Web.UI.Page
+		{
+			protected void Page_Load(object sender, EventArgs e)
+			{
+
+			}
+
+			[WebMethod]
+			public static string send()
+			{
+				return "true";
+			}
+		}
+	}
+3、总结：
+	1）前端页面，添加jQuery的引用
+	2）后台代码，方法必须为静态方法，而且，必须使用[WebMethod]进行声明。
+	3）后台代码中，如果要使用Session，怎必须属性（[WebMethod(EnableSession = true)]）的重载。
+		eg：
+			[WebMethod(EnableSession = true)]
+			public static string send()
+			{
+				return "true";
+			}
