@@ -1,9 +1,9 @@
-SCOPE_IDENTITY 和  @@IDENTITY 的用法
+SCOPE_IDENTITY() 和  @@IDENTITY 的用法
 相同点：作用都是取得返回在当前会话中的任何表内所生成的最后一个标识值。简单的说就是在执行一条插入语句之后使用@@IDENTITY的全局变量，取得插入记录的ID号。
 不同点：	
-	1）SQL Server中的作用域的概念：一个操作，一个触发器，一个存储过程叫做一个作用域。
+	1）SQL Server中的作用域的概念：一个操作，一个触发器，一个存储过程叫做一个【作用域】。
 	2）@@IDENTITY是全局的，所以在他的功能会体现在所有作用域。
 	3）如果出现多个作用域的情况的时候，@@IDENTITY所取得的ID号就是最后一个作用域产生的结果。
-	4）SCOPE_IDENTITY：只返回插入到当前作用域中的值;@@IDENTITY:不受限于特定的作用域。
+	4）SCOPE_IDENTITY()：只返回插入到当前【作用域】中的值;@@IDENTITY:不受限于特定的作用域。
 	
 参考链接：https://blog.csdn.net/anewboyz/article/details/50086081
