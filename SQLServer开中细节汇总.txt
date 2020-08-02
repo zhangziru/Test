@@ -1,0 +1,5 @@
+1、插入操作中，时间戳（timestamp）类型的列不能显示插入。报错信息：“不能将显式值插入时间戳列。请对列列表使用 INSERT 来排除时间戳列，或将 DEFAULT 插入时间戳列。”
+2、批量更新自增的操作：declare @index int set @index = 0  update tableName set [field]=@index,@index+=1
+3、更新/删除操作中使用表的别名：
+	1）update tableName set [field] = 1 from tableName aliasName
+	2）delete tableName from tableName aliasName where aliasName.Id = 1
