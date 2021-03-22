@@ -196,10 +196,12 @@ git update-index --no-assume-unchanged [file-path] ：[取消]忽略本地文件
 【Git 命令 撤销】
 git checkout[file]  ：撤销“工作区”的指定文件到的更改
 git checkout -- file     :可以丢弃工作区的修改，即：撤销更改（功能同上述一样）
-git checkout[commit] [file]  ：恢复某个commit的指定文件（本地仓库未推送的文件）到“暂存区”和“工作区”
+git checkout [commit版本号] [file]  ：恢复某个commit的指定文件（本地仓库未推送的文件）到“暂存区”和“工作区”
 git checkout .	:撤销"工作区"的所有文件的修改（不要轻易的执行）
 git reset --soft HEAD^  :恢复“本地仓库”的最新提交到“暂存区”
 git reset --mixed HEAD^  :恢复“本地仓库”的最新提交到“工作区”
+git reset HEAD -- .   ：从暂存区撤销 到 工作区，撤销所有
+git reset HEAD -- filename :从暂存区撤销 到 工作区，撤销特定目标
 【Git 命令 查看未推送的记录】
 git cherry -v	:查看本地仓库未推送的记录
 【Git 本地，拉取服务器上的代码异常，使用服务器上的分支，强制覆盖本地】
